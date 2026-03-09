@@ -1,0 +1,123 @@
+<nav aria-label="breadcrumb">
+  <ul>
+    <li>Companies</li>
+  </ul>
+</nav>
+
+<article>
+  <header>
+    Filter companies
+  </header>
+
+  <form action="/companies" method="get">
+    <div class="d-flex gap-2 flex-wrap align-items-end">
+      <div>
+        <label for="search_box">Search</label>
+        <input type="text" id="search_box" name="query_search" value="<%= params["query_search"] %>" placeholder="Company name...">
+      </div>
+
+      <div>
+        <label for="status_filter">Status</label>
+        <select id="status_filter" name="query_status">
+          <option value="">All statuses</option>
+          <% @statuses.each do |status| %>
+            <option value="<%= status %>" <%= params["query_status"] == status ? "selected" : "" %>>
+              <%= status %>
+            </option>
+          <% end %>
+        </select>
+      </div>
+
+      <div>
+        <button type="submit">Filter</button>
+      </div>
+
+      <div>
+        <a href="/companies" role="button" class="secondary">Clear</a>
+      </div>
+    </div>
+  </form>
+
+  <p class="mt-2">
+    <small>Showing <%= number_with_delimiter(@filtered_count) %> of <%= number_with_delimiter(@total_count) %> companies</small>
+  </p>
+</article>
+
+<article>
+  <header>
+    Add a new company
+  </header>
+
+  <form action="/insert_company" method="post">
+    <div>
+      <label for="company_name_box">Company name</label>
+      <input type="text" id="company_name_box" name="query_company_name">
+    </div>
+
+    <div>
+      <label for="website_box">Website</label>
+      <input type="text" id="website_box" name="query_website">
+    </div>
+
+    <div>
+      <label for="status_box">Status</label>
+      <input type="text" id="status_box" name="query_status">
+    </div>
+
+    <div>
+      <label for="notes_box">Notes</label>
+      <textarea id="notes_box" name="query_notes"></textarea>
+    </div>
+
+    <button type="submit">Create company</button>
+  </form>
+</article>
+
+<article>
+  <header>
+    All companies
+  </header>
+
+  <div class="overflow-auto">
+    <table>
+      <thead>
+        <tr>
+          <th>Company</th>
+          <th>Status</th>
+          <th>Contacts</th>
+          <th>Categories</th>
+          <th>Calls</th>
+          <th>Emails</th>
+          <th>Letters</th>
+          <th>Total Outreaches</th>
+          <th>Most Recent</th>
+          <th>Recent Owner</th>
+          <th>Recent Format</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @list_of_companies.each do |a_company| %>
+          <% stats  = @outreach_stats[a_company.id] %>
+          <% recent = @recent_outreaches[a_company.id] %>
+          <tr>
+            <td>
+              <a href="/companies/<%= a_company.id %>">
+                <%= a_company.company_name %>
+              </a>
+            </td>
+            <td><%= a_company.status %></td>
+            <td><%= @contact_counts[a_company.id] || 0 %></td>
+            <td><%= @category_counts[a_company.id] || 0 %></td>
+            <td><%= stats&.phone_count  || 0 %></td>
+            <td><%= stats&.email_count  || 0 %></td>
+            <td><%= stats&.letter_count || 0 %></td>
+            <td><%= stats&.total_outreaches || 0 %></td>
+            <td><%= stats&.most_recent_date&.to_time&.strftime("%b %-d, %Y") %></td>
+            <td><%= recent&.rep_name %></td>
+            <td><%= recent&.recent_medium %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</article>

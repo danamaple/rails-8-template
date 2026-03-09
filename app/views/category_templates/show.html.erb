@@ -1,0 +1,50 @@
+<nav aria-label="breadcrumb">
+  <ul>
+    <li><a href="/categories">Categories</a></li>
+    <li><%= @the_category.category %></li>
+  </ul>
+</nav>
+
+<article>
+  <header>
+    <%= @the_category.category %>
+  </header>
+
+  <a href="/delete_category/<%= @the_category.id %>">Delete category</a>
+</article>
+
+<article>
+  <header>
+    Edit category
+  </header>
+
+  <form action="/modify_category/<%= @the_category.id %>" method="post">
+    <div>
+      <label for="category_box">Category name</label>
+      <input type="text" id="category_box" name="query_category" value="<%= @the_category.category %>">
+    </div>
+
+    <button type="submit">Update category</button>
+  </form>
+</article>
+
+<article>
+  <header>
+    Companies in this category
+  </header>
+
+  <% if @the_category.companies.any? %>
+    <ul>
+      <% @the_category.companies.order({ :company_name => :asc }).each do |a_company| %>
+        <li>
+          <a href="/companies/<%= a_company.id %>">
+            <%= a_company.company_name %>
+          </a>
+          <% if a_company.status.present? %>&mdash; <%= a_company.status %><% end %>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>No companies in this category yet.</p>
+  <% end %>
+</article>

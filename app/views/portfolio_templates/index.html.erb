@@ -1,0 +1,51 @@
+<h1>
+  List of all portfolios
+</h1>
+
+<hr>
+
+<article>
+  <header>
+    <h2>
+      Add a new portfolio
+    </h2>
+  </header>
+
+  <form action="/insert_portfolio" method="post">
+    <div>
+      <label for="company_id_box">
+        Company
+      </label>
+
+      <input type="text" id="company_id_box" name="query_company_id">
+    </div>
+
+    <div>
+      <label for="category_id_box">
+        Category
+      </label>
+
+      <input type="text" id="category_id_box" name="query_category_id">
+    </div>
+
+    <button type="submit">
+      Create portfolio
+    </button>
+  </form>
+</article>
+
+<hr>
+
+<article>
+  <ul>
+    <% @list_of_portfolios.each do |a_portfolio| %>
+      <li>
+        <a href="/portfolios/<%= a_portfolio.id %>">
+          Portfolio #<%= a_portfolio.id %>
+        </a>
+      </li>
+    <% end %>
+  </ul>
+</article>
+
+<hr>

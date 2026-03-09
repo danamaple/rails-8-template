@@ -1,0 +1,244 @@
+<nav aria-label="breadcrumb">
+  <ul>
+    <li><a href="/companies">Companies</a></li>
+    <li><%= @the_company.company_name %></li>
+  </ul>
+</nav>
+
+<article>
+  <header>
+    <%= @the_company.company_name %>
+  </header>
+
+  <dl>
+    <dt>Website</dt>
+    <dd><%= @the_company.website %></dd>
+
+    <dt>Status</dt>
+    <dd><%= @the_company.status %></dd>
+
+    <dt>Notes</dt>
+    <dd><%= @the_company.notes %></dd>
+
+    <dt>Created</dt>
+    <dd><%= time_ago_in_words(@the_company.created_at) %> ago</dd>
+  </dl>
+
+  <a href="/delete_company/<%= @the_company.id %>">Delete company</a>
+</article>
+
+<article>
+  <header>
+    Edit company
+  </header>
+
+  <form action="/modify_company/<%= @the_company.id %>" method="post">
+    <div>
+      <label for="company_name_box">Company name</label>
+      <input type="text" id="company_name_box" name="query_company_name" value="<%= @the_company.company_name %>">
+    </div>
+
+    <div>
+      <label for="website_box">Website</label>
+      <input type="text" id="website_box" name="query_website" value="<%= @the_company.website %>">
+    </div>
+
+    <div>
+      <label for="status_box">Status</label>
+      <input type="text" id="status_box" name="query_status" value="<%= @the_company.status %>">
+    </div>
+
+    <div>
+      <label for="notes_box">Notes</label>
+      <textarea id="notes_box" name="query_notes"><%= @the_company.notes %></textarea>
+    </div>
+
+    <button type="submit">Update company</button>
+  </form>
+</article>
+
+<article>
+  <header>
+    Contacts at <%= @the_company.company_name %>
+  </header>
+
+  <% company_contacts = @the_company.contacts.order({ :last_name => :asc }) %>
+
+  <% if company_contacts.any? %>
+    <div class="overflow-auto">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Title</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>General contact</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% company_contacts.each do |a_contact| %>
+            <tr>
+              <td>
+                <a href="/contacts/<%= a_contact.id %>">
+                  <%= a_contact.first_name %> <%= a_contact.last_name %>
+                  <% if a_contact.preferred_name.present? %>(<%= a_contact.preferred_name %>)<% end %>
+                </a>
+              </td>
+              <td><%= a_contact.title %></td>
+              <td><%= a_contact.email %></td>
+              <td><%= a_contact.phone %></td>
+              <td><%= a_contact.general_company_contact ? "Yes" : "" %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <p>No contacts yet.</p>
+  <% end %>
+
+  <hr>
+
+  <strong>Add a contact</strong>
+
+  <form action="/insert_contact" method="post">
+    <input type="hidden" name="query_company_id" value="<%= @the_company.id %>">
+
+    <div>
+      <label for="first_name_box">First name</label>
+      <input type="text" id="first_name_box" name="query_first_name">
+    </div>
+
+    <div>
+      <label for="last_name_box">Last name</label>
+      <input type="text" id="last_name_box" name="query_last_name">
+    </div>
+
+    <div>
+      <label for="preferred_name_box">Preferred name</label>
+      <input type="text" id="preferred_name_box" name="query_preferred_name">
+    </div>
+
+    <div>
+      <label for="title_box">Title</label>
+      <input type="text" id="title_box" name="query_title">
+    </div>
+
+    <div>
+      <label for="email_box">Email</label>
+      <input type="email" id="email_box" name="query_email">
+    </div>
+
+    <div>
+      <label for="phone_box">Phone</label>
+      <input type="text" id="phone_box" name="query_phone">
+    </div>
+
+    <div>
+      <label for="linkedin_box">LinkedIn</label>
+      <input type="text" id="linkedin_box" name="query_linkedin">
+    </div>
+
+    <div>
+      <label for="notes_box">Notes</label>
+      <textarea id="notes_box" name="query_notes"></textarea>
+    </div>
+
+    <div>
+      <label>
+        <input type="checkbox" name="query_general_company_contact" value="true">
+        General company contact
+      </label>
+    </div>
+
+    <button type="submit">Add contact</button>
+  </form>
+</article>
+
+<article>
+  <header>
+    Categories
+  </header>
+
+  <% if @the_company.portfolios.any? %>
+    <ul>
+      <% @the_company.portfolios.each do |a_portfolio| %>
+        <li>
+          <a href="/categories/<%= a_portfolio.category.id %>">
+            <%= a_portfolio.category.category %>
+          </a>
+          &mdash;
+          <a href="/delete_portfolio/<%= a_portfolio.id %>">Remove</a>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>No categories assigned yet.</p>
+  <% end %>
+
+  <hr>
+
+  <strong>Add a category</strong>
+
+  <form action="/insert_portfolio" method="post">
+    <input type="hidden" name="query_company_id" value="<%= @the_company.id %>">
+
+    <div>
+      <label for="category_id_box">Category</label>
+      <select id="category_id_box" name="query_category_id">
+        <option value="">-- select a category --</option>
+        <% @list_of_categories.each do |a_category| %>
+          <option value="<%= a_category.id %>"><%= a_category.category %></option>
+        <% end %>
+      </select>
+    </div>
+
+    <button type="submit">Add category</button>
+  </form>
+</article>
+
+<article>
+  <header>
+    All outreaches
+  </header>
+
+  <% all_outreaches = @the_company.contacts.map { |c| c.outreaches.to_a }.flatten.sort_by { |o| o.outreach_datetime || Time.at(0) }.reverse %>
+
+  <% if all_outreaches.any? %>
+    <div class="overflow-auto">
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Contact</th>
+            <th>Medium</th>
+            <th>Rep</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% all_outreaches.each do |an_outreach| %>
+            <tr>
+              <td>
+                <a href="/outreaches/<%= an_outreach.id %>">
+                  <%= an_outreach.outreach_datetime&.strftime("%b %e, %Y") %>
+                </a>
+              </td>
+              <td>
+                <a href="/contacts/<%= an_outreach.contact.id %>">
+                  <%= an_outreach.contact.first_name %> <%= an_outreach.contact.last_name %>
+                </a>
+              </td>
+              <td><%= an_outreach.outreach_medium %></td>
+              <td><%= an_outreach.rep.first_name %> <%= an_outreach.rep.last_name %></td>
+              <td><%= an_outreach.notes %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <p>No outreaches recorded yet.</p>
+  <% end %>
+</article>

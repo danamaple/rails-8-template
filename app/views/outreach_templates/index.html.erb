@@ -1,0 +1,106 @@
+<nav aria-label="breadcrumb">
+  <ul>
+    <li>Outreaches</li>
+  </ul>
+</nav>
+
+<article>
+  <header>
+    Filter outreaches
+  </header>
+
+  <form action="/outreaches" method="get">
+    <div class="d-flex gap-2 flex-wrap align-items-end">
+      <div>
+        <label for="medium_filter">Medium</label>
+        <select id="medium_filter" name="query_outreach_medium">
+          <option value="">All mediums</option>
+          <% @mediums.each do |medium| %>
+            <option value="<%= medium %>" <%= params["query_outreach_medium"] == medium ? "selected" : "" %>>
+              <%= medium %>
+            </option>
+          <% end %>
+        </select>
+      </div>
+
+      <div>
+        <label for="rep_filter">Rep</label>
+        <select id="rep_filter" name="query_rep_id">
+          <option value="">All reps</option>
+          <% @list_of_reps.each do |a_rep| %>
+            <option value="<%= a_rep.id %>" <%= params["query_rep_id"] == a_rep.id.to_s ? "selected" : "" %>>
+              <%= a_rep.first_name %> <%= a_rep.last_name %>
+            </option>
+          <% end %>
+        </select>
+      </div>
+
+      <div>
+        <label for="start_date_box">From</label>
+        <input type="date" id="start_date_box" name="query_start_date" value="<%= params["query_start_date"] %>">
+      </div>
+
+      <div>
+        <label for="end_date_box">To</label>
+        <input type="date" id="end_date_box" name="query_end_date" value="<%= params["query_end_date"] %>">
+      </div>
+
+      <div>
+        <button type="submit">Filter</button>
+      </div>
+
+      <div>
+        <a href="/outreaches" role="button" class="secondary">Clear</a>
+      </div>
+    </div>
+  </form>
+
+  <p class="mt-2">
+    <small>Showing <%= number_with_delimiter(@filtered_count) %> of <%= number_with_delimiter(@total_count) %> outreaches</small>
+  </p>
+</article>
+
+<article>
+  <header>
+    All outreaches
+  </header>
+
+  <div class="overflow-auto">
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Contact</th>
+          <th>Company</th>
+          <th>Medium</th>
+          <th>Rep</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @list_of_outreaches.each do |an_outreach| %>
+          <tr>
+            <td>
+              <a href="/outreaches/<%= an_outreach.id %>">
+                <%= an_outreach.outreach_datetime&.strftime("%b %e, %Y") %>
+              </a>
+            </td>
+            <td>
+              <a href="/contacts/<%= an_outreach.contact.id %>">
+                <%= an_outreach.contact.first_name %> <%= an_outreach.contact.last_name %>
+              </a>
+            </td>
+            <td>
+              <a href="/companies/<%= an_outreach.contact.company.id %>">
+                <%= an_outreach.contact.company.company_name %>
+              </a>
+            </td>
+            <td><%= an_outreach.outreach_medium %></td>
+            <td><%= an_outreach.rep.first_name %> <%= an_outreach.rep.last_name %></td>
+            <td><%= an_outreach.notes %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</article>

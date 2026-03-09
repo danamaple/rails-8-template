@@ -1,0 +1,37 @@
+<nav aria-label="breadcrumb">
+  <ul>
+    <li>Categories</li>
+  </ul>
+</nav>
+
+<article>
+  <header>
+    Add a new category
+  </header>
+
+  <form action="/insert_category" method="post">
+    <div>
+      <label for="category_box">Category name</label>
+      <input type="text" id="category_box" name="query_category">
+    </div>
+
+    <button type="submit">Create category</button>
+  </form>
+</article>
+
+<article>
+  <header>
+    All categories
+  </header>
+
+  <ul>
+    <% @list_of_categories.each do |a_category| %>
+      <li>
+        <a href="/categories/<%= a_category.id %>">
+          <%= a_category.category %>
+        </a>
+        (<%= a_category.companies.count %> <%= a_category.companies.count == 1 ? "company" : "companies" %>)
+      </li>
+    <% end %>
+  </ul>
+</article>

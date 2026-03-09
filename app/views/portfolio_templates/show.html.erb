@@ -1,0 +1,81 @@
+<h1>
+  Portfolio #<%= @the_portfolio.id %> details
+</h1>
+
+<article>
+  <div>
+    <a href="/portfolios">
+      Go back
+    </a>
+  </div>
+
+  <div>
+    <a href="/delete_portfolio/<%= @the_portfolio.id %>">
+      Delete portfolio
+    </a>
+  </div>
+  <dl>
+    <dt>
+      Company
+    </dt>
+    <dd>
+      <%= @the_portfolio.company_id %>
+    </dd>
+
+    <dt>
+      Category
+    </dt>
+    <dd>
+      <%= @the_portfolio.category_id %>
+    </dd>
+
+    <dt>
+      Created at
+    </dt>
+    <dd>
+      <%= time_ago_in_words(@the_portfolio.created_at) %> ago
+    </dd>
+
+    <dt>
+      Updated at
+    </dt>
+    <dd>
+      <%= time_ago_in_words(@the_portfolio.updated_at) %> ago
+    </dd>
+  </dl>
+</article>
+
+<hr>
+
+
+<article>
+  <header>
+    <h2>
+      Edit portfolio
+    </h2>
+  </header>
+
+  <form action="/modify_portfolio/<%= @the_portfolio.id %>"  method="post" >
+    <div>
+      <label for="company_id_box">
+        Company
+      </label>
+
+      <input type="text" id="company_id_box" name="query_company_id" value="<%= @the_portfolio.company_id %>">
+    </div>
+
+    <div>
+      <label for="category_id_box">
+        Category
+      </label>
+
+      <input type="text" id="category_id_box" name="query_category_id" value="<%= @the_portfolio.category_id %>">
+    </div>
+
+    <button type="submit">
+      Update portfolio
+    </button>
+  </form>
+</article>
+
+<hr>

@@ -1,0 +1,75 @@
+<nav aria-label="breadcrumb">
+  <ul>
+    <li><a href="/companies">Companies</a></li>
+    <li><a href="/companies/<%= @the_outreach.contact.company.id %>"><%= @the_outreach.contact.company.company_name %></a></li>
+    <li><a href="/contacts/<%= @the_outreach.contact.id %>"><%= @the_outreach.contact.first_name %> <%= @the_outreach.contact.last_name %></a></li>
+    <li>Outreach #<%= @the_outreach.id %></li>
+  </ul>
+</nav>
+
+<article>
+  <header>
+    Outreach with <%= @the_outreach.contact.first_name %> <%= @the_outreach.contact.last_name %>
+  </header>
+
+  <dl>
+    <dt>Contact</dt>
+    <dd>
+      <a href="/contacts/<%= @the_outreach.contact.id %>">
+        <%= @the_outreach.contact.first_name %> <%= @the_outreach.contact.last_name %>
+      </a>
+    </dd>
+
+    <dt>Company</dt>
+    <dd>
+      <a href="/companies/<%= @the_outreach.contact.company.id %>">
+        <%= @the_outreach.contact.company.company_name %>
+      </a>
+    </dd>
+
+    <dt>Date &amp; time</dt>
+    <dd><%= @the_outreach.outreach_datetime&.strftime("%b %e, %Y %l:%M %p") %></dd>
+
+    <dt>Medium</dt>
+    <dd><%= @the_outreach.outreach_medium %></dd>
+
+    <dt>Rep</dt>
+    <dd><%= @the_outreach.rep.first_name %> <%= @the_outreach.rep.last_name %></dd>
+
+    <dt>Notes</dt>
+    <dd><%= @the_outreach.notes %></dd>
+
+    <dt>Created</dt>
+    <dd><%= time_ago_in_words(@the_outreach.created_at) %> ago</dd>
+  </dl>
+
+  <a href="/delete_outreach/<%= @the_outreach.id %>">Delete outreach</a>
+</article>
+
+<article>
+  <header>
+    Edit outreach
+  </header>
+
+  <form action="/modify_outreach/<%= @the_outreach.id %>" method="post">
+    <input type="hidden" name="query_contact_id" value="<%= @the_outreach.contact_id %>">
+
+    <div>
+      <label for="outreach_datetime_box">Date &amp; time</label>
+      <input type="datetime-local" id="outreach_datetime_box" name="query_outreach_datetime"
+        value="<%= @the_outreach.outreach_datetime&.strftime("%Y-%m-%dT%H:%M") %>">
+    </div>
+
+    <div>
+      <label for="outreach_medium_box">Medium</label>
+      <input type="text" id="outreach_medium_box" name="query_outreach_medium" value="<%= @the_outreach.outreach_medium %>">
+    </div>
+
+    <div>
+      <label for="notes_box">Notes</label>
+      <textarea id="notes_box" name="query_notes"><%= @the_outreach.notes %></textarea>
+    </div>
+
+    <button type="submit">Update outreach</button>
+  </form>
+</article>

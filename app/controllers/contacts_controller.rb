@@ -19,10 +19,16 @@ class ContactsController < ApplicationController
 
     @total_count = Contact.count
     @filtered_count = matching_contacts.count
-    @list_of_contacts = matching_contacts.order({ :last_name => :asc })
+    @list_of_contacts = matching_contacts.includes(:company).order({ :last_name => :asc })
     @list_of_companies = Company.all.order({ :company_name => :asc })
 
     render({ :template => "contact_templates/index" })
+  end
+
+  def new
+    @list_of_companies = Company.all.order({ :company_name => :asc })
+
+    render({ :template => "contact_templates/new" })
   end
 
   def show
@@ -38,8 +44,8 @@ class ContactsController < ApplicationController
   def create
     the_contact = Contact.new
     the_contact.company_id = params.fetch("query_company_id")
-    the_contact.first_name = params.fetch("query_first_name")
-    the_contact.last_name = params.fetch("query_last_name")
+    the_contact.first_name = params.fetch("query_first_name", "")
+    the_contact.last_name = params.fetch("query_last_name", "")
     the_contact.preferred_name = params.fetch("query_preferred_name", "")
     the_contact.title = params.fetch("query_title", "")
     the_contact.email = params.fetch("query_email", "")
@@ -61,8 +67,8 @@ class ContactsController < ApplicationController
     the_contact = Contact.where({ :id => the_id }).at(0)
 
     the_contact.company_id = params.fetch("query_company_id")
-    the_contact.first_name = params.fetch("query_first_name")
-    the_contact.last_name = params.fetch("query_last_name")
+    the_contact.first_name = params.fetch("query_first_name", "")
+    the_contact.last_name = params.fetch("query_last_name", "")
     the_contact.preferred_name = params.fetch("query_preferred_name", "")
     the_contact.title = params.fetch("query_title", "")
     the_contact.email = params.fetch("query_email", "")

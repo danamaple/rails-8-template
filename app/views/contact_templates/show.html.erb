@@ -154,14 +154,20 @@
   <form action="/insert_outreach" method="post">
     <input type="hidden" name="query_contact_id" value="<%= @the_contact.id %>">
 
-    <div>
-      <label for="outreach_datetime_box">Date &amp; time</label>
-      <input type="datetime-local" id="outreach_datetime_box" name="query_outreach_datetime">
+    <div class="d-flex gap-3 align-items-end">
+      <div>
+        <label for="outreach_date_box">Date</label>
+        <input type="date" id="outreach_date_box" name="query_date">
+      </div>
+      <div>
+        <label for="outreach_time_box">Time</label>
+        <input type="time" id="outreach_time_box" name="query_time">
+      </div>
     </div>
 
     <div>
       <label for="outreach_medium_box">Medium</label>
-      <input type="text" id="outreach_medium_box" name="query_outreach_medium" placeholder="e.g. Email, Phone, LinkedIn">
+      <input type="text" id="outreach_medium_box" name="query_outreach_medium" placeholder="e.g. Email, Call, Letter">
     </div>
 
     <div>

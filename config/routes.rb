@@ -65,6 +65,8 @@ Rails.application.routes.draw do
   # READ
   get("/companies", { :controller => "companies", :action => "index" })
 
+  get("/companies/new", { :controller => "companies", :action => "new" })
+
   get("/companies/:path_id", { :controller => "companies", :action => "show" })
 
   # UPDATE
@@ -83,6 +85,8 @@ Rails.application.routes.draw do
 
   # READ
   get("/contacts", { :controller => "contacts", :action => "index" })
+
+  get("/contacts/new", { :controller => "contacts", :action => "new" })
 
   get("/contacts/:path_id", { :controller => "contacts", :action => "show" })
 

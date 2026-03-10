@@ -4,6 +4,11 @@
   </ul>
 </nav>
 
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h2 class="mb-0">Companies</h2>
+  <a href="/companies/new" role="button">Add New Company</a>
+</div>
+
 <article>
   <header>
     Filter companies
@@ -20,9 +25,21 @@
         <label for="status_filter">Status</label>
         <select id="status_filter" name="query_status">
           <option value="">All statuses</option>
-          <% @statuses.each do |status| %>
-            <option value="<%= status %>" <%= params["query_status"] == status ? "selected" : "" %>>
-              <%= status %>
+          <option value="Cold"           <%= params["query_status"] == "Cold"           ? "selected" : "" %>>Cold</option>
+          <option value="Approaching"    <%= params["query_status"] == "Approaching"    ? "selected" : "" %>>Approaching</option>
+          <option value="Warm"           <%= params["query_status"] == "Warm"           ? "selected" : "" %>>Warm</option>
+          <option value="Converted"      <%= params["query_status"] == "Converted"      ? "selected" : "" %>>Converted</option>
+          <option value="Do Not Contact" <%= params["query_status"] == "Do Not Contact" ? "selected" : "" %>>Do Not Contact</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="category_filter">Category</label>
+        <select id="category_filter" name="query_category_id">
+          <option value="">All categories</option>
+          <% @list_of_categories.each do |a_category| %>
+            <option value="<%= a_category.id %>" <%= params["query_category_id"] == a_category.id.to_s ? "selected" : "" %>>
+              <%= a_category.category %>
             </option>
           <% end %>
         </select>
@@ -45,36 +62,6 @@
 
 <article>
   <header>
-    Add a new company
-  </header>
-
-  <form action="/insert_company" method="post">
-    <div>
-      <label for="company_name_box">Company name</label>
-      <input type="text" id="company_name_box" name="query_company_name">
-    </div>
-
-    <div>
-      <label for="website_box">Website</label>
-      <input type="text" id="website_box" name="query_website">
-    </div>
-
-    <div>
-      <label for="status_box">Status</label>
-      <input type="text" id="status_box" name="query_status">
-    </div>
-
-    <div>
-      <label for="notes_box">Notes</label>
-      <textarea id="notes_box" name="query_notes"></textarea>
-    </div>
-
-    <button type="submit">Create company</button>
-  </form>
-</article>
-
-<article>
-  <header>
     All companies
   </header>
 
@@ -84,7 +71,7 @@
         <tr>
           <th>Company</th>
           <th>Status</th>
-          <th>Contacts</th>
+          <th>Website</th>
           <th>Categories</th>
           <th>Calls</th>
           <th>Emails</th>
@@ -106,8 +93,12 @@
               </a>
             </td>
             <td><%= a_company.status %></td>
-            <td><%= @contact_counts[a_company.id] || 0 %></td>
-            <td><%= @category_counts[a_company.id] || 0 %></td>
+            <td>
+              <% if a_company.website.present? %>
+                <a href="<%= a_company.website %>" target="_blank"><%= a_company.website %></a>
+              <% end %>
+            </td>
+            <td><%= a_company.portfolios.map { |p| p.category.category }.join(", ") %></td>
             <td><%= stats&.phone_count  || 0 %></td>
             <td><%= stats&.email_count  || 0 %></td>
             <td><%= stats&.letter_count || 0 %></td>

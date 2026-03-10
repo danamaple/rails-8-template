@@ -1,12 +1,12 @@
 <nav aria-label="breadcrumb">
   <ul>
-    <li>Outreaches</li>
+    <li>Outreach</li>
   </ul>
 </nav>
 
 <article>
   <header>
-    Filter outreaches
+    Filter outreach
   </header>
 
   <form action="/outreaches" method="get">
@@ -62,14 +62,14 @@
 
 <article>
   <header>
-    All outreaches
+    All outreach
   </header>
 
   <div class="overflow-auto">
     <table>
       <thead>
         <tr>
-          <th>Date</th>
+          <th>Date &amp; Time</th>
           <th>Contact</th>
           <th>Company</th>
           <th>Medium</th>
@@ -82,7 +82,7 @@
           <tr>
             <td>
               <a href="/outreaches/<%= an_outreach.id %>">
-                <%= an_outreach.outreach_datetime&.strftime("%b %e, %Y") %>
+                <%= an_outreach.outreach_datetime&.strftime("%b %-d, %Y %-l:%M %p") %>
               </a>
             </td>
             <td>

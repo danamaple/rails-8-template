@@ -1,0 +1,86 @@
+<nav aria-label="breadcrumb">
+  <ul>
+    <li><a href="/contacts">Contacts</a></li>
+    <li>New contact</li>
+  </ul>
+</nav>
+
+<article>
+  <header>
+    Add a new contact
+  </header>
+
+  <form action="/insert_contact" method="post">
+
+    <div>
+      <label for="company_id_box">Company</label>
+      <select id="company_id_box" name="query_company_id" required>
+        <option value="">-- select a company --</option>
+        <% @list_of_companies.each do |a_company| %>
+          <option value="<%= a_company.id %>"><%= a_company.company_name %></option>
+        <% end %>
+      </select>
+    </div>
+
+    <div>
+      <label>
+        <input type="checkbox" id="general_contact_checkbox" name="query_general_company_contact" value="true" checked onchange="togglePersonFields()">
+        General company contact (no specific person)
+      </label>
+    </div>
+
+    <div id="person_fields">
+      <div>
+        <label for="first_name_box">First name</label>
+        <input type="text" id="first_name_box" name="query_first_name">
+      </div>
+
+      <div>
+        <label for="last_name_box">Last name</label>
+        <input type="text" id="last_name_box" name="query_last_name">
+      </div>
+
+      <div>
+        <label for="preferred_name_box">Preferred name</label>
+        <input type="text" id="preferred_name_box" name="query_preferred_name">
+      </div>
+
+      <div>
+        <label for="title_box">Title</label>
+        <input type="text" id="title_box" name="query_title">
+      </div>
+
+      <div>
+        <label for="linkedin_box">LinkedIn</label>
+        <input type="text" id="linkedin_box" name="query_linkedin">
+      </div>
+    </div>
+
+    <div>
+      <label for="email_box">Email</label>
+      <input type="email" id="email_box" name="query_email">
+    </div>
+
+    <div>
+      <label for="phone_box">Phone</label>
+      <input type="text" id="phone_box" name="query_phone">
+    </div>
+
+    <div>
+      <label for="notes_box">Notes</label>
+      <textarea id="notes_box" name="query_notes"></textarea>
+    </div>
+
+    <button type="submit">Create contact</button>
+  </form>
+</article>
+
+<script>
+  function togglePersonFields() {
+    var isGeneral = document.getElementById("general_contact_checkbox").checked;
+    document.getElementById("person_fields").style.display = isGeneral ? "none" : "block";
+  }
+
+  // Set initial state on page load (checkbox starts checked → hide person fields)
+  togglePersonFields();
+</script>

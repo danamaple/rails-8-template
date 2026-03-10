@@ -45,7 +45,11 @@
 
     <div>
       <label for="status_box">Status</label>
-      <input type="text" id="status_box" name="query_status" value="<%= @the_company.status %>">
+      <select id="status_box" name="query_status">
+        <% ["Cold", "Approaching", "Warm", "Converted", "Do Not Contact"].each do |s| %>
+          <option value="<%= s %>" <%= @the_company.status == s ? "selected" : "" %>><%= s %></option>
+        <% end %>
+      </select>
     </div>
 
     <div>

@@ -10,14 +10,14 @@ class CompaniesController < ApplicationController
       matching_companies = matching_companies.where({ :status => params["query_status"] })
     end
 
+    if params["query_category_id"].present?
+      matching_companies = matching_companies.joins(:portfolios).where(portfolios: { category_id: params["query_category_id"] }).distinct
+    end
+
     @total_count = Company.count
     @filtered_count = matching_companies.count
-    @list_of_companies = matching_companies.order({ :company_name => :asc })
-    @statuses = Company.distinct.pluck(:status).compact.reject { |s| s.blank? }.sort
-
-    # Contact and category counts — one query each, keyed by company_id
-    @contact_counts = Contact.group(:company_id).count
-    @category_counts = Portfolio.group(:company_id).count
+    @list_of_companies = matching_companies.includes(portfolios: :category).order({ :company_name => :asc })
+    @list_of_categories = Category.all.order({ :category => :asc })
 
     # Outreach aggregate stats — one query for all counts + max date
     @outreach_stats = Outreach.joins(:contact)
@@ -45,6 +45,10 @@ class CompaniesController < ApplicationController
       .index_by { |r| r.company_id.to_i }
 
     render({ :template => "company_templates/index" })
+  end
+
+  def new
+    render({ :template => "company_templates/new" })
   end
 
   def show

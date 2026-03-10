@@ -20,7 +20,7 @@ class OutreachesController < ApplicationController
 
     @total_count = Outreach.count
     @filtered_count = matching_outreaches.count
-    @list_of_outreaches = matching_outreaches.order({ :outreach_datetime => :desc })
+    @list_of_outreaches = matching_outreaches.includes(contact: :company).includes(:rep).order({ :outreach_datetime => :desc })
     @mediums = Outreach.distinct.pluck(:outreach_medium).compact.reject { |m| m.blank? }.sort
     @list_of_reps = User.all.order({ :last_name => :asc })
 
@@ -40,7 +40,9 @@ class OutreachesController < ApplicationController
   def create
     the_outreach = Outreach.new
     the_outreach.contact_id = params.fetch("query_contact_id")
-    the_outreach.outreach_datetime = params.fetch("query_outreach_datetime")
+    date_str = params.fetch("query_date", "")
+    time_str = params.fetch("query_time", "00:00")
+    the_outreach.outreach_datetime = date_str.present? ? DateTime.parse("#{date_str} #{time_str}") : nil
     the_outreach.outreach_medium = params.fetch("query_outreach_medium")
     the_outreach.rep_id = current_user.id
     the_outreach.notes = params.fetch("query_notes", "")

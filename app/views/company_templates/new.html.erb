@@ -1,0 +1,42 @@
+<nav aria-label="breadcrumb">
+  <ul>
+    <li><a href="/companies">Companies</a></li>
+    <li>New company</li>
+  </ul>
+</nav>
+
+<article>
+  <header>
+    Add a new company
+  </header>
+
+  <form action="/insert_company" method="post">
+    <div>
+      <label for="company_name_box">Company name</label>
+      <input type="text" id="company_name_box" name="query_company_name" required>
+    </div>
+
+    <div>
+      <label for="website_box">Website</label>
+      <input type="text" id="website_box" name="query_website">
+    </div>
+
+    <div>
+      <label for="status_box">Status</label>
+      <select id="status_box" name="query_status">
+        <option value="Cold">Cold</option>
+        <option value="Approaching">Approaching</option>
+        <option value="Warm">Warm</option>
+        <option value="Converted">Converted</option>
+        <option value="Do Not Contact">Do Not Contact</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="notes_box">Notes</label>
+      <textarea id="notes_box" name="query_notes"></textarea>
+    </div>
+
+    <button type="submit">Create company</button>
+  </form>
+</article>

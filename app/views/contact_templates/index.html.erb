@@ -49,6 +49,10 @@
       <div>
         <a href="/contacts" role="button" class="secondary">Clear</a>
       </div>
+
+      <div>
+        <a href="/contacts.csv<%= request.query_string.present? ? "?#{request.query_string}" : "" %>" role="button" class="outline">Download CSV</a>
+      </div>
     </div>
   </form>
 

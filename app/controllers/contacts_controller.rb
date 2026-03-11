@@ -22,7 +22,10 @@ class ContactsController < ApplicationController
     @list_of_contacts = matching_contacts.includes(:company).order({ :last_name => :asc })
     @list_of_companies = Company.all.order({ :company_name => :asc })
 
-    render({ :template => "contact_templates/index" })
+    respond_to do |format|
+      format.html { render({ :template => "contact_templates/index" }) }
+      format.csv { send_data Contact.to_csv(@list_of_contacts), filename: "contacts-#{Date.today}.csv", type: "text/csv" }
+    end
   end
 
   def new

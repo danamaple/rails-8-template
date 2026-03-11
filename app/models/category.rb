@@ -11,4 +11,13 @@
 class Category < ApplicationRecord
   has_many  :portfolios, class_name: "Portfolio", foreign_key: "category_id"
   has_many :companies, through: :portfolios, source: :company
+
+  def self.to_csv(records = all)
+    CSV.generate(headers: true) do |csv|
+      csv << ["id", "category"]
+      records.each do |category|
+        csv << [category.id, category.category]
+      end
+    end
+  end
 end

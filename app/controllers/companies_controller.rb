@@ -14,10 +14,15 @@ class CompaniesController < ApplicationController
       matching_companies = matching_companies.joins(:portfolios).where(portfolios: { category_id: params["query_category_id"] }).distinct
     end
 
+    if params["query_list_id"].present?
+      matching_companies = matching_companies.joins(:list_memberships).where(list_memberships: { list_id: params["query_list_id"] }).distinct
+    end
+
     @total_count = Company.count
     @filtered_count = matching_companies.count
-    @list_of_companies = matching_companies.includes(portfolios: :category).order({ :company_name => :asc })
+    @list_of_companies = matching_companies.includes(portfolios: :category, list_memberships: :list).order({ :company_name => :asc })
     @list_of_categories = Category.all.order({ :category => :asc })
+    @list_of_lists = List.all.order({ :name => :asc })
 
     # Outreach aggregate stats — one query for all counts + max date
     @outreach_stats = Outreach.joins(:contact)
@@ -44,7 +49,10 @@ class CompaniesController < ApplicationController
       .order("contacts.company_id, outreaches.outreach_datetime DESC")
       .index_by { |r| r.company_id.to_i }
 
-    render({ :template => "company_templates/index" })
+    respond_to do |format|
+      format.html { render({ :template => "company_templates/index" }) }
+      format.csv { send_data Company.to_csv(@list_of_companies), filename: "companies-#{Date.today}.csv", type: "text/csv" }
+    end
   end
 
   def new
@@ -59,6 +67,7 @@ class CompaniesController < ApplicationController
     @the_company = matching_companies.at(0)
 
     @list_of_categories = Category.all.order({ :category => :asc })
+    @list_of_lists = List.all.order({ :name => :asc })
 
     render({ :template => "company_templates/show" })
   end

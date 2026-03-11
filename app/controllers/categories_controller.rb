@@ -4,7 +4,10 @@ class CategoriesController < ApplicationController
 
     @list_of_categories = matching_categories.order({ :category => :asc })
 
-    render({ :template => "category_templates/index" })
+    respond_to do |format|
+      format.html { render({ :template => "category_templates/index" }) }
+      format.csv { send_data Category.to_csv(@list_of_categories), filename: "categories-#{Date.today}.csv", type: "text/csv" }
+    end
   end
 
   def show

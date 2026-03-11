@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_03_09_120000) do
+ActiveRecord::Schema[8.0].define(version: 2026_03_10_013645) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -42,6 +42,21 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_09_120000) do
     t.string "linkedin"
     t.text "notes"
     t.boolean "general_company_contact"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "list_memberships", force: :cascade do |t|
+    t.integer "company_id"
+    t.integer "list_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "lists", force: :cascade do |t|
+    t.string "name"
+    t.text "notes"
+    t.integer "list_memberships_count"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

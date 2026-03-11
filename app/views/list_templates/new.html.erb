@@ -1,0 +1,26 @@
+<nav aria-label="breadcrumb">
+  <ul>
+    <li><a href="/lists">Lists</a></li>
+    <li>New list</li>
+  </ul>
+</nav>
+
+<article>
+  <header>
+    Add a new list
+  </header>
+
+  <form action="/insert_list" method="post">
+    <div>
+      <label for="name_box">Name</label>
+      <input type="text" id="name_box" name="query_name" required>
+    </div>
+
+    <div>
+      <label for="notes_box">Notes</label>
+      <textarea id="notes_box" name="query_notes"></textarea>
+    </div>
+
+    <button type="submit">Create list</button>
+  </form>
+</article>

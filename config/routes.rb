@@ -1,4 +1,51 @@
 Rails.application.routes.draw do
+  # Admin routes
+  get("/admin/import",  { :controller => "admin", :action => "import" })
+  post("/admin/import", { :controller => "admin", :action => "do_import" })
+  get("/admin/template", { :controller => "admin", :action => "template" })
+
+  #------------------------------
+
+  # Routes for the List membership resource:
+
+  # CREATE
+  post("/insert_list_membership", { :controller => "list_memberships", :action => "create" })
+
+  # READ
+  get("/list_memberships", { :controller => "list_memberships", :action => "index" })
+
+  get("/list_memberships/:path_id", { :controller => "list_memberships", :action => "show" })
+
+  # UPDATE
+
+  post("/modify_list_membership/:path_id", { :controller => "list_memberships", :action => "update" })
+
+  # DELETE
+  get("/delete_list_membership/:path_id", { :controller => "list_memberships", :action => "destroy" })
+
+  #------------------------------
+
+  # Routes for the List resource:
+
+  # CREATE
+  post("/insert_list", { :controller => "lists", :action => "create" })
+
+  # READ
+  get("/lists", { :controller => "lists", :action => "index" })
+
+  get("/lists/new", { :controller => "lists", :action => "new" })
+
+  get("/lists/:path_id", { :controller => "lists", :action => "show" })
+
+  # UPDATE
+
+  post("/modify_list/:path_id", { :controller => "lists", :action => "update" })
+
+  # DELETE
+  get("/delete_list/:path_id", { :controller => "lists", :action => "destroy" })
+
+  #------------------------------
+
   devise_for :users
   # Routes for the Outreach resource:
 

@@ -46,11 +46,27 @@
       </div>
 
       <div>
+        <label for="list_filter">List</label>
+        <select id="list_filter" name="query_list_id">
+          <option value="">All lists</option>
+          <% @list_of_lists.each do |a_list| %>
+            <option value="<%= a_list.id %>" <%= params["query_list_id"] == a_list.id.to_s ? "selected" : "" %>>
+              <%= a_list.name %>
+            </option>
+          <% end %>
+        </select>
+      </div>
+
+      <div>
         <button type="submit">Filter</button>
       </div>
 
       <div>
         <a href="/companies" role="button" class="secondary">Clear</a>
+      </div>
+
+      <div>
+        <a href="/companies.csv<%= request.query_string.present? ? "?#{request.query_string}" : "" %>" role="button" class="outline">Download CSV</a>
       </div>
     </div>
   </form>
@@ -73,6 +89,7 @@
           <th>Status</th>
           <th>Website</th>
           <th>Categories</th>
+          <th>Lists</th>
           <th>Calls</th>
           <th>Emails</th>
           <th>Letters</th>
@@ -99,6 +116,7 @@
               <% end %>
             </td>
             <td><%= a_company.portfolios.map { |p| p.category.category }.join(", ") %></td>
+            <td><%= a_company.list_memberships.map { |m| m.list.name }.join(", ") %></td>
             <td><%= stats&.phone_count  || 0 %></td>
             <td><%= stats&.email_count  || 0 %></td>
             <td><%= stats&.letter_count || 0 %></td>

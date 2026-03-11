@@ -1,0 +1,72 @@
+<nav aria-label="breadcrumb">
+  <ul>
+    <li>Lists</li>
+  </ul>
+</nav>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h2 class="mb-0">Lists</h2>
+  <a href="/lists/new" role="button">Add New List</a>
+</div>
+
+<article>
+  <header>
+    Filter lists
+  </header>
+
+  <form action="/lists" method="get">
+    <div class="d-flex gap-2 flex-wrap align-items-end">
+      <div>
+        <label for="name_box">Name</label>
+        <input type="text" id="name_box" name="query_name" value="<%= params["query_name"] %>" placeholder="List name...">
+      </div>
+
+      <div>
+        <button type="submit">Filter</button>
+      </div>
+
+      <div>
+        <a href="/lists" role="button" class="secondary">Clear</a>
+      </div>
+
+      <div>
+        <a href="/lists.csv<%= request.query_string.present? ? "?#{request.query_string}" : "" %>" role="button" class="outline">Download CSV</a>
+      </div>
+    </div>
+  </form>
+</article>
+
+<article>
+  <header>
+    All lists
+  </header>
+
+  <% if @list_of_lists.any? %>
+    <div class="overflow-auto">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Notes</th>
+            <th>Companies</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @list_of_lists.each do |a_list| %>
+            <tr>
+              <td>
+                <a href="/lists/<%= a_list.id %>">
+                  <%= a_list.name %>
+                </a>
+              </td>
+              <td><%= a_list.notes %></td>
+              <td><%= a_list.list_memberships_count || 0 %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <p>No lists found.</p>
+  <% end %>
+</article>

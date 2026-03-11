@@ -1,0 +1,99 @@
+<nav aria-label="breadcrumb">
+  <ul>
+    <li><a href="/lists">Lists</a></li>
+    <li><%= @the_list.name %></li>
+  </ul>
+</nav>
+
+<article>
+  <header>
+    <%= @the_list.name %>
+  </header>
+
+  <dl>
+    <dt>Notes</dt>
+    <dd><%= @the_list.notes %></dd>
+
+    <dt>Created</dt>
+    <dd><%= time_ago_in_words(@the_list.created_at) %> ago</dd>
+  </dl>
+
+  <a href="/delete_list/<%= @the_list.id %>">Delete list</a>
+</article>
+
+<article>
+  <header>
+    Edit list
+  </header>
+
+  <form action="/modify_list/<%= @the_list.id %>" method="post">
+    <div>
+      <label for="name_box">Name</label>
+      <input type="text" id="name_box" name="query_name" value="<%= @the_list.name %>">
+    </div>
+
+    <div>
+      <label for="notes_box">Notes</label>
+      <textarea id="notes_box" name="query_notes"><%= @the_list.notes %></textarea>
+    </div>
+
+    <button type="submit">Update list</button>
+  </form>
+</article>
+
+<article>
+  <header>
+    Companies in this list
+  </header>
+
+  <% if @the_list.list_memberships.any? %>
+    <div class="overflow-auto">
+      <table>
+        <thead>
+          <tr>
+            <th>Company</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @the_list.list_memberships.includes(:company).order("companies.company_name").each do |a_membership| %>
+            <tr>
+              <td>
+                <a href="/companies/<%= a_membership.company.id %>">
+                  <%= a_membership.company.company_name %>
+                </a>
+              </td>
+              <td><%= a_membership.company.status %></td>
+              <td>
+                <a href="/delete_list_membership/<%= a_membership.id %>">Remove</a>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <p>No companies in this list yet.</p>
+  <% end %>
+
+  <hr>
+
+  <strong>Add a company</strong>
+
+  <form action="/insert_list_membership" method="post">
+    <input type="hidden" name="query_list_id" value="<%= @the_list.id %>">
+
+    <div>
+      <label for="company_id_box">Company</label>
+      <select id="company_id_box" name="query_company_id">
+        <option value="">-- select a company --</option>
+        <% @list_of_all_companies.each do |a_company| %>
+          <option value="<%= a_company.id %>"><%= a_company.company_name %></option>
+        <% end %>
+      </select>
+    </div>
+
+    <button type="submit">Add company</button>
+  </form>
+</article>

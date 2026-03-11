@@ -204,6 +204,49 @@
 
 <article>
   <header>
+    Lists
+  </header>
+
+  <% if @the_company.list_memberships.any? %>
+    <ul>
+      <% @the_company.list_memberships.each do |a_membership| %>
+        <li>
+          <a href="/lists/<%= a_membership.list.id %>">
+            <%= a_membership.list.name %>
+          </a>
+          &mdash;
+          <a href="/delete_list_membership/<%= a_membership.id %>?source=company">Remove</a>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>No lists assigned yet.</p>
+  <% end %>
+
+  <hr>
+
+  <strong>Add to a list</strong>
+
+  <form action="/insert_list_membership" method="post">
+    <input type="hidden" name="query_company_id" value="<%= @the_company.id %>">
+    <input type="hidden" name="query_source" value="company">
+
+    <div>
+      <label for="list_id_box">List</label>
+      <select id="list_id_box" name="query_list_id">
+        <option value="">-- select a list --</option>
+        <% @list_of_lists.each do |a_list| %>
+          <option value="<%= a_list.id %>"><%= a_list.name %></option>
+        <% end %>
+      </select>
+    </div>
+
+    <button type="submit">Add to list</button>
+  </form>
+</article>
+
+<article>
+  <header>
     All outreaches
   </header>
 

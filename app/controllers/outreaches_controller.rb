@@ -24,7 +24,10 @@ class OutreachesController < ApplicationController
     @mediums = Outreach.distinct.pluck(:outreach_medium).compact.reject { |m| m.blank? }.sort
     @list_of_reps = User.all.order({ :last_name => :asc })
 
-    render({ :template => "outreach_templates/index" })
+    respond_to do |format|
+      format.html { render({ :template => "outreach_templates/index" }) }
+      format.csv { send_data Outreach.to_csv(@list_of_outreaches), filename: "outreaches-#{Date.today}.csv", type: "text/csv" }
+    end
   end
 
   def show

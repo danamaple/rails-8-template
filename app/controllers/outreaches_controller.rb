@@ -20,21 +20,22 @@ class OutreachesController < ApplicationController
 
     @total_count = Outreach.count
     @filtered_count = matching_outreaches.count
-    @list_of_outreaches = matching_outreaches.includes(contact: :company).includes(:rep).order({ :outreach_datetime => :desc })
+    @list_of_outreaches = matching_outreaches.includes({ :contact => :company }).includes(:rep).order({ :outreach_datetime => :desc })
     @mediums = Outreach.distinct.pluck(:outreach_medium).compact.reject { |m| m.blank? }.sort
     @list_of_reps = User.all.order({ :last_name => :asc })
 
-    respond_to do |format|
-      format.html { render({ :template => "outreach_templates/index" }) }
-      format.csv { send_data Outreach.to_csv(@list_of_outreaches), filename: "outreaches-#{Date.today}.csv", type: "text/csv" }
-    end
+    render({ :template => "outreach_templates/index" })
+  end
+
+  def new
+    @list_of_contacts = Contact.all.includes(:company).order({ :last_name => :asc })
+
+    render({ :template => "outreach_templates/new" })
   end
 
   def show
     the_id = params.fetch("path_id")
-
     matching_outreaches = Outreach.where({ :id => the_id })
-
     @the_outreach = matching_outreaches.at(0)
 
     render({ :template => "outreach_templates/show" })
@@ -83,5 +84,33 @@ class OutreachesController < ApplicationController
     the_outreach.destroy
 
     redirect_to("/contacts/#{the_contact_id}", { :notice => "Outreach deleted successfully." })
+  end
+
+  def export
+    matching_outreaches = Outreach.all
+
+    if params["query_outreach_medium"].present?
+      matching_outreaches = matching_outreaches.where({ :outreach_medium => params["query_outreach_medium"] })
+    end
+
+    if params["query_rep_id"].present?
+      matching_outreaches = matching_outreaches.where({ :rep_id => params["query_rep_id"] })
+    end
+
+    if params["query_start_date"].present?
+      matching_outreaches = matching_outreaches.where("outreach_datetime >= ?", params["query_start_date"])
+    end
+
+    if params["query_end_date"].present?
+      matching_outreaches = matching_outreaches.where("outreach_datetime <= ?", params["query_end_date"] + " 23:59:59")
+    end
+
+    matching_outreaches = matching_outreaches.includes({ :contact => :company }).includes(:rep).order({ :outreach_datetime => :desc })
+
+    respond_to do |format|
+      format.csv do
+        send_data(Outreach.to_csv(matching_outreaches), { :filename => "outreaches-#{Date.today}.csv" })
+      end
+    end
   end
 end

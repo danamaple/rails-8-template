@@ -16,18 +16,20 @@ class Outreach < ApplicationRecord
   belongs_to :rep, required: true, class_name: "User", foreign_key: "rep_id", counter_cache: true
 
   def self.to_csv(records = all)
-    CSV.generate(headers: true) do |csv|
-      csv << ["id", "outreach_datetime", "outreach_medium", "notes", "contact_email", "rep_email"]
+    headers = ["id", "outreach_datetime", "outreach_medium", "notes", "contact_email", "rep_email"]
+    csv = CSV.generate(headers: true) do |csv|
+      csv << headers
       records.each do |outreach|
-        csv << [
-          outreach.id,
-          outreach.outreach_datetime&.strftime("%Y-%m-%d %H:%M:%S"),
-          outreach.outreach_medium,
-          outreach.notes,
-          outreach.contact&.email,
-          outreach.rep&.email
-        ]
+        row = []
+        row.push(outreach.id)
+        row.push(outreach.outreach_datetime&.strftime("%Y-%m-%d %H:%M:%S"))
+        row.push(outreach.outreach_medium)
+        row.push(outreach.notes)
+        row.push(outreach.contact&.email)
+        row.push(outreach.rep&.email)
+        csv << row
       end
     end
+    return csv
   end
 end

@@ -1,0 +1,54 @@
+<nav aria-label="breadcrumb">
+  <ul>
+    <li><a href="/outreaches">Outreach</a></li>
+    <li>Log New Outreach</li>
+  </ul>
+</nav>
+
+<article>
+  <header>
+    Log New Outreach
+  </header>
+
+  <form action="/insert_outreach" method="post">
+    <div>
+      <label for="contact_id_box">Contact</label>
+      <select id="contact_id_box" name="query_contact_id">
+        <option value="">-- select a contact --</option>
+        <% @list_of_contacts.each do |a_contact| %>
+          <option value="<%= a_contact.id %>">
+            <%= a_contact.first_name %> <%= a_contact.last_name %> (<%= a_contact.company.company_name %>)
+          </option>
+        <% end %>
+      </select>
+    </div>
+
+    <div class="d-flex gap-3 align-items-end">
+      <div>
+        <label for="outreach_date_box">Date</label>
+        <input type="date" id="outreach_date_box" name="query_date">
+      </div>
+      <div>
+        <label for="outreach_time_box">Time</label>
+        <input type="time" id="outreach_time_box" name="query_time">
+      </div>
+    </div>
+
+    <div>
+      <label for="outreach_medium_box">Medium</label>
+      <select id="outreach_medium_box" name="query_outreach_medium">
+        <option value="">-- select medium --</option>
+        <option value="Call">Call</option>
+        <option value="Email">Email</option>
+        <option value="Letter">Letter</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="notes_box">Notes</label>
+      <textarea id="notes_box" name="query_notes"></textarea>
+    </div>
+
+    <button type="submit">Log outreach</button>
+  </form>
+</article>

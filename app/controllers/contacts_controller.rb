@@ -22,10 +22,7 @@ class ContactsController < ApplicationController
     @list_of_contacts = matching_contacts.includes(:company).order({ :last_name => :asc })
     @list_of_companies = Company.all.order({ :company_name => :asc })
 
-    respond_to do |format|
-      format.html { render({ :template => "contact_templates/index" }) }
-      format.csv { send_data Contact.to_csv(@list_of_contacts), filename: "contacts-#{Date.today}.csv", type: "text/csv" }
-    end
+    render({ :template => "contact_templates/index" })
   end
 
   def new
@@ -36,9 +33,7 @@ class ContactsController < ApplicationController
 
   def show
     the_id = params.fetch("path_id")
-
     matching_contacts = Contact.where({ :id => the_id })
-
     @the_contact = matching_contacts.at(0)
 
     render({ :template => "contact_templates/show" })
@@ -96,5 +91,32 @@ class ContactsController < ApplicationController
     the_contact.destroy
 
     redirect_to("/companies/#{the_company_id}", { :notice => "Contact deleted successfully." })
+  end
+
+  def export
+    matching_contacts = Contact.all
+
+    if params["query_search"].present?
+      term = "%#{params["query_search"]}%"
+      matching_contacts = matching_contacts.where(
+        "first_name ILIKE ? OR last_name ILIKE ? OR email ILIKE ?", term, term, term
+      )
+    end
+
+    if params["query_company_id"].present?
+      matching_contacts = matching_contacts.where({ :company_id => params["query_company_id"] })
+    end
+
+    if params["query_general_company_contact"].present?
+      matching_contacts = matching_contacts.where({ :general_company_contact => params["query_general_company_contact"] == "true" })
+    end
+
+    matching_contacts = matching_contacts.includes(:company).order({ :last_name => :asc })
+
+    respond_to do |format|
+      format.csv do
+        send_data(Contact.to_csv(matching_contacts), { :filename => "contacts-#{Date.today}.csv" })
+      end
+    end
   end
 end

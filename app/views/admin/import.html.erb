@@ -14,22 +14,22 @@
     Select table and download a template
   </header>
 
-  <div class="d-flex gap-3 align-items-end flex-wrap">
-    <div>
-      <label for="table_select">Table</label>
-      <select id="table_select" name="table">
-        <option value="companies">Companies</option>
-        <option value="contacts">Contacts</option>
-        <option value="outreaches">Outreaches</option>
-        <option value="categories">Categories</option>
-        <option value="lists">Lists</option>
-      </select>
-    </div>
-
-    <div>
-      <a id="template_link" href="/admin/template?table=companies" role="button" class="secondary">Download Template</a>
-    </div>
+<div style="display: flex; align-items: end; gap: 12px;">
+  <div>
+    <label for="table_select">Table</label>
+    <select id="table_select" name="table" style="margin-bottom: 0;">
+      <option value="companies">Companies</option>
+      <option value="contacts">Contacts</option>
+      <option value="outreaches">Outreaches</option>
+      <option value="categories">Categories</option>
+      <option value="lists">Lists</option>
+    </select>
   </div>
+
+  <div>
+    <a id="template_link" href="/admin/template?table=companies" role="button" class="secondary" style="margin-bottom: 0; padding: 16px 16px;">Download Template</a>
+  </div>
+</div>
 
   <script>
     document.getElementById('table_select').addEventListener('change', function () {
@@ -67,13 +67,49 @@
 </article>
 
 <article>
-  <header>Import notes</header>
-  <ul>
-    <li><strong>Companies:</strong> Columns — company_name, website, status, notes</li>
-    <li><strong>Contacts:</strong> Use <code>company_name</code> (not company_id) — the company is looked up by name automatically.</li>
-    <li><strong>Outreaches:</strong> Use <code>contact_email</code> to look up the contact and <code>rep_email</code> to look up the rep.</li>
-    <li><strong>Categories:</strong> Columns — category</li>
-    <li><strong>Lists:</strong> Columns — name, notes</li>
-    <li>Rows with missing required fields are skipped and counted as errors.</li>
-  </ul>
+  <header>
+    Clear database tables
+  </header>
+
+  <form action="/admin/purge" method="post" onsubmit="return confirmPurge(this)">
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+
+    <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px;">
+      <label>
+        <input type="checkbox" name="tables[]" value="outreaches">
+        Outreaches
+      </label>
+      <label>
+        <input type="checkbox" name="tables[]" value="contacts">
+        Contacts
+      </label>
+      <label>
+        <input type="checkbox" name="tables[]" value="companies">
+        Companies
+      </label>
+      <label>
+        <input type="checkbox" name="tables[]" value="categories">
+        Categories
+      </label>
+      <label>
+        <input type="checkbox" name="tables[]" value="lists">
+        Lists
+      </label>
+    </div>
+
+    <button type="submit" class="secondary">Clear selected tables</button>
+  </form>
 </article>
+
+<script>
+  function confirmPurge(form) {
+    var checked = Array.from(form.querySelectorAll('input[type="checkbox"]:checked'))
+                       .map(function(cb) { return cb.value; });
+    if (checked.length === 0) {
+      alert("Please select at least one table to clear.");
+      return false;
+    }
+    var names = checked.map(function(v) { return v.charAt(0).toUpperCase() + v.slice(1); }).join(", ");
+    return confirm("Are you sure you want to permanently delete all records in: " + names + "?\n\nThis cannot be undone.");
+  }
+</script>

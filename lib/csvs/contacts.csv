@@ -1,0 +1,81 @@
+id,company_id,first_name,last_name,preferred_name,title,email,phone,linkedin,notes,general_company_contact
+1,1,James,Kowalski,,VP of Sales,jkowalski@mclaneco.com,(972) 555-0134,,Primary buyer - tobacco and snacks,false
+2,1,Sandra,Brennan,,Purchasing Manager,sbrennan@mclaneco.com,(972) 555-0198,,Decision maker on new vendor approvals,false
+3,1,,,,,purchasing@mclaneco.com,(972) 555-0100,,General purchasing inquiries,true
+4,2,Robert,Hartley,,VP of Operations,rhartley@eby-brown.com,(630) 555-0147,,Referred us to category manager,false
+5,2,Denise,Malone,,Category Manager,dmalone@eby-brown.com,(630) 555-0162,,Handles snack and tobacco categories,false
+6,3,Thomas,Ostrowski,,President,tostrowski@sabraham.com,(616) 555-0183,,Family business owner - decision maker,false
+7,3,Carol,Pietrzak,,Buyer,cpietrzak@sabraham.com,(616) 555-0119,,Primary contact for new SKUs,false
+8,4,Michael,Donovan,,VP of Sales,mdonovan@core-mark.com,(925) 555-0145,,Met at NACS 2024 - expressed interest,false
+9,4,,,,,info@core-mark.com,(925) 555-0100,,General company inquiries,true
+10,5,Patricia,Lindqvist,,Purchasing Manager,plindqvist@spartannash.com,(616) 555-0172,,Grocery-focused buyer,false
+11,5,Brian,Carmichael,,Category Manager,bcarmichael@spartannash.com,(616) 555-0155,,Handles snack and beverage categories,false
+12,6,Kevin,Marshfield,,Owner,kmarshfield@hthackney.com,(865) 555-0138,,Long-time industry veteran,false
+13,6,Angela,Ruston,,VP of Sales,aruston@hthackney.com,(865) 555-0167,,Primary sales contact,false
+14,7,Daniel,Bocken,,President,dbocken@farnerbocken.com,(641) 555-0142,,Second-generation owner,false
+15,7,Melissa,Granger,,Purchasing Manager,mgranger@farnerbocken.com,(641) 555-0189,,Handles all vendor onboarding,false
+16,8,Steven,Whitmore,,VP of Operations,swhitmore@vistar.com,(303) 555-0153,,National accounts focus,false
+17,8,,,,,sales@vistar.com,(303) 555-0100,,General sales inquiries,true
+18,9,Laura,Hendricks,,Buyer,lhendricks@awginc.com,(913) 555-0176,,Grocery and general merchandise buyer,false
+19,9,Frank,Ostergaard,,General Manager,fostergaard@awginc.com,(913) 555-0130,,Final approval on new vendors,false
+20,10,Christine,Nakamura,,Sales Director,cnakamura@bunzlusa.com,(314) 555-0165,,Janitorial and packaging specialist,false
+21,10,,,,,info@bunzlusa.com,(314) 555-0100,,General inquiries,true
+22,11,Richard,Broussard,,VP of Sales,rbroussard@imperialtrading.com,(504) 555-0148,,Louisiana-based but covers Midwest,false
+23,11,Janet,Thibodaux,,Purchasing Manager,jthibodaux@imperialtrading.com,(504) 555-0177,,New vendor intake,false
+24,12,Gary,Nettles,,President,gnettles@gscenterprises.com,(918) 555-0141,,Owner operator - expanding territory,false
+25,13,William,Koester,,General Manager,wkoester@generalwholesale.com,(313) 555-0195,,Michigan market expert,false
+26,13,,,,,orders@generalwholesale.com,(313) 555-0100,,Order desk,true
+27,14,Anthony,Ferraro,,Owner,aferraro@miwholesaletobacco.com,(313) 555-0158,,Tobacco only buyer - very focused,false
+28,15,Dorothy,Schumacher,,Office Manager,dschumacher@ilwholesale.com,(773) 555-0143,,Handles vendor contracts,false
+29,16,Mark,Olafsen,,VP of Sales,molafsen@arrowheadwholesale.com,(651) 555-0169,,Minnesota market specialist,false
+30,17,Barbara,Gruber,,Purchasing Manager,bgruber@standarddistributing.com,(614) 555-0152,,Broad category buyer,false
+31,18,Joseph,Haverstock,,President,jhaverstock@nashbrosdist.com,(317) 555-0184,,Family-owned - third generation,false
+32,19,Nancy,Vandenberg,,Buyer,nvandenberg@midwestgrocery.com,(608) 555-0170,,Co-op buyer - committee decisions,false
+33,20,Timothy,Riordan,,Sales Director,triordan@centralrestaurant.com,(317) 555-0137,,Foodservice and c-store specialist,false
+34,21,Kathleen,Mazurek,,VP of Sales,kmazurek@liparifoods.com,(248) 555-0166,,Specialty foods expert - referred by Eby-Brown,false
+35,21,Douglas,Ferretti,,Category Manager,dferretti@liparifoods.com,(248) 555-0144,,Handles deli and snack categories,false
+36,22,Sharon,Whitfield,,Purchasing Manager,swhitfield@atlaswholesalefoods.com,(614) 555-0179,,Ohio regional buyer,false
+37,23,Ronald,Kingsley,,General Manager,rkingsley@heartlandwholesale.com,(515) 555-0163,,Iowa distributor - open to new lines,false
+38,24,Donna,Stefanski,,Buyer,dstefanski@greatlakesdist.com,(419) 555-0186,,Beverage and snack buyer,false
+39,25,Paul,Lindemann,,VP of Operations,plindemann@prairiefarmsdairy.com,(217) 555-0174,,Dairy and cold chain focus,false
+40,26,Karen,Thorvaldsen,,Owner,kthorvaldsen@superiorwholesaletobacco.com,(612) 555-0156,,Tobacco specialist - Minnesota,false
+41,27,George,Hostetler,,President,ghostetler@troyerfoods.com,(260) 555-0191,,Specialty Amish foods expert,false
+42,28,Lisa,Hendrickson,,Sales Director,lhendrickson@dotfoods.com,(217) 555-0168,,Massive SKU redistributor,false
+43,28,,,,,info@dotfoods.com,(217) 555-0100,,General inquiries line,true
+44,29,Charles,Bergstrom,,General Manager,cbergstrom@nashfinch.com,(952) 555-0140,,Minnesota grocery focus,false
+45,30,Helen,Zakowski,,Purchasing Manager,hzakowski@keystrokewholesale.com,(608) 555-0159,,Wisconsin general merchandise,false
+46,31,Edward,Galloway,,VP of Operations,egalloway@reinhartfoodservice.com,(920) 555-0182,,Foodservice distribution expert,false
+47,32,Susan,Blackmore,,Buyer,sblackmore@capitalcitydist.com,(614) 555-0173,,Columbus area buyer,false
+48,33,Kenneth,Pfeiffer,,President,kpfeiffer@buckeyewholesale.com,(614) 555-0150,,Ohio statewide coverage,false
+49,34,Betty,Gundersen,,Sales Director,bgundersen@greatplainsdist.com,(785) 555-0187,,Kansas/Nebraska territory,false
+50,35,Donald,Krebs,,Owner,dkrebs@midwesttobacco.com,(913) 555-0135,,Multi-state tobacco specialist,false
+51,36,Maria,Delacroix,,General Manager,mdelacroix@rivercitywholesale.com,(314) 555-0161,,St. Louis area distributor,false
+52,37,Steven,Beaumont,,Purchasing Manager,sbeaumont@gatewaywholesalefoods.com,(314) 555-0178,,Missouri gateway region,false
+53,38,Sandra,Halvorsen,,VP of Sales,shalvorsen@northstarwholesale.com,(715) 555-0146,,Minnesota/Wisconsin border territory,false
+54,39,John,Presto,,General Manager,jpresto@crowndistributing.com,(847) 555-0193,,Chicago suburban market,false
+55,40,Patricia,Carlisle,,Buyer,pcarlisle@lakeshorewholesale.com,(312) 555-0154,,Chicago lakefront distributor,false
+56,41,Richard,Hoagland,,President,rhoagland@hawkeyewholesale.com,(515) 555-0171,,Iowa statewide operation,false
+57,42,James,Brandt,,General Manager,jbrandt@cornhuskerdist.com,(402) 555-0188,,Nebraska agricultural markets,false
+58,43,,,,,info@bluegrasswholesale.com,(502) 555-0100,,Do not contact,true
+59,44,Barbara,Steinmetz,,VP of Operations,bsteinmetz@tristatewholesale.com,(317) 555-0164,,Tri-state territory manager,false
+60,45,Thomas,Rourke,,President,trouve@cardinalwholesale.com,(317) 555-0149,,Indiana statewide distributor,false
+61,46,Nancy,Fitzgerald,,Category Manager,nfitzgerald@metrowholesalefoods.com,(312) 555-0175,,Chicago metro specialty foods,false
+62,47,Gregory,Halstead,,VP of Sales,ghalstead@horizonwholesale.com,(312) 555-0136,,Key contact - active account,false
+63,47,Diane,Worthington,,Purchasing Manager,dworthington@horizonwholesale.com,(312) 555-0196,,Handles reorders and new SKUs,false
+64,48,Frank,Kaczmarek,,Owner,fkaczmarek@prairiewholesale.com,(217) 555-0160,,Converted account - tobacco specialist,false
+65,49,,,,,info@ozarkwholesale.com,(417) 555-0100,,Do not contact,true
+66,50,Timothy,Bredesen,,General Manager,tbredesen@centralstateswholesale.com,(402) 555-0185,,Active account - strong reorder history,false
+67,50,Cynthia,Moorfield,,Buyer,cmoorfield@centralstateswholesale.com,(402) 555-0120,,Primary buyer for snacks and tobacco,false
+68,1,William,Fontaine,,General Manager,wfontaine@mclaneco.com,(972) 555-0127,,Regional GM - South/Midwest division,false
+69,2,Christopher,Gallagher,,Sales Director,cgallagher@eby-brown.com,(630) 555-0133,,Oversees vendor relationships,false
+70,4,Rachel,Pemberton,,Buyer,rpemberton@core-mark.com,(925) 555-0116,,Handles tobacco category,false
+71,6,Jonathan,Shuster,,Purchasing Manager,jshuster@hthackney.com,(865) 555-0122,,Referred us to VP - warm lead,false
+72,7,Melissa,Clifford,,Sales Director,mclifford@farnerbocken.com,(641) 555-0131,,C-store category specialist,false
+73,21,Aaron,Petrosian,,VP of Operations,apetrosian@liparifoods.com,(248) 555-0118,,Oversees Michigan and Ohio territory,false
+74,26,Brian,Magnusson,,Buyer,bmagnusson@superiorwholesaletobacco.com,(612) 555-0129,,Tobacco buyer - new SKU interest,false
+75,47,,,,,purchasing@horizonwholesale.com,(312) 555-0101,,General purchasing department,true
+76,48,Lorraine,Wojciechowski,,Office Manager,lwojciechowski@prairiewholesale.com,(217) 555-0124,,Handles billing and vendor setup,false
+77,50,,,,,orders@centralstateswholesale.com,(402) 555-0102,,Order desk,true
+78,14,Dennis,Marchetti,,Buyer,dmarchetti@miwholesaletobacco.com,(313) 555-0126,,Secondary buyer for new lines,false
+79,3,Susan,Walczak,,Office Manager,swalczak@sabraham.com,(616) 555-0132,,Coordinates vendor onboarding paperwork,false
+80,35,Cynthia,Novak,,Purchasing Manager,cnovak@midwesttobacco.com,(913) 555-0128,,Multi-state tobacco buyer,false

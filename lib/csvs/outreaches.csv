@@ -1,0 +1,121 @@
+id,contact_id,outreach_datetime,outreach_medium,rep_id,notes
+1,1,2025-10-03 09:15:00,Call,1,Left voicemail - introduced Inzollo product line
+2,1,2025-10-17 14:30:00,Email,1,Sent product catalog and pricing sheet
+3,2,2025-10-22 10:00:00,Call,2,Spoke with buyer - interested in tobacco category
+4,2,2025-11-05 11:45:00,Call,2,Follow up - discussed MOQ requirements
+5,4,2025-10-08 13:00:00,Email,1,Sent intro letter and product overview
+6,4,2025-11-12 09:30:00,Call,1,No answer - left voicemail
+7,5,2025-11-19 15:00:00,Call,2,Spoke with category manager - needs sample kit
+8,5,2025-12-03 10:15:00,Email,2,Sent sample kit follow-up and pricing
+9,6,2025-10-14 08:45:00,Call,3,Reached owner - interested in snack line
+10,6,2025-10-28 13:30:00,Email,3,Sent product catalog per request
+11,7,2025-11-07 11:00:00,Call,3,Discussed new SKU availability with buyer
+12,7,2025-11-21 14:00:00,Email,3,Sent updated price list
+13,8,2025-10-10 09:00:00,Email,1,Initial outreach - introduced brand
+14,8,2025-11-15 10:30:00,Call,1,Spoke briefly - requested more info on tobacco line
+15,10,2025-10-06 14:15:00,Call,2,Left voicemail for purchasing manager
+16,10,2025-10-20 11:00:00,Email,2,Sent intro email with product highlights
+17,12,2025-10-09 09:30:00,Call,3,Spoke with owner - large tobacco buyer - very interested
+18,12,2025-10-23 13:00:00,Email,3,Sent pricing and MOQ details as requested
+19,12,2025-11-06 10:45:00,Call,3,Follow up call - moving toward decision
+20,13,2025-11-14 15:30:00,Call,1,Spoke with VP - interested in full line review
+21,14,2025-10-15 09:00:00,Call,2,Introduced brand - owner took the call
+22,14,2025-10-29 11:30:00,Email,2,Sent catalog - owner requested samples
+23,14,2025-11-12 14:00:00,Call,2,Sample review call - positive feedback
+24,15,2025-12-01 10:00:00,Email,3,Sent intro letter to purchasing department
+25,16,2025-10-11 13:45:00,Call,1,Left voicemail - no response yet
+26,18,2025-10-18 09:15:00,Email,1,Sent intro email to AWG buyer
+27,18,2025-11-03 14:30:00,Call,1,Spoke with buyer - grocery focus only for now
+28,19,2025-11-22 10:00:00,Call,2,Reached general manager - promising conversation
+29,22,2025-10-07 11:00:00,Email,3,Initial outreach email sent
+30,22,2025-10-21 09:30:00,Call,3,Left voicemail with tobacco specialist
+31,24,2025-11-04 13:00:00,Call,1,Spoke with buyer - interested in snack and beverage line
+32,25,2025-10-13 14:00:00,Letter,2,Sent intro letter to Michigan distributor
+33,27,2025-11-08 09:00:00,Call,3,Left voicemail for tobacco owner
+34,27,2025-11-25 10:30:00,Call,3,Spoke with owner - wants exclusive territory discussion
+35,29,2025-12-09 11:00:00,Email,1,Sent product catalog to Arrowhead wholesale
+36,30,2025-10-16 13:15:00,Email,2,Initial intro email sent
+37,31,2025-10-30 09:45:00,Call,2,Left voicemail - Ohio distributor
+38,34,2025-11-17 14:00:00,Call,3,Spoke with GM - broad category interest
+39,36,2025-10-25 10:00:00,Email,1,Sent intro email to Iowa distributor
+40,37,2025-11-13 13:30:00,Call,1,Left voicemail for co-op buyer
+41,38,2025-12-05 09:00:00,Email,2,Sent pricing sheet to Great Lakes Distributing
+42,40,2025-10-19 11:45:00,Call,3,Spoke with tobacco specialist - strong interest
+43,40,2025-11-03 13:00:00,Email,3,Sent sample kit per request
+44,40,2025-11-18 10:00:00,Call,3,Follow up on samples - positive response
+45,42,2025-12-12 14:30:00,Letter,1,Sent intro letter - Indiana specialty foods
+46,44,2025-10-28 09:15:00,Call,2,Left voicemail for Dot Foods sales director
+47,47,2025-11-06 10:45:00,Email,1,Intro email to Nash Finch distribution
+48,50,2025-10-24 13:00:00,Call,3,Left voicemail - no response
+49,51,2025-11-28 11:00:00,Call,1,Spoke with GM - Missouri distributor
+50,51,2025-12-15 09:30:00,Email,1,Sent updated product list
+51,53,2025-10-31 14:15:00,Call,2,Left voicemail - North Star Wholesale
+52,54,2025-11-19 10:00:00,Email,3,Intro email to Crown Distributing
+53,55,2025-10-08 13:45:00,Call,1,Spoke with buyer - Chicago lakefront market
+54,56,2025-11-14 09:00:00,Letter,2,Sent intro letter to Iowa wholesaler
+55,57,2025-12-03 11:30:00,Call,3,Left voicemail - Nebraska distributor
+56,59,2025-10-22 14:00:00,Email,1,Sent intro email to tri-state territory
+57,60,2025-11-07 10:15:00,Call,2,Spoke with Indiana distributor president
+58,61,2025-12-18 13:00:00,Call,3,Left voicemail - Chicago metro specialty
+59,62,2025-10-05 09:30:00,Call,1,Spoke with VP - Horizon is active account now
+60,62,2025-10-19 11:00:00,Email,1,Sent onboarding documents
+61,62,2025-11-02 14:30:00,Call,1,Follow up on first order details
+62,63,2025-11-16 10:00:00,Call,2,Spoke with purchasing manager - confirmed reorder
+63,64,2025-10-12 13:15:00,Call,3,Spoke with owner - Prairie Wholesale signed Q4
+64,64,2025-10-26 09:00:00,Email,3,Sent contract and onboarding info
+65,66,2025-11-01 11:45:00,Call,1,Spoke with GM - Central States active account
+66,66,2025-11-15 14:00:00,Email,1,Sent reorder confirmation
+67,67,2025-12-01 10:30:00,Call,2,Spoke with buyer - new SKU interest
+68,68,2025-10-14 13:00:00,Email,3,Sent intro email to McLane regional GM
+69,69,2025-11-09 09:15:00,Call,1,Spoke with sales director - Eby-Brown
+70,70,2025-10-27 14:45:00,Call,2,Left voicemail for Core-Mark buyer
+71,71,2025-11-21 10:00:00,Email,3,Follow-up email to H.T. Hackney purchasing
+72,72,2025-12-08 13:30:00,Call,1,Spoke with Farner-Bocken sales director
+73,73,2025-10-15 09:45:00,Letter,2,Sent intro letter to Lipari Foods VP
+74,73,2025-10-29 11:00:00,Call,2,Follow up call - Lipari VP interested
+75,74,2025-11-12 14:15:00,Email,3,Sent tobacco catalog to Superior Wholesale buyer
+76,74,2025-11-26 10:30:00,Call,3,Spoke with buyer - very interested in vape line
+77,76,2025-12-19 09:00:00,Call,1,Spoke with Prairie Wholesale office manager
+78,78,2025-10-09 13:00:00,Email,2,Sent intro email to Michigan Wholesale secondary buyer
+79,78,2025-10-23 10:45:00,Call,2,Follow up call - buyer reviewing catalog
+80,79,2025-11-17 14:30:00,Letter,3,Sent intro letter to S. Abraham office manager
+81,80,2025-12-10 09:15:00,Call,1,Spoke with tobacco purchasing manager
+82,80,2025-12-22 11:00:00,Email,1,Sent updated vape and tobacco pricing
+83,1,2026-01-06 10:00:00,Call,2,New year follow up - McLane VP confirmed interest
+84,2,2026-01-08 13:30:00,Email,3,Sent Q1 pricing updates to Eby-Brown
+85,5,2026-01-13 09:00:00,Call,1,Left voicemail - SpartanNash purchasing
+86,7,2026-01-15 14:00:00,Call,2,Spoke with Farner-Bocken buyer - Q1 orders
+87,7,2026-01-22 10:30:00,Email,2,Sent Q1 order confirmation details
+88,12,2026-01-07 11:15:00,Call,3,H.T. Hackney owner - discussed Q1 tobacco order
+89,12,2026-01-21 13:00:00,Letter,3,Sent formal product proposal letter
+90,14,2026-01-10 09:30:00,Email,1,Sent new vape SKU list to Michigan Wholesale
+91,21,2026-01-14 14:15:00,Call,2,Follow up with Farner-Bocken purchasing manager
+92,27,2026-01-19 10:00:00,Call,3,Superior Wholesale tobacco owner - close to decision
+93,34,2026-01-25 13:30:00,Email,1,Sent intro email to Lipari VP Operations
+94,40,2026-01-28 09:00:00,Call,2,Follow up call - Superior Wholesale buyer very interested
+95,42,2026-02-03 11:00:00,Email,3,Sent updated catalog to Dot Foods
+96,44,2026-02-07 14:00:00,Call,1,Left voicemail for Nash Finch GM
+97,62,2026-02-11 10:15:00,Call,2,Horizon active account check-in call
+98,63,2026-02-14 13:00:00,Email,3,Sent Valentine promo to Horizon purchasing
+99,64,2026-02-18 09:45:00,Call,1,Prairie Wholesale owner - discussed expansion SKUs
+100,66,2026-02-21 11:30:00,Call,2,Central States GM - new category interest
+101,67,2026-02-25 14:00:00,Email,3,Sent snack and candy catalog to Central States buyer
+102,4,2026-01-05 09:00:00,Letter,1,Sent new year intro letter to Eby-Brown category manager
+103,8,2026-01-11 13:15:00,Call,2,Left voicemail - H.T. Hackney VP
+104,13,2026-01-16 10:30:00,Email,3,Sent tobacco catalog to H.T. Hackney purchasing
+105,15,2026-01-23 09:00:00,Call,1,Spoke with Lipari category manager
+106,24,2026-02-02 14:00:00,Email,2,Sent pricing to Michigan Wholesale owner
+107,28,2026-02-09 11:00:00,Call,3,Left voicemail for GSC Enterprises president
+108,35,2026-02-13 10:15:00,Letter,1,Sent intro letter to Heartland Wholesale GM
+109,38,2026-02-17 13:30:00,Call,2,Spoke with Great Lakes buyer - beverage interest
+110,51,2026-02-20 09:00:00,Email,3,Sent product updates to River City Wholesale GM
+111,53,2026-02-24 11:45:00,Call,1,Spoke with North Star Wholesale VP
+112,55,2026-02-27 14:00:00,Email,2,Sent catalog to Chicago lakefront buyer
+113,62,2026-03-01 09:30:00,Call,3,Horizon monthly check-in - all good
+114,66,2026-02-28 11:00:00,Call,1,Central States reorder confirmed by GM
+115,3,2026-01-29 13:00:00,Email,2,Sent Q1 product updates to SpartanNash category manager
+116,9,2026-02-05 10:00:00,Call,3,Left voicemail - AWG buyer - no response
+117,18,2026-02-10 14:30:00,Letter,1,Sent letter to Associated Wholesale Grocers GM
+118,25,2026-02-16 09:15:00,Call,2,Spoke with Prairie Farms sales contact
+119,29,2026-02-23 13:00:00,Email,3,Sent intro to Arrowhead Wholesale VP
+120,32,2026-02-28 10:30:00,Call,1,Left voicemail - Nash Brothers Indiana president

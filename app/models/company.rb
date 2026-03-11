@@ -19,19 +19,21 @@ class Company < ApplicationRecord
   has_many :lists, through: :list_memberships, source: :list
 
   def self.to_csv(records = all)
-    CSV.generate(headers: true) do |csv|
-      csv << ["id", "company_name", "website", "status", "notes", "categories", "lists"]
+    headers = ["id", "company_name", "website", "status", "notes", "categories", "lists"]
+    csv = CSV.generate(headers: true) do |csv|
+      csv << headers
       records.each do |company|
-        csv << [
-          company.id,
-          company.company_name,
-          company.website,
-          company.status,
-          company.notes,
-          company.portfolios.map { |p| p.category.category }.join("; "),
-          company.list_memberships.map { |m| m.list.name }.join("; ")
-        ]
+        row = []
+        row.push(company.id)
+        row.push(company.company_name)
+        row.push(company.website)
+        row.push(company.status)
+        row.push(company.notes)
+        row.push(company.portfolios.map { |p| p.category.category }.join("; "))
+        row.push(company.list_memberships.map { |m| m.list.name }.join("; "))
+        csv << row
       end
     end
+    return csv
   end
 end

@@ -13,11 +13,16 @@ class Category < ApplicationRecord
   has_many :companies, through: :portfolios, source: :company
 
   def self.to_csv(records = all)
-    CSV.generate(headers: true) do |csv|
-      csv << ["id", "category"]
+    headers = ["id", "category"]
+    csv = CSV.generate(headers: true) do |csv|
+      csv << headers
       records.each do |category|
-        csv << [category.id, category.category]
+        row = []
+        row.push(category.id)
+        row.push(category.category)
+        csv << row
       end
     end
+    return csv
   end
 end

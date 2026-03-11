@@ -56,18 +56,12 @@
           <% end %>
         </select>
       </div>
+    </div>
 
-      <div>
-        <button type="submit">Filter</button>
-      </div>
-
-      <div>
-        <a href="/companies" role="button" class="secondary">Clear</a>
-      </div>
-
-      <div>
-        <a href="/companies.csv<%= request.query_string.present? ? "?#{request.query_string}" : "" %>" role="button" class="outline">Download CSV</a>
-      </div>
+    <div style="display: flex; align-items: center; gap: 8px; margin-top: 10px;">
+      <button type="submit" style="width: auto; margin-bottom: 0; padding: 8px 16px;">Filter</button>
+      <a href="/companies" role="button" class="secondary" style="width: auto; margin-bottom: 0; padding: 8px 16px;">Clear</a>
+      <a href="/export_companies.csv<%= request.query_string.present? ? "?#{request.query_string}" : "" %>" role="button" class="outline" style="width: auto; margin-bottom: 0; padding: 8px 16px;">Download CSV</a>
     </div>
   </form>
 
@@ -110,9 +104,11 @@
               </a>
             </td>
             <td><%= a_company.status %></td>
-            <td>
-              <% if a_company.website.present? %>
-                <a href="<%= a_company.website %>" target="_blank"><%= a_company.website %></a>
+            <td style="max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+              <% url = a_company.website %>
+              <% if url.present? %>
+                <% url = "https://#{url}" unless url.start_with?("http://", "https://") %>
+                <a href="<%= url %>" target="_blank" title="<%= a_company.website %>"><%= a_company.website %></a>
               <% end %>
             </td>
             <td><%= a_company.portfolios.map { |p| p.category.category }.join(", ") %></td>

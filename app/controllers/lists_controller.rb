@@ -8,10 +8,7 @@ class ListsController < ApplicationController
 
     @list_of_lists = matching_lists.order({ :name => :asc })
 
-    respond_to do |format|
-      format.html { render({ :template => "list_templates/index" }) }
-      format.csv { send_data List.to_csv(@list_of_lists), filename: "lists-#{Date.today}.csv", type: "text/csv" }
-    end
+    render({ :template => "list_templates/index" })
   end
 
   def new
@@ -20,11 +17,8 @@ class ListsController < ApplicationController
 
   def show
     the_id = params.fetch("path_id")
-
     matching_lists = List.where({ :id => the_id })
-
     @the_list = matching_lists.at(0)
-
     @list_of_all_companies = Company.all.order({ :company_name => :asc })
 
     render({ :template => "list_templates/show" })
@@ -65,5 +59,21 @@ class ListsController < ApplicationController
     the_list.destroy
 
     redirect_to("/lists", { :notice => "List deleted successfully." })
+  end
+
+  def export
+    matching_lists = List.all
+
+    if params["query_name"].present?
+      matching_lists = matching_lists.where("name ILIKE ?", "%#{params["query_name"]}%")
+    end
+
+    matching_lists = matching_lists.order({ :name => :asc })
+
+    respond_to do |format|
+      format.csv do
+        send_data(List.to_csv(matching_lists), { :filename => "lists-#{Date.today}.csv" })
+      end
+    end
   end
 end

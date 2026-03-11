@@ -14,11 +14,17 @@ class List < ApplicationRecord
   has_many :companies, through: :list_memberships, source: :company
 
   def self.to_csv(records = all)
-    CSV.generate(headers: true) do |csv|
-      csv << ["id", "name", "notes"]
+    headers = ["id", "name", "notes"]
+    csv = CSV.generate(headers: true) do |csv|
+      csv << headers
       records.each do |list|
-        csv << [list.id, list.name, list.notes]
+        row = []
+        row.push(list.id)
+        row.push(list.name)
+        row.push(list.notes)
+        csv << row
       end
     end
+    return csv
   end
 end

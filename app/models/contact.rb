@@ -21,23 +21,25 @@ class Contact < ApplicationRecord
   belongs_to :company, required: true, class_name: "Company", foreign_key: "company_id"
 
   def self.to_csv(records = all)
-    CSV.generate(headers: true) do |csv|
-      csv << ["id", "first_name", "last_name", "preferred_name", "title", "email", "phone", "linkedin", "notes", "general_company_contact", "company_name"]
+    headers = ["id", "first_name", "last_name", "preferred_name", "title", "email", "phone", "linkedin", "notes", "general_company_contact", "company_name"]
+    csv = CSV.generate(headers: true) do |csv|
+      csv << headers
       records.each do |contact|
-        csv << [
-          contact.id,
-          contact.first_name,
-          contact.last_name,
-          contact.preferred_name,
-          contact.title,
-          contact.email,
-          contact.phone,
-          contact.linkedin,
-          contact.notes,
-          contact.general_company_contact,
-          contact.company&.company_name
-        ]
+        row = []
+        row.push(contact.id)
+        row.push(contact.first_name)
+        row.push(contact.last_name)
+        row.push(contact.preferred_name)
+        row.push(contact.title)
+        row.push(contact.email)
+        row.push(contact.phone)
+        row.push(contact.linkedin)
+        row.push(contact.notes)
+        row.push(contact.general_company_contact)
+        row.push(contact.company&.company_name)
+        csv << row
       end
     end
+    return csv
   end
 end

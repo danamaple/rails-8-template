@@ -4,17 +4,12 @@ class CategoriesController < ApplicationController
 
     @list_of_categories = matching_categories.order({ :category => :asc })
 
-    respond_to do |format|
-      format.html { render({ :template => "category_templates/index" }) }
-      format.csv { send_data Category.to_csv(@list_of_categories), filename: "categories-#{Date.today}.csv", type: "text/csv" }
-    end
+    render({ :template => "category_templates/index" })
   end
 
   def show
     the_id = params.fetch("path_id")
-
     matching_categories = Category.where({ :id => the_id })
-
     @the_category = matching_categories.at(0)
 
     render({ :template => "category_templates/show" })
@@ -53,5 +48,15 @@ class CategoriesController < ApplicationController
     the_category.destroy
 
     redirect_to("/categories", { :notice => "Category deleted successfully." })
+  end
+
+  def export
+    matching_categories = Category.all.order({ :category => :asc })
+
+    respond_to do |format|
+      format.csv do
+        send_data(Category.to_csv(matching_categories), { :filename => "categories-#{Date.today}.csv" })
+      end
+    end
   end
 end

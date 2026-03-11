@@ -250,9 +250,7 @@
     All outreaches
   </header>
 
-  <% all_outreaches = @the_company.contacts.map { |c| c.outreaches.to_a }.flatten.sort_by { |o| o.outreach_datetime || Time.at(0) }.reverse %>
-
-  <% if all_outreaches.any? %>
+  <% if @all_outreaches.any? %>
     <div class="overflow-auto">
       <table>
         <thead>
@@ -265,7 +263,7 @@
           </tr>
         </thead>
         <tbody>
-          <% all_outreaches.each do |an_outreach| %>
+          <% @all_outreaches.each do |an_outreach| %>
             <tr>
               <td>
                 <a href="/outreaches/<%= an_outreach.id %>">

@@ -99,6 +99,30 @@ class AdminController < ApplicationController
     redirect_to "/admin/import", notice: msg
   end
 
+  def purge
+    tables = params[:tables] || []
+
+    # Always delete in dependency order to avoid FK violations:
+    # outreaches → contacts → portfolios + list_memberships → companies → categories → lists
+    Outreach.delete_all       if tables.include?("outreaches") || tables.include?("contacts") || tables.include?("companies")
+    Contact.delete_all        if tables.include?("contacts")   || tables.include?("companies")
+    Portfolio.delete_all      if tables.include?("companies")  || tables.include?("categories")
+    ListMembership.delete_all if tables.include?("companies")  || tables.include?("lists")
+    Company.delete_all        if tables.include?("companies")
+    Category.delete_all       if tables.include?("categories")
+    List.delete_all           if tables.include?("lists")
+
+    tables.each do |t|
+      ActiveRecord::Base.connection.reset_pk_sequence!(t) rescue nil
+    end
+    ["outreaches", "contacts", "portfolios", "list_memberships"].each do |t|
+      ActiveRecord::Base.connection.reset_pk_sequence!(t) rescue nil
+    end
+
+    cleared = tables.map(&:humanize).join(", ")
+    redirect_to("/admin/import", { :notice => "Cleared: #{cleared}." })
+  end
+
   def template
     table   = params[:table]
     headers = TEMPLATE_HEADERS[table] || []

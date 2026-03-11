@@ -42,17 +42,12 @@
         </select>
       </div>
 
-      <div>
-        <button type="submit">Filter</button>
-      </div>
+    </div>
 
-      <div>
-        <a href="/contacts" role="button" class="secondary">Clear</a>
-      </div>
-
-      <div>
-        <a href="/contacts.csv<%= request.query_string.present? ? "?#{request.query_string}" : "" %>" role="button" class="outline">Download CSV</a>
-      </div>
+    <div style="display: flex; align-items: center; gap: 8px; margin-top: 10px;">
+      <button type="submit" style="width: auto; margin-bottom: 0; padding: 8px 16px;">Filter</button>
+      <a href="/contacts" role="button" class="secondary" style="width: auto; margin-bottom: 0; padding: 8px 16px;">Clear</a>
+      <a href="/export_contacts.csv<%= request.query_string.present? ? "?#{request.query_string}" : "" %>" role="button" class="outline" style="width: auto; margin-bottom: 0; padding: 8px 16px;">Download CSV</a>
     </div>
   </form>
 

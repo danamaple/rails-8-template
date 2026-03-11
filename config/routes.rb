@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get("/admin/import",  { :controller => "admin", :action => "import" })
   post("/admin/import", { :controller => "admin", :action => "do_import" })
   get("/admin/template", { :controller => "admin", :action => "template" })
+  post("/admin/purge",  { :controller => "admin", :action => "purge" })
 
   #------------------------------
 
@@ -10,15 +11,6 @@ Rails.application.routes.draw do
 
   # CREATE
   post("/insert_list_membership", { :controller => "list_memberships", :action => "create" })
-
-  # READ
-  get("/list_memberships", { :controller => "list_memberships", :action => "index" })
-
-  get("/list_memberships/:path_id", { :controller => "list_memberships", :action => "show" })
-
-  # UPDATE
-
-  post("/modify_list_membership/:path_id", { :controller => "list_memberships", :action => "update" })
 
   # DELETE
   get("/delete_list_membership/:path_id", { :controller => "list_memberships", :action => "destroy" })
@@ -44,6 +36,9 @@ Rails.application.routes.draw do
   # DELETE
   get("/delete_list/:path_id", { :controller => "lists", :action => "destroy" })
 
+  # EXPORT
+  get("/export_lists", { :controller => "lists", :action => "export" })
+
   #------------------------------
 
   devise_for :users
@@ -55,6 +50,8 @@ Rails.application.routes.draw do
   # READ
   get("/outreaches", { :controller => "outreaches", :action => "index" })
 
+  get("/outreaches/new", { :controller => "outreaches", :action => "new" })
+
   get("/outreaches/:path_id", { :controller => "outreaches", :action => "show" })
 
   # UPDATE
@@ -63,6 +60,9 @@ Rails.application.routes.draw do
 
   # DELETE
   get("/delete_outreach/:path_id", { :controller => "outreaches", :action => "destroy" })
+
+  # EXPORT
+  get("/export_outreach", { :controller => "outreaches", :action => "export" })
 
   #------------------------------
 
@@ -102,6 +102,9 @@ Rails.application.routes.draw do
   # DELETE
   get("/delete_category/:path_id", { :controller => "categories", :action => "destroy" })
 
+  # EXPORT
+  get("/export_categories", { :controller => "categories", :action => "export" })
+
   #------------------------------
 
   # Routes for the Company resource:
@@ -123,6 +126,9 @@ Rails.application.routes.draw do
   # DELETE
   get("/delete_company/:path_id", { :controller => "companies", :action => "destroy" })
 
+  # EXPORT
+  get("/export_companies", { :controller => "companies", :action => "export" })
+
   #------------------------------
 
   # Routes for the Contact resource:
@@ -143,6 +149,9 @@ Rails.application.routes.draw do
 
   # DELETE
   get("/delete_contact/:path_id", { :controller => "contacts", :action => "destroy" })
+
+  # EXPORT
+  get("/export_contacts", { :controller => "contacts", :action => "export" })
 
   #------------------------------
 

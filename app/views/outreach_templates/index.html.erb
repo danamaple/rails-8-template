@@ -4,6 +4,11 @@
   </ul>
 </nav>
 
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h2 class="mb-0">Outreach</h2>
+  <a href="/outreaches/new" role="button">Log New Outreach</a>
+</div>
+
 <article>
   <header>
     Filter outreach
@@ -35,27 +40,22 @@
         </select>
       </div>
 
-      <div>
-        <label for="start_date_box">From</label>
-        <input type="date" id="start_date_box" name="query_start_date" value="<%= params["query_start_date"] %>">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <div>
+          <label for="start_date_box">From</label>
+          <input type="date" id="start_date_box" name="query_start_date" value="<%= params["query_start_date"] %>">
+        </div>
+        <div>
+          <label for="end_date_box">To</label>
+          <input type="date" id="end_date_box" name="query_end_date" value="<%= params["query_end_date"] %>">
+        </div>
       </div>
+    </div>
 
-      <div>
-        <label for="end_date_box">To</label>
-        <input type="date" id="end_date_box" name="query_end_date" value="<%= params["query_end_date"] %>">
-      </div>
-
-      <div>
-        <button type="submit">Filter</button>
-      </div>
-
-      <div>
-        <a href="/outreaches" role="button" class="secondary">Clear</a>
-      </div>
-
-      <div>
-        <a href="/outreaches.csv<%= request.query_string.present? ? "?#{request.query_string}" : "" %>" role="button" class="outline">Download CSV</a>
-      </div>
+    <div style="display: flex; align-items: center; gap: 8px; margin-top: 10px;">
+      <button type="submit" style="width: auto; margin-bottom: 0; padding: 8px 16px;">Filter</button>
+      <a href="/outreaches" role="button" class="secondary" style="width: auto; margin-bottom: 0; padding: 8px 16px;">Clear</a>
+      <a href="/export_outreach.csv<%= request.query_string.present? ? "?#{request.query_string}" : "" %>" role="button" class="outline" style="width: auto; margin-bottom: 0; padding: 8px 16px;">Download CSV</a>
     </div>
   </form>
 

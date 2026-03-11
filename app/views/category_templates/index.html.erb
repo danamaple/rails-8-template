@@ -31,10 +31,7 @@
   <ul>
     <% @list_of_categories.each do |a_category| %>
       <li>
-        <a href="/categories/<%= a_category.id %>">
-          <%= a_category.category %>
-        </a>
-        (<%= a_category.companies.count %> <%= a_category.companies.count == 1 ? "company" : "companies" %>)
+        <a href="/categories/<%= a_category.id %>"><%= a_category.category %> (<%= a_category.companies.count %> <%= a_category.companies.count == 1 ? "company" : "companies" %>)</a>
       </li>
     <% end %>
   </ul>

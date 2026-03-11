@@ -77,8 +77,12 @@
           <tr>
             <td>
               <a href="/contacts/<%= a_contact.id %>">
-                <%= a_contact.first_name %> <%= a_contact.last_name %>
-                <% if a_contact.preferred_name.present? %>(<%= a_contact.preferred_name %>)<% end %>
+                <% if a_contact.first_name.present? || a_contact.last_name.present? %>
+                  <%= a_contact.first_name %> <%= a_contact.last_name %>
+                  <% if a_contact.preferred_name.present? %>(<%= a_contact.preferred_name %>)<% end %>
+                <% else %>
+                  <em><%= a_contact.title.present? ? a_contact.title : "General Contact" %></em>
+                <% end %>
               </a>
             </td>
             <td>
@@ -88,7 +92,7 @@
             </td>
             <td><%= a_contact.title %></td>
             <td><%= a_contact.email %></td>
-            <td><%= a_contact.phone %></td>
+            <td style="white-space: nowrap; min-width: 130px;"><%= a_contact.phone %></td>
           </tr>
         <% end %>
       </tbody>

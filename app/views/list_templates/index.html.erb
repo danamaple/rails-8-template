@@ -36,13 +36,7 @@
   <ul>
     <% @list_of_lists.each do |a_list| %>
       <li>
-        <a href="/lists/<%= a_list.id %>">
-          <%= a_list.name %>
-        </a>
-        (<%= a_list.list_memberships_count || 0 %> <%= (a_list.list_memberships_count || 0) == 1 ? "company" : "companies" %>)
-        <% if a_list.notes.present? %>
-          &mdash; <%= a_list.notes %>
-        <% end %>
+        <a href="/lists/<%= a_list.id %>"><%= a_list.name %> (<%= a_list.list_memberships_count || 0 %> <%= (a_list.list_memberships_count || 0) == 1 ? "company" : "companies" %>)</a>
       </li>
     <% end %>
   </ul>

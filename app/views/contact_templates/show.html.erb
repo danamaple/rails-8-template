@@ -2,15 +2,23 @@
   <ul>
     <li><a href="/companies">Companies</a></li>
     <li><a href="/companies/<%= @the_contact.company.id %>"><%= @the_contact.company.company_name %></a></li>
-    <li><%= @the_contact.first_name %> <%= @the_contact.last_name %></li>
+    <li>
+      <% if @the_contact.first_name.present? || @the_contact.last_name.present? %>
+        <%= @the_contact.first_name %> <%= @the_contact.last_name %>
+      <% else %>
+        <%= @the_contact.title.present? ? @the_contact.title : "General Contact" %>
+      <% end %>
+    </li>
   </ul>
 </nav>
 
 <article>
   <header>
-    <%= @the_contact.first_name %> <%= @the_contact.last_name %>
-    <% if @the_contact.preferred_name.present? %>
-      (<%= @the_contact.preferred_name %>)
+    <% if @the_contact.first_name.present? || @the_contact.last_name.present? %>
+      <%= @the_contact.first_name %> <%= @the_contact.last_name %>
+      <% if @the_contact.preferred_name.present? %>(<%= @the_contact.preferred_name %>)<% end %>
+    <% else %>
+      <%= @the_contact.title.present? ? @the_contact.title : "General Contact" %>
     <% end %>
   </header>
 

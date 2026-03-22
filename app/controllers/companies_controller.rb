@@ -37,6 +37,11 @@ class CompaniesController < ApplicationController
       )
       .index_by { |r| r.company_id.to_i }
 
+    @email_stats = EmailSend.joins(:contact)
+      .where({ :status => "sent" })
+      .group("contacts.company_id")
+      .count
+
     # Most recent outreach per company — one query using DISTINCT ON (PostgreSQL)
     @recent_outreaches = Outreach
       .joins(:contact, :rep)
@@ -67,6 +72,11 @@ class CompaniesController < ApplicationController
       .joins(:contact)
       .where({ :contacts => { :company_id => the_id } })
       .order({ :outreach_datetime => :desc })
+
+    @all_email_sends = EmailSend.includes(:email_template, :user, :contact)
+      .joins(:contact)
+      .where({ :contacts => { :company_id => the_id } })
+      .order({ :created_at => :desc })
 
     render({ :template => "company_templates/show" })
   end

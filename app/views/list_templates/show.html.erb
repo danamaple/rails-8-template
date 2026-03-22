@@ -74,7 +74,7 @@
       </table>
     </div>
   <% else %>
-    <p>No companies in this list yet.</p>
+    <p>No companies manually added yet.</p>
   <% end %>
 
   <hr>
@@ -96,4 +96,164 @@
 
     <button type="submit">Add company</button>
   </form>
+</article>
+
+<article>
+  <header>
+    Rules
+  </header>
+
+  <% if @the_list.smart_list_rules.any? %>
+    <div class="overflow-auto">
+      <table>
+        <thead>
+          <tr>
+            <th>Field</th>
+            <th>Measurement</th>
+            <th>Value</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @the_list.smart_list_rules.each do |a_rule| %>
+            <tr>
+              <td><%= a_rule.field %></td>
+              <td><%= a_rule.measurement %></td>
+              <td><%= a_rule.value %></td>
+              <td><a href="/delete_smart_list_rule/<%= a_rule.id %>">Remove</a></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <p>No rules yet.</p>
+  <% end %>
+
+  <hr>
+
+  <strong>Add a rule</strong>
+
+  <form action="/insert_smart_list_rule" method="post">
+    <input type="hidden" name="query_list_id" value="<%= @the_list.id %>">
+
+    <div>
+      <label for="field_box">Field</label>
+      <select id="field_box" name="query_field">
+        <option value="">-- select a field --</option>
+        <option value="status">status</option>
+        <option value="company_name">company_name</option>
+        <option value="website">website</option>
+        <option value="category">category</option>
+        <option value="contact_count">contact_count</option>
+        <option value="total_outreaches">total_outreaches</option>
+        <option value="most_recent_outreach">most_recent_outreach</option>
+        <option value="outreach_medium">outreach_medium</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="measurement_box">Measurement</label>
+      <select id="measurement_box" name="query_measurement">
+        <option value="">-- select a measurement --</option>
+        <option value="equals">equals</option>
+        <option value="not_equals">not_equals</option>
+        <option value="contains">contains</option>
+        <option value="greater_than">greater_than</option>
+        <option value="less_than">less_than</option>
+        <option value="days_ago_more_than">days_ago_more_than</option>
+        <option value="days_ago_less_than">days_ago_less_than</option>
+        <option value="is_blank">is_blank</option>
+        <option value="is_not_blank">is_not_blank</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="value_box">Value</label>
+      <input type="text" id="value_box" name="query_value">
+    </div>
+
+    <button type="submit">Add Rule</button>
+  </form>
+</article>
+
+<article>
+  <header>
+    All Members
+  </header>
+
+  <%
+    all_members     = @the_list.all_companies.order(:company_name)
+    manual_ids      = @the_list.companies.pluck(:id).to_set
+    rule_ids        = @the_list.smart_list_rules.any? ? List.evaluate_rules(@the_list.smart_list_rules).pluck(:id).to_set : Set.new
+  %>
+
+  <% if all_members.any? %>
+    <div class="overflow-auto">
+      <table>
+        <thead>
+          <tr>
+            <th>Company</th>
+            <th>Status</th>
+            <th>Source</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% all_members.each do |a_company| %>
+            <%
+              in_manual = manual_ids.include?(a_company.id)
+              in_rule   = rule_ids.include?(a_company.id)
+              badge     = if in_manual && in_rule then "Both"
+                          elsif in_manual          then "Manual"
+                          else                          "Rule"
+                          end
+            %>
+            <tr>
+              <td><a href="/companies/<%= a_company.id %>"><%= a_company.company_name %></a></td>
+              <td><%= a_company.status %></td>
+              <td><%= badge %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <p>No members yet.</p>
+  <% end %>
+
+  <a href="/export_list_members/<%= @the_list.id %>.csv" role="button">Download CSV</a>
+</article>
+
+<article>
+  <header>
+    Send Bulk Email
+  </header>
+
+  <%
+    all_members_for_email = @the_list.all_companies
+    contact_count = all_members_for_email.sum { |c| c.contacts.where.not(:email => [nil, ""]).count }
+    company_count = all_members_for_email.count
+  %>
+
+  <p>This will email <strong><%= contact_count %></strong> <%= "contact".pluralize(contact_count) %> across <strong><%= company_count %></strong> <%= "company".pluralize(company_count) %>.</p>
+
+  <% if current_user.smtp_configured? %>
+    <form action="/send_bulk_email" method="post">
+      <input type="hidden" name="query_list_id" value="<%= @the_list.id %>">
+
+      <div>
+        <label for="bulk_email_template_box">Email Template</label>
+        <select id="bulk_email_template_box" name="query_email_template_id">
+          <option value="">-- select a template --</option>
+          <% @list_of_email_templates.each do |a_template| %>
+            <option value="<%= a_template.id %>"><%= a_template.name %> — <%= a_template.subject %></option>
+          <% end %>
+        </select>
+      </div>
+
+      <button type="submit">Send to All Members</button>
+    </form>
+  <% else %>
+    <p>Configure your email settings to send bulk emails. <a href="/users/edit">Edit profile</a></p>
+  <% end %>
 </article>

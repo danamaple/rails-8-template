@@ -35,6 +35,7 @@ class ContactsController < ApplicationController
     the_id = params.fetch("path_id")
     matching_contacts = Contact.where({ :id => the_id })
     @the_contact = matching_contacts.at(0)
+    @list_of_email_templates = EmailTemplate.all.order({ :name => :asc })
 
     render({ :template => "contact_templates/show" })
   end
@@ -51,6 +52,7 @@ class ContactsController < ApplicationController
     the_contact.linkedin = params.fetch("query_linkedin", "")
     the_contact.notes = params.fetch("query_notes", "")
     the_contact.general_company_contact = params.fetch("query_general_company_contact", false)
+    the_contact.email_consent = params.fetch("query_email_consent", false)
 
     if the_contact.valid?
       the_contact.save
@@ -74,6 +76,7 @@ class ContactsController < ApplicationController
     the_contact.linkedin = params.fetch("query_linkedin", "")
     the_contact.notes = params.fetch("query_notes", "")
     the_contact.general_company_contact = params.fetch("query_general_company_contact", false)
+    the_contact.email_consent = params.fetch("query_email_consent", false)
 
     if the_contact.valid?
       the_contact.save

@@ -4,6 +4,8 @@
 #
 #  id                      :bigint           not null, primary key
 #  email                   :string
+#  email_consent           :boolean
+#  email_consent_date      :datetime
 #  first_name              :string
 #  general_company_contact :boolean
 #  last_name               :string
@@ -12,12 +14,15 @@
 #  phone                   :string
 #  preferred_name          :string
 #  title                   :string
+#  unsubscribed            :boolean
+#  unsubscribed_date       :datetime
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
 #  company_id              :integer
 #
 class Contact < ApplicationRecord
-  has_many  :outreaches, class_name: "Outreach", foreign_key: "contact_id"
+  has_many  :outreaches,   class_name: "Outreach",   foreign_key: "contact_id"
+  has_many  :email_sends,  class_name: "EmailSend",  foreign_key: "contact_id"
   belongs_to :company, required: true, class_name: "Company", foreign_key: "company_id"
 
   def self.to_csv(records = all)

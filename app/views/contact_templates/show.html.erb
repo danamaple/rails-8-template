@@ -45,6 +45,17 @@
     <dt>General company contact</dt>
     <dd><%= @the_contact.general_company_contact ? "Yes" : "No" %></dd>
 
+    <dt>Email consent</dt>
+    <dd><%= @the_contact.email_consent ? "Yes" : "No" %></dd>
+
+    <dt>Unsubscribed</dt>
+    <dd>
+      <%= @the_contact.unsubscribed ? "Yes" : "No" %>
+      <% if @the_contact.unsubscribed && @the_contact.unsubscribed_date %>
+        — <%= @the_contact.unsubscribed_date.strftime("%b %-d, %Y") %>
+      <% end %>
+    </dd>
+
     <dt>Notes</dt>
     <dd><%= @the_contact.notes %></dd>
 
@@ -109,11 +120,51 @@
       </label>
     </div>
 
+    <div>
+      <label>
+        <input type="checkbox" name="query_email_consent" value="true"
+          <%= @the_contact.email_consent ? "checked" : "" %>>
+        Email consent
+      </label>
+    </div>
+
     <input type="hidden" name="query_company_id" value="<%= @the_contact.company_id %>">
 
     <button type="submit">Update contact</button>
   </form>
 </article>
+
+<% if @the_contact.email.present? %>
+  <article>
+    <header>
+      Send Email
+    </header>
+
+    <% if @the_contact.unsubscribed %>
+      <p>This contact has unsubscribed and cannot receive emails.</p>
+    <% elsif !@the_contact.email_consent %>
+      <p>This contact has not given email consent and cannot receive emails.</p>
+    <% elsif current_user.smtp_configured? %>
+      <form action="/send_email" method="post">
+        <input type="hidden" name="query_contact_id" value="<%= @the_contact.id %>">
+
+        <div>
+          <label for="email_template_box">Email Template</label>
+          <select id="email_template_box" name="query_email_template_id">
+            <option value="">-- select a template --</option>
+            <% @list_of_email_templates.each do |a_template| %>
+              <option value="<%= a_template.id %>"><%= a_template.name %> — <%= a_template.subject %></option>
+            <% end %>
+          </select>
+        </div>
+
+        <button type="submit">Send Email</button>
+      </form>
+    <% else %>
+      <p>Configure your email settings to send emails. <a href="/users/edit">Edit profile</a></p>
+    <% end %>
+  </article>
+<% end %>
 
 <article>
   <header>
@@ -185,4 +236,39 @@
 
     <button type="submit">Log outreach</button>
   </form>
+</article>
+
+<article>
+  <header>
+    Sent Emails
+  </header>
+
+  <% contact_email_sends = @the_contact.email_sends.includes(:email_template, :user).order({ :created_at => :desc }) %>
+
+  <% if contact_email_sends.any? %>
+    <div class="overflow-auto">
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Template</th>
+            <th>Subject</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% contact_email_sends.each do |a_send| %>
+            <tr>
+              <td><a href="/email_sends/<%= a_send.id %>"><%= a_send.created_at&.strftime("%b %-d, %Y") %></a></td>
+              <td><%= a_send.email_template&.name %></td>
+              <td><%= a_send.subject %></td>
+              <td><%= a_send.status %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <p>No emails sent to this contact yet.</p>
+  <% end %>
 </article>

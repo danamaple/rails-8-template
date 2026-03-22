@@ -20,6 +20,7 @@ class ListsController < ApplicationController
     matching_lists = List.where({ :id => the_id })
     @the_list = matching_lists.at(0)
     @list_of_all_companies = Company.all.order({ :company_name => :asc })
+    @list_of_email_templates = EmailTemplate.all.order({ :name => :asc })
 
     render({ :template => "list_templates/show" })
   end
@@ -73,6 +74,18 @@ class ListsController < ApplicationController
     respond_to do |format|
       format.csv do
         send_data(List.to_csv(matching_lists), { :filename => "lists-#{Date.today}.csv" })
+      end
+    end
+  end
+
+  def export_members
+    the_id = params.fetch("path_id")
+    the_list = List.where({ :id => the_id }).at(0)
+    members = the_list.all_companies.order({ :company_name => :asc })
+
+    respond_to do |format|
+      format.csv do
+        send_data(Company.to_csv(members), { :filename => "list-members-#{the_list.name}-#{Date.today}.csv" })
       end
     end
   end

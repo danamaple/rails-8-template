@@ -1,0 +1,53 @@
+<nav aria-label="breadcrumb">
+  <ul>
+    <li><a href="/email_sends">Sent Emails</a></li>
+    <li>Email #<%= @the_email_send.id %></li>
+  </ul>
+</nav>
+
+<article>
+  <header>
+    Email Details
+  </header>
+
+  <dl>
+    <dt>Date Sent</dt>
+    <dd><%= @the_email_send.created_at&.strftime("%B %-d, %Y at %-l:%M %p") %></dd>
+
+    <dt>Status</dt>
+    <dd><%= @the_email_send.status %></dd>
+
+    <dt>Contact</dt>
+    <dd>
+      <% if @the_email_send.contact %>
+        <a href="/contacts/<%= @the_email_send.contact.id %>">
+          <%= @the_email_send.contact.first_name %> <%= @the_email_send.contact.last_name %>
+        </a>
+        — <%= @the_email_send.contact.email %>
+        <% if @the_email_send.contact.company %>
+          (<a href="/companies/<%= @the_email_send.contact.company.id %>"><%= @the_email_send.contact.company.company_name %></a>)
+        <% end %>
+      <% end %>
+    </dd>
+
+    <dt>Template Used</dt>
+    <dd>
+      <% if @the_email_send.email_template %>
+        <a href="/email_templates/<%= @the_email_send.email_template.id %>"><%= @the_email_send.email_template.name %></a>
+      <% else %>
+        (deleted)
+      <% end %>
+    </dd>
+
+    <dt>Sent By</dt>
+    <dd><%= @the_email_send.user&.first_name %> <%= @the_email_send.user&.last_name %></dd>
+
+    <dt>Subject (as sent)</dt>
+    <dd><%= @the_email_send.subject %></dd>
+
+    <dt>Body (as sent)</dt>
+    <dd><pre style="white-space: pre-wrap;"><%= @the_email_send.body %></pre></dd>
+  </dl>
+
+  <a href="/email_sends">← Back to Sent Emails</a>
+</article>

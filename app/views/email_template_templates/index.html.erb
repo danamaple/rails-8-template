@@ -1,0 +1,58 @@
+<nav aria-label="breadcrumb">
+  <ul>
+    <li>Email Templates</li>
+  </ul>
+</nav>
+
+<article>
+  <header>
+    Filter
+  </header>
+
+  <form action="/email_templates" method="get">
+    <div class="d-flex gap-3 align-items-end">
+      <div>
+        <label for="name_box">Name</label>
+        <input type="text" id="name_box" name="query_name" value="<%= params["query_name"] %>">
+      </div>
+      <button type="submit">Search</button>
+      <a href="/email_templates">Clear</a>
+    </div>
+  </form>
+</article>
+
+<div class="d-flex justify-content-between mb-2">
+  <a href="/email_templates/new" role="button" style="width: auto; margin-bottom: 0; padding: 8px 16px;">Create New Template</a>
+  <a href="/export_email_templates.csv" role="button" class="outline" style="width: auto; margin-bottom: 0; padding: 8px 16px;">Download CSV</a>
+</div>
+
+<article>
+  <header>
+    All Email Templates
+  </header>
+
+  <% if @list_of_email_templates.any? %>
+    <div class="overflow-auto">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Subject</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @list_of_email_templates.each do |a_template| %>
+            <tr>
+              <td><a href="/email_templates/<%= a_template.id %>"><%= a_template.name %></a></td>
+              <td><%= a_template.subject %></td>
+              <td><a href="/delete_email_template/<%= a_template.id %>">Delete</a></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <p>No email templates yet.</p>
+  <% end %>
+</article>

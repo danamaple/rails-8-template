@@ -36,7 +36,11 @@
   <ul>
     <% @list_of_lists.each do |a_list| %>
       <li>
-        <a href="/lists/<%= a_list.id %>"><%= a_list.name %> (<%= a_list.list_memberships_count || 0 %> <%= (a_list.list_memberships_count || 0) == 1 ? "company" : "companies" %>)</a>
+        <%
+          manual_count = a_list.list_memberships_count || 0
+          rules_suffix = a_list.smart_list_rules.any? ? " (+ rules)" : ""
+        %>
+        <a href="/lists/<%= a_list.id %>"><%= a_list.name %> (<%= manual_count %> <%= manual_count == 1 ? "company" : "companies" %><%= rules_suffix %>)</a>
       </li>
     <% end %>
   </ul>

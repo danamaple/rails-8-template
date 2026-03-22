@@ -1,4 +1,75 @@
 Rails.application.routes.draw do
+  # Routes for the Email send resource:
+
+  # CREATE
+  post("/insert_email_send", { :controller => "email_sends", :action => "create" })
+
+  # READ
+  get("/email_sends", { :controller => "email_sends", :action => "index" })
+
+  get("/email_sends/:path_id", { :controller => "email_sends", :action => "show" })
+
+  # UPDATE
+
+  post("/modify_email_send/:path_id", { :controller => "email_sends", :action => "update" })
+
+  # DELETE
+  get("/delete_email_send/:path_id", { :controller => "email_sends", :action => "destroy" })
+
+  # EXPORT
+  get("/export_email_sends", { :controller => "email_sends", :action => "export" })
+
+  # UNSUBSCRIBE (no auth required)
+  get("/unsubscribe/:path_id", { :controller => "emails", :action => "unsubscribe" })
+
+  #------------------------------
+
+  # Routes for the Email template resource:
+
+  # CREATE
+  post("/insert_email_template", { :controller => "email_templates", :action => "create" })
+
+  # READ
+  get("/email_templates", { :controller => "email_templates", :action => "index" })
+
+  get("/email_templates/new", { :controller => "email_templates", :action => "new" })
+
+  get("/email_templates/:path_id", { :controller => "email_templates", :action => "show" })
+
+  # UPDATE
+  post("/modify_email_template/:path_id", { :controller => "email_templates", :action => "update" })
+
+  # DELETE
+  get("/delete_email_template/:path_id", { :controller => "email_templates", :action => "destroy" })
+
+  # EXPORT
+  get("/export_email_templates", { :controller => "email_templates", :action => "export" })
+
+  # SENDING
+  post("/send_email",      { :controller => "emails", :action => "send_single" })
+  post("/send_bulk_email", { :controller => "emails", :action => "send_bulk" })
+
+  #------------------------------
+
+  # Routes for the Smart list rule resource:
+
+  # CREATE
+  post("/insert_smart_list_rule", { :controller => "smart_list_rules", :action => "create" })
+
+  # READ
+  get("/smart_list_rules", { :controller => "smart_list_rules", :action => "index" })
+
+  get("/smart_list_rules/:path_id", { :controller => "smart_list_rules", :action => "show" })
+
+  # UPDATE
+
+  post("/modify_smart_list_rule/:path_id", { :controller => "smart_list_rules", :action => "update" })
+
+  # DELETE
+  get("/delete_smart_list_rule/:path_id", { :controller => "smart_list_rules", :action => "destroy" })
+
+  #------------------------------
+
   # Admin routes
   get("/admin/import",  { :controller => "admin", :action => "import" })
   post("/admin/import", { :controller => "admin", :action => "do_import" })
@@ -38,6 +109,7 @@ Rails.application.routes.draw do
 
   # EXPORT
   get("/export_lists", { :controller => "lists", :action => "export" })
+  get("/export_list_members/:path_id", { :controller => "lists", :action => "export_members" })
 
   #------------------------------
 

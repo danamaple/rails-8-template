@@ -1,0 +1,67 @@
+<h1>
+  List of all smart list rules
+</h1>
+
+<hr>
+
+<article>
+  <header>
+    <h2>
+      Add a new smart list rule
+    </h2>
+  </header>
+
+  <form action="/insert_smart_list_rule" method="post">
+    <div>
+      <label for="list_id_box">
+        List
+      </label>
+
+      <input type="text" id="list_id_box" name="query_list_id">
+    </div>
+
+    <div>
+      <label for="field_box">
+        Field
+      </label>
+
+      <input type="text" id="field_box" name="query_field">
+    </div>
+
+    <div>
+      <label for="measurement_box">
+        Measurement
+      </label>
+
+      <input type="text" id="measurement_box" name="query_measurement">
+    </div>
+
+    <div>
+      <label for="value_box">
+        Value
+      </label>
+
+      <input type="text" id="value_box" name="query_value">
+    </div>
+
+    <button type="submit">
+      Create smart list rule
+    </button>
+  </form>
+</article>
+
+<hr>
+
+<article>
+  <ul>
+    <% @list_of_smart_list_rules.each do |a_smart_list_rule| %>
+      <li>
+        <a href="/smart_list_rules/<%= a_smart_list_rule.id %>">
+          Smart list rule #<%= a_smart_list_rule.id %>
+        </a>
+      </li>
+    <% end %>
+  </ul>
+</article>
+
+<hr>

@@ -1,0 +1,85 @@
+<nav aria-label="breadcrumb">
+  <ul>
+    <li><a href="/email_templates">Email Templates</a></li>
+    <li><%= @the_email_template.name %></li>
+  </ul>
+</nav>
+
+<article>
+  <header>
+    <%= @the_email_template.name %>
+  </header>
+
+  <dl>
+    <dt>Subject</dt>
+    <dd><%= @the_email_template.subject %></dd>
+
+    <dt>Body</dt>
+    <dd><pre style="white-space: pre-wrap;"><%= @the_email_template.body %></pre></dd>
+
+    <dt>Created</dt>
+    <dd><%= time_ago_in_words(@the_email_template.created_at) %> ago</dd>
+  </dl>
+
+  <a href="/delete_email_template/<%= @the_email_template.id %>">Delete template</a>
+</article>
+
+<article>
+  <header>
+    Edit Template
+  </header>
+
+  <form action="/modify_email_template/<%= @the_email_template.id %>" method="post">
+    <div>
+      <label for="name_box">Name</label>
+      <input type="text" id="name_box" name="query_name" value="<%= @the_email_template.name %>">
+    </div>
+
+    <div>
+      <label for="subject_box">Subject</label>
+      <input type="text" id="subject_box" name="query_subject" value="<%= @the_email_template.subject %>">
+    </div>
+
+    <div>
+      <label for="body_box">Body</label>
+      <p><small>Available merge fields: <code>{{company_name}}</code>, <code>{{first_name}}</code>, <code>{{last_name}}</code>, <code>{{title}}</code>, <code>{{rep_first_name}}</code>, <code>{{rep_last_name}}</code></small></p>
+      <textarea id="body_box" name="query_body" rows="10"><%= @the_email_template.body %></textarea>
+    </div>
+
+    <button type="submit">Update Template</button>
+  </form>
+</article>
+
+<article>
+  <header>
+    Preview
+  </header>
+
+  <form action="/email_templates/<%= @the_email_template.id %>" method="get">
+    <div>
+      <label for="preview_contact_box">Preview for contact</label>
+      <select id="preview_contact_box" name="preview_contact_id">
+        <option value="">-- select a contact --</option>
+        <% @list_of_all_contacts.each do |a_contact| %>
+          <option value="<%= a_contact.id %>" <%= params["preview_contact_id"].to_s == a_contact.id.to_s ? "selected" : "" %>>
+            <%= a_contact.first_name %> <%= a_contact.last_name %> — <%= a_contact.company.company_name %>
+          </option>
+        <% end %>
+      </select>
+    </div>
+
+    <button type="submit">Preview</button>
+  </form>
+
+  <% if @preview %>
+    <hr>
+    <dl>
+      <dt>Subject</dt>
+      <dd><%= @preview[:subject] %></dd>
+
+      <dt>Body</dt>
+      <dd><pre style="white-space: pre-wrap;"><%= @preview[:body] %></pre></dd>
+    </dl>
+    <p><small>Previewing for: <%= @preview_contact.first_name %> <%= @preview_contact.last_name %></small></p>
+  <% end %>
+</article>

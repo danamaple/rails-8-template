@@ -1,0 +1,32 @@
+<nav aria-label="breadcrumb">
+  <ul>
+    <li><a href="/email_templates">Email Templates</a></li>
+    <li>New Template</li>
+  </ul>
+</nav>
+
+<article>
+  <header>
+    Create Email Template
+  </header>
+
+  <form action="/insert_email_template" method="post">
+    <div>
+      <label for="name_box">Name</label>
+      <input type="text" id="name_box" name="query_name">
+    </div>
+
+    <div>
+      <label for="subject_box">Subject</label>
+      <input type="text" id="subject_box" name="query_subject">
+    </div>
+
+    <div>
+      <label for="body_box">Body</label>
+      <p><small>Available merge fields: <code>{{company_name}}</code>, <code>{{first_name}}</code>, <code>{{last_name}}</code>, <code>{{title}}</code>, <code>{{rep_first_name}}</code>, <code>{{rep_last_name}}</code></small></p>
+      <textarea id="body_box" name="query_body" rows="10"></textarea>
+    </div>
+
+    <button type="submit">Create Template</button>
+  </form>
+</article>

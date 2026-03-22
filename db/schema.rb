@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_03_10_013645) do
+ActiveRecord::Schema[8.0].define(version: 2026_03_22_062614) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -44,6 +44,29 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_10_013645) do
     t.boolean "general_company_contact"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "email_consent"
+    t.datetime "email_consent_date"
+    t.boolean "unsubscribed"
+    t.datetime "unsubscribed_date"
+  end
+
+  create_table "email_sends", force: :cascade do |t|
+    t.integer "contact_id"
+    t.integer "email_template_id"
+    t.integer "user_id"
+    t.string "subject"
+    t.text "body"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "email_templates", force: :cascade do |t|
+    t.string "name"
+    t.string "subject"
+    t.text "body"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "list_memberships", force: :cascade do |t|
@@ -74,6 +97,15 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_10_013645) do
   create_table "portfolios", force: :cascade do |t|
     t.integer "company_id"
     t.integer "category_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "smart_list_rules", force: :cascade do |t|
+    t.integer "list_id"
+    t.string "field"
+    t.string "measurement"
+    t.string "value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -232,6 +264,11 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_10_013645) do
     t.integer "outreaches_count"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "smtp_address"
+    t.integer "smtp_port"
+    t.string "smtp_username"
+    t.string "smtp_password"
+    t.string "smtp_from_email"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

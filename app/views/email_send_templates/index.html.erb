@@ -1,0 +1,113 @@
+<nav aria-label="breadcrumb">
+  <ul>
+    <li>Sent Emails</li>
+  </ul>
+</nav>
+
+<article>
+  <header>
+    Filter
+  </header>
+
+  <form action="/email_sends" method="get">
+    <div class="d-flex gap-2 flex-wrap align-items-end">
+      <div>
+        <label for="template_filter">Template</label>
+        <select id="template_filter" name="query_email_template_id">
+          <option value="">All templates</option>
+          <% @list_of_email_templates.each do |t| %>
+            <option value="<%= t.id %>" <%= params["query_email_template_id"] == t.id.to_s ? "selected" : "" %>><%= t.name %></option>
+          <% end %>
+        </select>
+      </div>
+
+      <div>
+        <label for="rep_filter">Rep</label>
+        <select id="rep_filter" name="query_user_id">
+          <option value="">All reps</option>
+          <% @list_of_users.each do |u| %>
+            <option value="<%= u.id %>" <%= params["query_user_id"] == u.id.to_s ? "selected" : "" %>><%= u.first_name %> <%= u.last_name %></option>
+          <% end %>
+        </select>
+      </div>
+
+      <div>
+        <label for="status_filter">Status</label>
+        <select id="status_filter" name="query_status">
+          <option value="">All statuses</option>
+          <option value="sent"   <%= params["query_status"] == "sent"   ? "selected" : "" %>>Sent</option>
+          <option value="failed" <%= params["query_status"] == "failed" ? "selected" : "" %>>Failed</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="date_from_box">From</label>
+        <input type="date" id="date_from_box" name="query_date_from" value="<%= params["query_date_from"] %>">
+      </div>
+
+      <div>
+        <label for="date_to_box">To</label>
+        <input type="date" id="date_to_box" name="query_date_to" value="<%= params["query_date_to"] %>">
+      </div>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 8px; margin-top: 10px;">
+      <button type="submit" style="width: auto; margin-bottom: 0; padding: 8px 16px;">Filter</button>
+      <a href="/email_sends" role="button" class="secondary" style="width: auto; margin-bottom: 0; padding: 8px 16px;">Clear</a>
+      <a href="/export_email_sends.csv" role="button" class="outline" style="width: auto; margin-bottom: 0; padding: 8px 16px;">Download CSV</a>
+    </div>
+  </form>
+
+  <p class="mt-2"><small>Showing <%= number_with_delimiter(@filtered_count) %> of <%= number_with_delimiter(@total_count) %> emails sent</small></p>
+</article>
+
+<article>
+  <header>
+    All Sent Emails
+  </header>
+
+  <% if @list_of_email_sends.any? %>
+    <div class="overflow-auto">
+      <table>
+        <thead>
+          <tr>
+            <th>Date Sent</th>
+            <th>Contact</th>
+            <th>Company</th>
+            <th>Template</th>
+            <th>Subject</th>
+            <th>Status</th>
+            <th>Sent By</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @list_of_email_sends.each do |a_send| %>
+            <tr>
+              <td><a href="/email_sends/<%= a_send.id %>"><%= a_send.created_at&.strftime("%b %-d, %Y %-l:%M %p") %></a></td>
+              <td>
+                <% if a_send.contact %>
+                  <a href="/contacts/<%= a_send.contact.id %>"><%= a_send.contact.first_name %> <%= a_send.contact.last_name %></a>
+                <% end %>
+              </td>
+              <td>
+                <% if a_send.contact&.company %>
+                  <a href="/companies/<%= a_send.contact.company.id %>"><%= a_send.contact.company.company_name %></a>
+                <% end %>
+              </td>
+              <td>
+                <% if a_send.email_template %>
+                  <a href="/email_templates/<%= a_send.email_template.id %>"><%= a_send.email_template.name %></a>
+                <% end %>
+              </td>
+              <td><%= a_send.subject %></td>
+              <td><%= a_send.status %></td>
+              <td><%= a_send.user&.first_name %> <%= a_send.user&.last_name %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <p>No emails sent yet.</p>
+  <% end %>
+</article>

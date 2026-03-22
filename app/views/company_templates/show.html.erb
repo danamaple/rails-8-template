@@ -156,6 +156,13 @@
       </label>
     </div>
 
+    <div>
+      <label>
+        <input type="checkbox" name="query_email_consent" value="true" checked>
+        Email consent
+      </label>
+    </div>
+
     <button type="submit">Add contact</button>
   </form>
 </article>
@@ -243,6 +250,47 @@
 
     <button type="submit">Add to list</button>
   </form>
+</article>
+
+<article>
+  <header>
+    Sent Emails
+  </header>
+
+  <% if @all_email_sends.any? %>
+    <div class="overflow-auto">
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Contact</th>
+            <th>Template</th>
+            <th>Subject</th>
+            <th>Status</th>
+            <th>Sent By</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @all_email_sends.each do |a_send| %>
+            <tr>
+              <td><a href="/email_sends/<%= a_send.id %>"><%= a_send.created_at&.strftime("%b %-d, %Y") %></a></td>
+              <td>
+                <a href="/contacts/<%= a_send.contact.id %>">
+                  <%= a_send.contact.first_name %> <%= a_send.contact.last_name %>
+                </a>
+              </td>
+              <td><%= a_send.email_template&.name %></td>
+              <td><%= a_send.subject %></td>
+              <td><%= a_send.status %></td>
+              <td><%= a_send.user&.first_name %> <%= a_send.user&.last_name %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <p>No emails sent to this company yet.</p>
+  <% end %>
 </article>
 
 <article>

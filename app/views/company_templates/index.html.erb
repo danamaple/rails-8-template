@@ -88,6 +88,7 @@
           <th>Emails</th>
           <th>Letters</th>
           <th>Total Outreaches</th>
+          <th>Emails Sent</th>
           <th>Most Recent</th>
           <th>Recent Owner</th>
           <th>Recent Format</th>
@@ -117,6 +118,7 @@
             <td><%= stats&.email_count  || 0 %></td>
             <td><%= stats&.letter_count || 0 %></td>
             <td><%= stats&.total_outreaches || 0 %></td>
+            <td><%= @email_stats[a_company.id] || 0 %></td>
             <td><%= stats&.most_recent_date&.to_time&.strftime("%b %-d, %Y") %></td>
             <td><%= recent&.rep_name %></td>
             <td><%= recent&.recent_medium %></td>

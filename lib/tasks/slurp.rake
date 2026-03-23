@@ -111,6 +111,169 @@ namespace :slurp do
     puts "There are now #{Outreach.count} rows in the outreaches table"
   end
 
+  desc "Import brands from lib/csvs/brands.csv"
+  task brands: :environment do
+    csv_text = File.read(Rails.root.join("lib", "csvs", "brands.csv"))
+    csv = CSV.parse(csv_text, :headers => true, :encoding => "ISO-8859-1")
+    csv.each do |row|
+      b = Brand.new
+      b.id   = row["id"]
+      b.name = row["name"]
+      b.save
+      puts "#{b.name} saved"
+    end
+    puts "There are now #{Brand.count} rows in the brands table"
+  end
+
+  desc "Import suppliers from lib/csvs/suppliers.csv"
+  task suppliers: :environment do
+    csv_text = File.read(Rails.root.join("lib", "csvs", "suppliers.csv"))
+    csv = CSV.parse(csv_text, :headers => true, :encoding => "ISO-8859-1")
+    csv.each do |row|
+      s = Supplier.new
+      s.id           = row["id"]
+      s.name         = row["name"]
+      s.contact_name = row["contact_name"]
+      s.email        = row["email"]
+      s.phone        = row["phone"]
+      s.website      = row["website"]
+      s.save
+      puts "#{s.name} saved"
+    end
+    puts "There are now #{Supplier.count} rows in the suppliers table"
+  end
+
+  desc "Import product category ones from lib/csvs/product_category_ones.csv"
+  task product_category_ones: :environment do
+    csv_text = File.read(Rails.root.join("lib", "csvs", "product_category_ones.csv"))
+    csv = CSV.parse(csv_text, :headers => true, :encoding => "ISO-8859-1")
+    csv.each do |row|
+      c = ProductCategoryOne.new
+      c.id   = row["id"]
+      c.name = row["name"]
+      c.save
+      puts "#{c.name} saved"
+    end
+    puts "There are now #{ProductCategoryOne.count} rows in the product_category_ones table"
+  end
+
+  desc "Import product category twos from lib/csvs/product_category_twos.csv"
+  task product_category_twos: :environment do
+    csv_text = File.read(Rails.root.join("lib", "csvs", "product_category_twos.csv"))
+    csv = CSV.parse(csv_text, :headers => true, :encoding => "ISO-8859-1")
+    csv.each do |row|
+      c = ProductCategoryTwo.new
+      c.id                      = row["id"]
+      c.name                    = row["name"]
+      c.product_category_one_id = row["product_category_one_id"]
+      c.save
+      puts "#{c.name} saved"
+    end
+    puts "There are now #{ProductCategoryTwo.count} rows in the product_category_twos table"
+  end
+
+  desc "Import product category threes from lib/csvs/product_category_threes.csv"
+  task product_category_threes: :environment do
+    csv_text = File.read(Rails.root.join("lib", "csvs", "product_category_threes.csv"))
+    csv = CSV.parse(csv_text, :headers => true, :encoding => "ISO-8859-1")
+    csv.each do |row|
+      c = ProductCategoryThree.new
+      c.id                      = row["id"]
+      c.name                    = row["name"]
+      c.product_category_two_id = row["product_category_two_id"]
+      c.save
+      puts "#{c.name} saved"
+    end
+    puts "There are now #{ProductCategoryThree.count} rows in the product_category_threes table"
+  end
+
+  desc "Import price categories from lib/csvs/price_categories.csv"
+  task price_categories: :environment do
+    csv_text = File.read(Rails.root.join("lib", "csvs", "price_categories.csv"))
+    csv = CSV.parse(csv_text, :headers => true, :encoding => "ISO-8859-1")
+    csv.each do |row|
+      pc = PriceCategory.new
+      pc.id   = row["id"]
+      pc.name = row["name"]
+      pc.save
+      puts "#{pc.name} saved"
+    end
+    puts "There are now #{PriceCategory.count} rows in the price_categories table"
+  end
+
+  desc "Import products from lib/csvs/products.csv"
+  task products: :environment do
+    csv_text = File.read(Rails.root.join("lib", "csvs", "products.csv"))
+    csv = CSV.parse(csv_text, :headers => true, :encoding => "ISO-8859-1")
+    csv.each do |row|
+      p = Product.new
+      p.id                        = row["id"]
+      p.sku                       = row["sku"]
+      p.name                      = row["name"]
+      p.description               = row["description"]
+      p.frontend_name             = row["frontend_name"]
+      p.upc                       = row["upc"]
+      p.flavour                   = row["flavour"]
+      p.size                      = row["size"]
+      p.weight                    = row["weight"]
+      p.supply_price              = row["supply_price"]
+      p.retail_price              = row["retail_price"]
+      p.is_active                 = row["is_active"] == "true"
+      p.new_arrival               = row["new_arrival"] == "true"
+      p.image_url                 = row["image_url"]
+      p.inventory_level           = row["inventory_level"]
+      p.track_inventory           = row["track_inventory"] == "true"
+      p.reorder_quantity          = row["reorder_quantity"]
+      p.reorder_point             = row["reorder_point"]
+      p.brand_id                  = row["brand_id"]
+      p.supplier_id               = row["supplier_id"]
+      p.product_category_one_id   = row["product_category_one_id"]
+      p.product_category_two_id   = row["product_category_two_id"]
+      p.product_category_three_id = row["product_category_three_id"]
+      p.save
+      puts "#{p.name} saved"
+    end
+    puts "There are now #{Product.count} rows in the products table"
+  end
+
+  desc "Import product prices from lib/csvs/product_prices.csv"
+  task product_prices: :environment do
+    csv_text = File.read(Rails.root.join("lib", "csvs", "product_prices.csv"))
+    csv = CSV.parse(csv_text, :headers => true, :encoding => "ISO-8859-1")
+    csv.each do |row|
+      pp = ProductPrice.new
+      pp.id                = row["id"]
+      pp.product_id        = row["product_id"]
+      pp.price_category_id = row["price_category_id"]
+      pp.min_quantity      = row["min_quantity"]
+      pp.max_quantity      = row["max_quantity"]
+      pp.unit_price        = row["unit_price"]
+      pp.save
+      puts "ProductPrice ##{pp.id} saved"
+    end
+    puts "There are now #{ProductPrice.count} rows in the product_prices table"
+  end
+
+  desc "Import lots from lib/csvs/lots.csv"
+  task lots: :environment do
+    csv_text = File.read(Rails.root.join("lib", "csvs", "lots.csv"))
+    csv = CSV.parse(csv_text, :headers => true, :encoding => "ISO-8859-1")
+    csv.each do |row|
+      l = Lot.new
+      l.id            = row["id"]
+      l.product_id    = row["product_id"]
+      l.location_id   = row["location_id"]
+      l.supplier_id   = row["supplier_id"]
+      l.lot_number    = row["lot_number"]
+      l.quantity      = row["quantity"]
+      l.expiry_date   = row["expiry_date"]
+      l.received_date = row["received_date"]
+      l.save
+      puts "Lot #{l.lot_number} saved"
+    end
+    puts "There are now #{Lot.count} rows in the lots table"
+  end
+
   desc "Seed sample locations"
   task locations: :environment do
     Location.find_or_create_by(:name => "Santa Fe Warehouse", :location_type => "warehouse")
@@ -153,6 +316,33 @@ namespace :slurp do
 
     Rake::Task["slurp:locations"].invoke
     ActiveRecord::Base.connection.reset_pk_sequence!("locations")
+
+    Rake::Task["slurp:brands"].invoke
+    ActiveRecord::Base.connection.reset_pk_sequence!("brands")
+
+    Rake::Task["slurp:suppliers"].invoke
+    ActiveRecord::Base.connection.reset_pk_sequence!("suppliers")
+
+    Rake::Task["slurp:product_category_ones"].invoke
+    ActiveRecord::Base.connection.reset_pk_sequence!("product_category_ones")
+
+    Rake::Task["slurp:product_category_twos"].invoke
+    ActiveRecord::Base.connection.reset_pk_sequence!("product_category_twos")
+
+    Rake::Task["slurp:product_category_threes"].invoke
+    ActiveRecord::Base.connection.reset_pk_sequence!("product_category_threes")
+
+    Rake::Task["slurp:price_categories"].invoke
+    ActiveRecord::Base.connection.reset_pk_sequence!("price_categories")
+
+    Rake::Task["slurp:products"].invoke
+    ActiveRecord::Base.connection.reset_pk_sequence!("products")
+
+    Rake::Task["slurp:product_prices"].invoke
+    ActiveRecord::Base.connection.reset_pk_sequence!("product_prices")
+
+    Rake::Task["slurp:lots"].invoke
+    ActiveRecord::Base.connection.reset_pk_sequence!("lots")
 
     puts "Done! All tables imported."
   end

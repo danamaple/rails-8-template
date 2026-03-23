@@ -1,0 +1,76 @@
+id,sku,name,description,frontend_name,upc,flavour,size,weight,supply_price,retail_price,is_active,new_arrival,image_url,inventory_level,track_inventory,reorder_quantity,reorder_point,brand_id,supplier_id,product_category_one_id,product_category_two_id,product_category_three_id
+1,CND-001,100 Grand Bar,100 Grand Bar - Crispy Caramel 1.5 oz,100 Grand Bar,976975704983,Crispy Caramel,1.5 oz,1.5,0.79,1.99,true,false,,229,true,24,12,1,1,1,1,1
+2,CND-002,Snickers Original,Snickers Original - Peanut Caramel 1.86 oz,Snickers Original,690261401000,Peanut Caramel,1.86 oz,1.86,0.85,2.19,true,false,,224,true,24,12,2,1,1,1,1
+3,CND-003,M&M's Peanut,M&M's Peanut - Peanut 3.27 oz,M&M's Peanut,993122491040,Peanut,3.27 oz,3.27,1.2,2.49,true,false,,175,true,48,24,3,1,1,1,1
+4,CND-004,Reese's Peanut Butter Cups,Reese's Peanut Butter Cups - Peanut Butter 1.5 oz,Reese's Peanut Butter Cups,181044195276,Peanut Butter,1.5 oz,1.5,0.82,2.09,true,false,,225,true,96,12,4,1,1,1,1
+5,CND-005,Kit Kat Wafer Bar,Kit Kat Wafer Bar - Milk Chocolate 1.5 oz,Kit Kat Wafer Bar,495288795222,Milk Chocolate,1.5 oz,1.5,0.78,1.99,true,false,,163,true,48,24,5,1,1,1,1
+6,CND-006,Haribo Gold-Bears,Haribo Gold-Bears - Assorted Fruit 5 oz,Haribo Gold-Bears,944827576906,Assorted Fruit,5 oz,5.0,1.5,3.29,true,false,,495,true,72,36,38,1,1,2,4
+7,CND-007,Sour Patch Kids,Sour Patch Kids - Assorted Sour 3.5 oz,Sour Patch Kids,368899360774,Assorted Sour,3.5 oz,3.5,1.25,2.79,true,false,,202,true,96,24,39,1,1,2,5
+8,CND-008,Skittles Original,Skittles Original - Original Fruit 2.17 oz,Skittles Original,598797399703,Original Fruit,2.17 oz,2.17,0.9,1.99,true,false,,381,true,96,36,40,1,1,2,4
+9,CND-009,Snickers Dark Chocolate,Snickers Dark Chocolate - Dark Chocolate Peanut 1.86 oz,Snickers Dark Chocolate,723268058973,Dark Chocolate Peanut,1.86 oz,1.86,0.89,2.29,true,false,,482,true,24,12,2,1,1,1,2
+10,CND-010,M&M's Plain,M&M's Plain - Milk Chocolate 1.69 oz,M&M's Plain,644043403025,Milk Chocolate,1.69 oz,1.69,0.95,1.99,true,false,,94,true,24,24,3,1,1,1,1
+11,SNK-001,Doritos Nacho Cheese,Doritos Nacho Cheese - Nacho Cheese 2.75 oz,Doritos Nacho Cheese,849079940670,Nacho Cheese,2.75 oz,2.75,1.1,2.49,true,false,,60,true,96,36,6,3,2,4,8
+12,SNK-002,Lay's Classic,Lay's Classic - Classic 2.625 oz,Lay's Classic,177008660885,Classic,2.625 oz,2.625,1.05,2.49,true,false,,161,true,96,12,7,3,2,4,7
+13,SNK-003,Cheetos Crunchy,Cheetos Crunchy - Original 3.25 oz,Cheetos Crunchy,281358538510,Original,3.25 oz,3.25,1.15,2.69,true,false,,252,true,72,24,8,3,2,4,9
+14,SNK-004,Takis Fuego,Takis Fuego - Hot Chili Lime 4 oz,Takis Fuego,925005113641,Hot Chili Lime,4 oz,4.0,1.3,2.99,true,true,,422,true,96,12,9,3,2,4,8
+15,SNK-005,Pringles Original,Pringles Original - Original 5.5 oz,Pringles Original,818469002978,Original,5.5 oz,5.5,1.65,3.49,true,true,,271,true,24,36,10,3,2,4,7
+16,SNK-006,Jack Link's Original Jerky,Jack Link's Original Jerky - Original 2.85 oz,Jack Link's Original Jerky,737160986000,Original,2.85 oz,2.85,3.5,7.99,true,true,,198,true,24,36,36,3,2,6,16
+17,SNK-007,Slim Jim Giant,Slim Jim Giant - Original 0.97 oz,Slim Jim Giant,451670914012,Original,0.97 oz,0.97,0.75,1.79,true,false,,58,true,72,24,37,3,2,6,17
+18,SNK-008,Doritos Cool Ranch,Doritos Cool Ranch - Cool Ranch 2.75 oz,Doritos Cool Ranch,629096725123,Cool Ranch,2.75 oz,2.75,1.1,2.49,true,false,,139,true,96,24,6,3,2,4,8
+19,SNK-009,Lay's BBQ,Lay's BBQ - BBQ 2.625 oz,Lay's BBQ,243359460240,BBQ,2.625 oz,2.625,1.05,2.49,true,false,,346,true,72,12,7,3,2,4,7
+20,SNK-010,Cheetos Flamin' Hot,Cheetos Flamin' Hot - Flamin' Hot 3.25 oz,Cheetos Flamin' Hot,765985854836,Flamin' Hot,3.25 oz,3.25,1.15,2.69,true,false,,120,true,48,36,8,3,2,4,9
+21,BEV-001,Red Bull Original 8.4oz,Red Bull Original 8.4oz - Original 8.4 oz,Red Bull Original 8.4oz,918007229677,Original,8.4 oz,8.4,1.8,3.49,true,false,,203,true,24,24,11,2,3,7,19
+22,BEV-002,Monster Energy Original,Monster Energy Original - Original 16 oz,Monster Energy Original,949890098304,Original,16 oz,16.0,1.6,3.29,true,false,,129,true,96,12,12,2,3,7,19
+23,BEV-003,Coca-Cola Classic 20oz,Coca-Cola Classic 20oz - Classic 20 oz,Coca-Cola Classic 20oz,148425596663,Classic,20 oz,20.0,0.95,2.29,true,false,,81,true,72,36,13,2,3,8,22
+24,BEV-004,Pepsi 20oz,Pepsi 20oz - Original 20 oz,Pepsi 20oz,411483890510,Original,20 oz,20.0,0.95,2.29,true,false,,195,true,96,12,14,2,3,8,22
+25,BEV-005,Gatorade Lemon-Lime 20oz,Gatorade Lemon-Lime 20oz - Lemon-Lime 20 oz,Gatorade Lemon-Lime 20oz,885574016315,Lemon-Lime,20 oz,20.0,1.05,2.49,true,false,,211,true,96,12,15,2,3,9,27
+26,BEV-006,Red Bull Sugar Free 8.4oz,Red Bull Sugar Free 8.4oz - Sugar Free 8.4 oz,Red Bull Sugar Free 8.4oz,611880136042,Sugar Free,8.4 oz,8.4,1.8,3.49,true,false,,423,true,48,12,11,2,3,7,20
+27,BEV-007,Monster Zero Ultra,Monster Zero Ultra - Zero Ultra 16 oz,Monster Zero Ultra,012320581630,Zero Ultra,16 oz,16.0,1.6,3.29,true,true,,306,true,24,24,12,2,3,7,20
+28,BEV-008,Coca-Cola Zero 20oz,Coca-Cola Zero 20oz - Zero Sugar 20 oz,Coca-Cola Zero 20oz,654909174122,Zero Sugar,20 oz,20.0,0.95,2.29,true,false,,233,true,48,24,13,2,3,8,22
+29,BEV-009,Gatorade Fruit Punch 20oz,Gatorade Fruit Punch 20oz - Fruit Punch 20 oz,Gatorade Fruit Punch 20oz,535088707959,Fruit Punch,20 oz,20.0,1.05,2.49,true,false,,260,true,96,24,15,2,3,9,27
+30,BEV-010,Red Bull Tropical 8.4oz,Red Bull Tropical 8.4oz - Tropical 8.4 oz,Red Bull Tropical 8.4oz,151205022206,Tropical,8.4 oz,8.4,1.8,3.49,true,false,,278,true,96,36,11,2,3,7,19
+31,TOB-001,Swisher Sweets Cigarillos,Swisher Sweets Cigarillos - Original Sweet 2 pack,Swisher Sweets Cigarillos,280882587699,Original Sweet,2 pack,0.5,0.85,1.99,true,false,,486,true,24,24,17,4,4,10,28
+32,TOB-002,Dutch Masters Palma,Dutch Masters Palma - Natural 2 pack,Dutch Masters Palma,871822074171,Natural,2 pack,0.5,1.1,2.49,true,false,,464,true,48,36,18,4,4,10,29
+33,TOB-003,RAW Classic Papers,RAW Classic Papers -  1 1/4,RAW Classic Papers,824677925515,,1 1/4,0.1,1.2,2.99,true,false,,274,true,96,24,19,4,4,11,31
+34,TOB-004,RAW Cones King Size,RAW Cones King Size -  3 pack,RAW Cones King Size,783643563880,,3 pack,0.2,1.5,3.49,true,true,,270,true,24,12,19,4,4,11,32
+35,TOB-005,Swisher Sweets Grape,Swisher Sweets Grape - Grape 2 pack,Swisher Sweets Grape,072297367545,Grape,2 pack,0.5,0.85,1.99,true,false,,325,true,48,36,17,4,4,10,28
+36,TOB-006,Bic Classic Lighter,Bic Classic Lighter -  1 ct,Bic Classic Lighter,458699989263,,1 ct,0.8,0.95,2.49,true,true,,137,true,24,36,16,4,4,11,33
+37,TOB-007,Bic Lighter 5-Pack,Bic Lighter 5-Pack - Assorted 5 ct,Bic Lighter 5-Pack,974038312591,Assorted,5 ct,4.0,3.75,8.99,true,false,,397,true,72,24,16,4,4,11,33
+38,TOB-008,RAW Tips,RAW Tips -  50 ct,RAW Tips,411812733749,,50 ct,0.2,0.75,1.99,true,true,,300,true,24,12,19,4,4,11,31
+39,TOB-009,Swisher Sweets Blueberry,Swisher Sweets Blueberry - Blueberry 2 pack,Swisher Sweets Blueberry,010859217980,Blueberry,2 pack,0.5,0.85,1.99,true,false,,69,true,72,24,17,4,4,10,28
+40,TOB-010,Dutch Masters Honey Fusion,Dutch Masters Honey Fusion - Honey 2 pack,Dutch Masters Honey Fusion,933269253798,Honey,2 pack,0.5,1.1,2.49,true,false,,154,true,24,12,18,4,4,10,29
+41,HLT-001,Advil Ibuprofen 2ct,Advil Ibuprofen 2ct -  2 ct,Advil Ibuprofen 2ct,336257479085,,2 ct,0.1,0.45,1.29,true,false,,248,true,48,36,22,5,5,13,37
+42,HLT-002,Tylenol Extra Strength 2ct,Tylenol Extra Strength 2ct -  2 ct,Tylenol Extra Strength 2ct,614025420882,,2 ct,0.1,0.5,1.49,true,true,,453,true,48,24,23,5,5,13,37
+43,HLT-003,Chapstick Original,Chapstick Original - Original 0.15 oz,Chapstick Original,361958647378,Original,0.15 oz,0.15,0.85,1.99,true,false,,422,true,72,12,25,5,5,14,40
+44,HLT-004,Colgate Toothpaste Travel,Colgate Toothpaste Travel - Cavity Protection 1 oz,Colgate Toothpaste Travel,373018067698,Cavity Protection,1 oz,1.0,0.75,1.79,true,false,,69,true,24,36,21,5,5,14,39
+45,HLT-005,Band-Aid Assorted 10ct,Band-Aid Assorted 10ct -  10 ct,Band-Aid Assorted 10ct,729815779121,,10 ct,0.5,1.5,3.49,true,false,,385,true,48,12,24,5,5,14,41
+46,PPK-001,Hefty Tall Kitchen Bags 10ct,Hefty Tall Kitchen Bags 10ct -  10 ct,Hefty Tall Kitchen Bags 10ct,451715975024,,10 ct,8.0,2.5,4.99,true,false,,184,true,24,36,26,6,6,15,43
+47,PPK-002,Reynolds Wrap Aluminum Foil,Reynolds Wrap Aluminum Foil -  30 sq ft,Reynolds Wrap Aluminum Foil,016368090946,,30 sq ft,4.0,2.25,4.49,true,false,,56,true,96,12,30,6,6,16,46
+48,PPK-003,Bounty Paper Towels Single,Bounty Paper Towels Single -  1 roll,Bounty Paper Towels Single,644466027099,,1 roll,6.0,2.0,3.99,true,false,,270,true,96,24,27,6,6,16,47
+49,PPK-004,Dixie Paper Cups 50ct,Dixie Paper Cups 50ct -  50 ct,Dixie Paper Cups 50ct,792209347887,,50 ct,3.0,3.0,5.99,true,false,,289,true,96,24,29,6,6,17,49
+50,PPK-005,Scott Toilet Paper 4pk,Scott Toilet Paper 4pk -  4 roll,Scott Toilet Paper 4pk,745703518827,,4 roll,8.0,3.25,5.49,true,false,,492,true,24,36,28,6,6,16,47
+51,SNK-011,Doritos Spicy Sweet Chili,Doritos Spicy Sweet Chili - Spicy Sweet Chili 2.75 oz,Doritos Spicy Sweet Chili,707511195412,Spicy Sweet Chili,2.75 oz,2.75,1.1,2.49,true,false,,259,true,96,12,6,3,2,4,8
+52,BEV-011,Monster Mango Loco,Monster Mango Loco - Mango Loco 16 oz,Monster Mango Loco,296159582745,Mango Loco,16 oz,16.0,1.6,3.29,true,false,,150,true,96,12,12,2,3,7,19
+53,BEV-012,Coca-Cola Cherry 20oz,Coca-Cola Cherry 20oz - Cherry 20 oz,Coca-Cola Cherry 20oz,918165102257,Cherry,20 oz,20.0,0.95,2.29,true,false,,179,true,48,36,13,2,3,8,22
+54,CND-011,Reese's Pieces,Reese's Pieces - Peanut Butter 4 oz,Reese's Pieces,602096308645,Peanut Butter,4 oz,4.0,1.3,2.79,true,false,,271,true,96,12,4,1,1,1,1
+55,CND-012,Kit Kat Big Kat,Kit Kat Big Kat - Milk Chocolate 3 oz,Kit Kat Big Kat,772164481515,Milk Chocolate,3 oz,3.0,1.45,3.19,true,false,,423,true,96,36,5,1,1,1,1
+56,BEV-013,Pepsi Zero Sugar 20oz,Pepsi Zero Sugar 20oz - Zero Sugar 20 oz,Pepsi Zero Sugar 20oz,899531476992,Zero Sugar,20 oz,20.0,0.95,2.29,true,false,,411,true,96,24,14,2,3,8,22
+57,BEV-014,Gatorade Cool Blue 20oz,Gatorade Cool Blue 20oz - Cool Blue 20 oz,Gatorade Cool Blue 20oz,713550699461,Cool Blue,20 oz,20.0,1.05,2.49,true,false,,121,true,96,12,15,2,3,9,27
+58,SNK-012,Pringles Sour Cream & Onion,Pringles Sour Cream & Onion - Sour Cream & Onion 5.5 oz,Pringles Sour Cream & Onion,925428208211,Sour Cream & Onion,5.5 oz,5.5,1.65,3.49,true,false,,270,true,96,12,10,3,2,4,7
+59,SNK-013,Takis Blue Heat,Takis Blue Heat - Blue Heat 4 oz,Takis Blue Heat,816959145574,Blue Heat,4 oz,4.0,1.3,2.99,true,false,,327,true,48,24,9,3,2,4,8
+60,SNK-014,Jack Link's Teriyaki Jerky,Jack Link's Teriyaki Jerky - Teriyaki 2.85 oz,Jack Link's Teriyaki Jerky,563194324615,Teriyaki,2.85 oz,2.85,3.5,7.99,true,false,,373,true,48,24,36,3,2,6,16
+61,HLT-006,Chapstick Cherry,Chapstick Cherry - Cherry 0.15 oz,Chapstick Cherry,127655544850,Cherry,0.15 oz,0.15,0.85,1.99,true,false,,111,true,72,24,25,5,5,14,40
+62,HLT-007,Advil Ibuprofen 10ct,Advil Ibuprofen 10ct -  10 ct,Advil Ibuprofen 10ct,818692354836,,10 ct,0.5,2.0,4.49,true,false,,138,true,96,12,22,5,5,13,37
+63,PPK-006,Hefty Zip Bags Quart 15ct,Hefty Zip Bags Quart 15ct -  15 ct,Hefty Zip Bags Quart 15ct,153149733206,,15 ct,2.0,1.75,3.49,true,false,,178,true,72,36,26,6,6,15,45
+64,PPK-007,Dixie Foam Cups 20ct,Dixie Foam Cups 20ct -  20 ct,Dixie Foam Cups 20ct,706952618114,,20 ct,2.0,2.25,4.49,true,false,,378,true,72,12,29,6,6,17,50
+65,CND-013,Haribo Peaches,Haribo Peaches - Peach 5 oz,Haribo Peaches,808008031171,Peach,5 oz,5.0,1.5,3.29,true,false,,85,true,24,24,38,1,1,2,4
+66,CND-014,Sour Patch Watermelon,Sour Patch Watermelon - Watermelon 3.5 oz,Sour Patch Watermelon,757505346859,Watermelon,3.5 oz,3.5,1.25,2.79,true,false,,456,true,72,24,39,1,1,2,5
+67,CND-015,M&M's Caramel,M&M's Caramel - Caramel 1.41 oz,M&M's Caramel,202822325080,Caramel,1.41 oz,1.41,0.95,2.09,true,false,,200,true,72,24,3,1,1,1,1
+68,CND-016,Snickers Almond,Snickers Almond - Almond 1.76 oz,Snickers Almond,753168175856,Almond,1.76 oz,1.76,0.85,2.19,true,true,,73,true,96,36,2,1,1,1,1
+69,BEV-015,Red Bull Watermelon 8.4oz,Red Bull Watermelon 8.4oz - Watermelon 8.4 oz,Red Bull Watermelon 8.4oz,452516000464,Watermelon,8.4 oz,8.4,1.8,3.49,true,false,,361,true,24,24,11,2,3,7,19
+70,BEV-016,Monster Pipeline Punch,Monster Pipeline Punch - Pipeline Punch 16 oz,Monster Pipeline Punch,934783460821,Pipeline Punch,16 oz,16.0,1.6,3.29,true,false,,452,true,48,12,12,2,3,7,19
+71,TOB-011,Swisher Sweets Strawberry,Swisher Sweets Strawberry - Strawberry 2 pack,Swisher Sweets Strawberry,534644642313,Strawberry,2 pack,0.5,0.85,1.99,true,false,,83,true,72,12,17,4,4,10,28
+72,TOB-012,RAW Black Papers,RAW Black Papers -  1 1/4,RAW Black Papers,055071717873,,1 1/4,0.1,1.5,3.49,true,false,,74,true,48,24,19,4,4,11,31
+73,PPK-008,Bounty Select-A-Size,Bounty Select-A-Size -  1 roll,Bounty Select-A-Size,669538372629,,1 roll,6.0,2.25,4.29,true,false,,232,true,24,36,27,6,6,16,47
+74,PPK-009,Reynolds Plastic Wrap,Reynolds Plastic Wrap -  75 sq ft,Reynolds Plastic Wrap,699969407898,,75 sq ft,3.0,2.0,3.99,true,false,,234,true,48,24,30,6,6,16,47
+75,HLT-008,Colgate Max Fresh Travel,Colgate Max Fresh Travel - Cool Mint 1 oz,Colgate Max Fresh Travel,564940448384,Cool Mint,1 oz,1.0,0.8,1.99,true,false,,429,true,72,12,21,5,5,14,39

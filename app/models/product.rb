@@ -40,4 +40,5 @@ class Product < ApplicationRecord
   has_many :customer_prices, class_name: "CustomerPrice", foreign_key: "product_id", dependent: :destroy
   has_many :promotion_products, class_name: "PromotionProduct", foreign_key: "product_id"
   has_many :promotions, through: :promotion_products, source: :promotion
+  has_many :lots, class_name: "Lot", foreign_key: "product_id"
 end

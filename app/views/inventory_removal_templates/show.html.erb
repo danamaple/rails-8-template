@@ -1,0 +1,126 @@
+<h1>
+  Inventory removal #<%= @the_inventory_removal.id %> details
+</h1>
+
+<article>
+  <div>
+    <a href="/inventory_removals">
+      Go back
+    </a>
+  </div>
+
+  <div>
+    <a href="/delete_inventory_removal/<%= @the_inventory_removal.id %>">
+      Delete inventory removal
+    </a>
+  </div>
+  <dl>
+    <dt>
+      Lot
+    </dt>
+    <dd>
+      <%= @the_inventory_removal.lot_id %>
+    </dd>
+
+    <dt>
+      Quantity
+    </dt>
+    <dd>
+      <%= @the_inventory_removal.quantity %>
+    </dd>
+
+    <dt>
+      Reason
+    </dt>
+    <dd>
+      <%= @the_inventory_removal.reason %>
+    </dd>
+
+    <dt>
+      Removed date
+    </dt>
+    <dd>
+      <%= @the_inventory_removal.removed_date %>
+    </dd>
+
+    <dt>
+      Notes
+    </dt>
+    <dd>
+      <%= @the_inventory_removal.notes %>
+    </dd>
+
+    <dt>
+      Created at
+    </dt>
+    <dd>
+      <%= time_ago_in_words(@the_inventory_removal.created_at) %> ago
+    </dd>
+
+    <dt>
+      Updated at
+    </dt>
+    <dd>
+      <%= time_ago_in_words(@the_inventory_removal.updated_at) %> ago
+    </dd>
+  </dl>
+</article>
+
+<hr>
+
+
+<article>
+  <header>
+    <h2>
+      Edit inventory removal
+    </h2>
+  </header>
+
+  <form action="/modify_inventory_removal/<%= @the_inventory_removal.id %>"  method="post" >
+    <div>
+      <label for="lot_id_box">
+        Lot
+      </label>
+
+      <input type="text" id="lot_id_box" name="query_lot_id" value="<%= @the_inventory_removal.lot_id %>">
+    </div>
+
+    <div>
+      <label for="quantity_box">
+        Quantity
+      </label>
+
+      <input type="text" id="quantity_box" name="query_quantity" value="<%= @the_inventory_removal.quantity %>">
+    </div>
+
+    <div>
+      <label for="reason_box">
+        Reason
+      </label>
+
+      <input type="text" id="reason_box" name="query_reason" value="<%= @the_inventory_removal.reason %>">
+    </div>
+
+    <div>
+      <label for="removed_date_box">
+        Removed date
+      </label>
+
+      <input type="date" id="removed_date_box" name="query_removed_date" value="<%= @the_inventory_removal.removed_date %>">
+    </div>
+
+    <div>
+      <label for="notes_box">
+        Notes
+      </label>
+
+      <input type="text" id="notes_box" name="query_notes" value="<%= @the_inventory_removal.notes %>">
+    </div>
+
+    <button type="submit">
+      Update inventory removal
+    </button>
+  </form>
+</article>
+
+<hr>

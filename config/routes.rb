@@ -1,4 +1,70 @@
 Rails.application.routes.draw do
+  # Routes for the Inventory removal resource:
+
+  # CREATE
+  post("/insert_inventory_removal", { :controller => "inventory_removals", :action => "create" })
+
+  # READ
+  get("/inventory_removals", { :controller => "inventory_removals", :action => "index" })
+
+  get("/inventory_removals/:path_id", { :controller => "inventory_removals", :action => "show" })
+
+  # UPDATE
+
+  post("/modify_inventory_removal/:path_id", { :controller => "inventory_removals", :action => "update" })
+
+  # DELETE
+  get("/delete_inventory_removal/:path_id", { :controller => "inventory_removals", :action => "destroy" })
+
+  #------------------------------
+
+  # Routes for the Lot resource:
+
+  # CREATE
+  post("/insert_lot", { :controller => "lots", :action => "create" })
+
+  # READ
+  get("/lots", { :controller => "lots", :action => "index" })
+
+  get("/lots/:path_id", { :controller => "lots", :action => "show" })
+
+  # UPDATE
+
+  post("/modify_lot/:path_id", { :controller => "lots", :action => "update" })
+
+  # DELETE
+  get("/delete_lot/:path_id", { :controller => "lots", :action => "destroy" })
+
+  #------------------------------
+
+  # Inventory overview routes
+  get("/inventory",                           { :controller => "inventory", :action => "overview" })
+  get("/inventory/locations",                 { :controller => "inventory", :action => "locations" })
+  get("/inventory/locations/:path_id",        { :controller => "inventory", :action => "location_detail" })
+
+  # Transfer lot
+  post("/transfer_lot",                       { :controller => "lots", :action => "transfer" })
+
+  #------------------------------
+
+  # Routes for the Location resource:
+
+  # CREATE
+  get("/locations/new",                       { :controller => "locations", :action => "new" })
+  post("/insert_location",                    { :controller => "locations", :action => "create" })
+
+  # READ
+  get("/locations",                           { :controller => "locations", :action => "index" })
+  get("/locations/:path_id",                  { :controller => "locations", :action => "show" })
+
+  # UPDATE
+  post("/modify_location/:path_id",           { :controller => "locations", :action => "update" })
+
+  # DELETE
+  get("/delete_location/:path_id",            { :controller => "locations", :action => "destroy" })
+
+  #------------------------------
+
   # Routes for the Promotion list resource:
 
   # CREATE

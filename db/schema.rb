@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_03_23_161047) do
+ActiveRecord::Schema[8.0].define(version: 2026_03_23_164610) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -100,6 +100,16 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_23_161047) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "inventory_removals", force: :cascade do |t|
+    t.integer "lot_id"
+    t.integer "quantity"
+    t.string "reason"
+    t.date "removed_date"
+    t.text "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "list_memberships", force: :cascade do |t|
     t.integer "company_id"
     t.integer "list_id"
@@ -111,6 +121,26 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_23_161047) do
     t.string "name"
     t.text "notes"
     t.integer "list_memberships_count"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "locations", force: :cascade do |t|
+    t.string "name"
+    t.string "location_type"
+    t.integer "company_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "lots", force: :cascade do |t|
+    t.integer "product_id"
+    t.integer "location_id"
+    t.integer "supplier_id"
+    t.string "lot_number"
+    t.integer "quantity"
+    t.date "expiry_date"
+    t.date "received_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

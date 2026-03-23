@@ -1,0 +1,59 @@
+<h1>
+  List of all locations
+</h1>
+
+<hr>
+
+<article>
+  <header>
+    <h2>
+      Add a new location
+    </h2>
+  </header>
+
+  <form action="/insert_location" method="post">
+    <div>
+      <label for="name_box">
+        Name
+      </label>
+
+      <input type="text" id="name_box" name="query_name">
+    </div>
+
+    <div>
+      <label for="location_type_box">
+        Location type
+      </label>
+
+      <input type="text" id="location_type_box" name="query_location_type">
+    </div>
+
+    <div>
+      <label for="company_id_box">
+        Company
+      </label>
+
+      <input type="text" id="company_id_box" name="query_company_id">
+    </div>
+
+    <button type="submit">
+      Create location
+    </button>
+  </form>
+</article>
+
+<hr>
+
+<article>
+  <ul>
+    <% @list_of_locations.each do |a_location| %>
+      <li>
+        <a href="/locations/<%= a_location.id %>">
+          Location #<%= a_location.id %>
+        </a>
+      </li>
+    <% end %>
+  </ul>
+</article>
+
+<hr>

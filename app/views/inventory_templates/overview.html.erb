@@ -1,0 +1,127 @@
+<div class="page-header">
+  <div>
+    <h1 class="page-title">Inventory Overview</h1>
+    <p class="page-subtitle">Product inventory by location</p>
+  </div>
+  <a href="/inventory/locations" class="btn btn-secondary btn-sm">Manage Locations</a>
+</div>
+
+<% if @products.empty? %>
+  <div class="card">
+    <div class="card-body" style="text-align:center;padding:48px;color:#94a3b8;">
+      No products found. <a href="/products/new">Add a product</a> to get started.
+    </div>
+  </div>
+<% else %>
+
+<div class="card" style="overflow-x:auto;">
+  <table class="data-table" id="inventory-table">
+    <thead>
+      <tr>
+        <th style="min-width:180px;position:sticky;left:0;background:#f8fafc;z-index:1;">Product</th>
+        <th style="min-width:100px;">Brand</th>
+        <th style="min-width:110px;">Category</th>
+
+        <%# Warehouses group %>
+        <th class="group-header" data-group="warehouse" style="text-align:center;cursor:pointer;background:#eff6ff;border-left:2px solid #bfdbfe;white-space:nowrap;" title="Click to expand">
+          <span class="group-toggle-warehouse">▶</span> Warehouses
+        </th>
+        <% @warehouses.each do |loc| %>
+          <th class="group-warehouse" style="display:none;text-align:center;background:#eff6ff;white-space:nowrap;min-width:90px;"><%= loc.name %></th>
+        <% end %>
+
+        <%# Transit group %>
+        <th class="group-header" data-group="transit" style="text-align:center;cursor:pointer;background:#f0fdf4;border-left:2px solid #bbf7d0;white-space:nowrap;" title="Click to expand">
+          <span class="group-toggle-transit">▶</span> Transit
+        </th>
+        <% @transit.each do |loc| %>
+          <th class="group-transit" style="display:none;text-align:center;background:#f0fdf4;white-space:nowrap;min-width:90px;"><%= loc.name %></th>
+        <% end %>
+
+        <%# Stores group %>
+        <th class="group-header" data-group="store" style="text-align:center;cursor:pointer;background:#fefce8;border-left:2px solid #fde68a;white-space:nowrap;" title="Click to expand">
+          <span class="group-toggle-store">▶</span> Stores
+        </th>
+        <% @stores.each do |loc| %>
+          <th class="group-store" style="display:none;text-align:center;background:#fefce8;white-space:nowrap;min-width:90px;"><%= loc.name %></th>
+        <% end %>
+
+        <th style="text-align:center;background:#fef2f2;border-left:2px solid #fecaca;white-space:nowrap;">Removed</th>
+        <th style="text-align:center;font-weight:700;background:#f8fafc;border-left:2px solid #e2e8f0;white-space:nowrap;">Total On Hand</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @products.each do |product| %>
+        <% loc_qty = @qty_by_product_location[product.id] || {} %>
+        <% type_qty = @qty_by_product_type[product.id] || {} %>
+        <% removal_qty = @removals_by_product_reason[product.id] || {} %>
+        <% total_removed = removal_qty.values.sum %>
+        <% total_on_hand = type_qty.values.sum %>
+
+        <tr>
+          <td style="position:sticky;left:0;background:#fff;font-weight:500;">
+            <a href="/products/<%= product.id %>"><%= product.name %></a>
+            <% if product.sku.present? %><br><code style="font-size:11px;color:#94a3b8;"><%= product.sku %></code><% end %>
+          </td>
+          <td><%= product.brand&.name || "—" %></td>
+          <td><%= product.product_category_one&.name || "—" %></td>
+
+          <%# Warehouse collapsed total %>
+          <td class="group-header-cell-warehouse" style="text-align:center;background:#eff6ff;border-left:2px solid #bfdbfe;font-weight:600;">
+            <%= type_qty["warehouse"] || 0 %>
+          </td>
+          <% @warehouses.each do |loc| %>
+            <td class="group-warehouse" style="display:none;text-align:center;background:#eff6ff;">
+              <%= loc_qty[loc.id] || 0 %>
+            </td>
+          <% end %>
+
+          <%# Transit collapsed total %>
+          <td class="group-header-cell-transit" style="text-align:center;background:#f0fdf4;border-left:2px solid #bbf7d0;font-weight:600;">
+            <%= type_qty["transit"] || 0 %>
+          </td>
+          <% @transit.each do |loc| %>
+            <td class="group-transit" style="display:none;text-align:center;background:#f0fdf4;">
+              <%= loc_qty[loc.id] || 0 %>
+            </td>
+          <% end %>
+
+          <%# Store collapsed total %>
+          <td class="group-header-cell-store" style="text-align:center;background:#fefce8;border-left:2px solid #fde68a;font-weight:600;">
+            <%= type_qty["store"] || 0 %>
+          </td>
+          <% @stores.each do |loc| %>
+            <td class="group-store" style="display:none;text-align:center;background:#fefce8;">
+              <%= loc_qty[loc.id] || 0 %>
+            </td>
+          <% end %>
+
+          <td style="text-align:center;background:#fef2f2;border-left:2px solid #fecaca;color:<%= total_removed > 0 ? '#dc2626' : '#94a3b8' %>;">
+            <%= total_removed > 0 ? total_removed : "—" %>
+          </td>
+          <td style="text-align:center;background:#f8fafc;border-left:2px solid #e2e8f0;font-weight:700;font-size:14px;">
+            <%= total_on_hand %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<script>
+document.querySelectorAll('.group-header').forEach(function(th) {
+  th.addEventListener('click', function() {
+    var group = this.dataset.group;
+    var cells = document.querySelectorAll('.group-' + group);
+    var toggles = document.querySelectorAll('.group-toggle-' + group);
+    var headerCells = document.querySelectorAll('.group-header-cell-' + group);
+    var isExpanded = cells[0] && cells[0].style.display !== 'none';
+
+    cells.forEach(function(c) { c.style.display = isExpanded ? 'none' : 'table-cell'; });
+    headerCells.forEach(function(c) { c.style.display = isExpanded ? 'table-cell' : 'none'; });
+    toggles.forEach(function(t) { t.textContent = isExpanded ? '▶' : '▼'; });
+  });
+});
+</script>
+
+<% end %>

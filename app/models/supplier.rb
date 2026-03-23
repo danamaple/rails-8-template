@@ -13,4 +13,5 @@
 #
 class Supplier < ApplicationRecord
   has_many :products, class_name: "Product", foreign_key: "supplier_id"
+  has_many :lots, class_name: "Lot", foreign_key: "supplier_id"
 end

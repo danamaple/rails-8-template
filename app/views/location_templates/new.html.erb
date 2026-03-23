@@ -1,0 +1,40 @@
+<div class="page-header">
+  <h1 class="page-title">New Location</h1>
+  <a href="/inventory/locations" class="btn btn-ghost btn-sm">← Back</a>
+</div>
+
+<div style="max-width:480px;">
+  <div class="card">
+    <div class="card-header"><h3 class="card-title">Location Details</h3></div>
+    <form action="/insert_location" method="post">
+      <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+      <div class="card-body">
+        <div class="form-group">
+          <label class="form-label">Name</label>
+          <input type="text" name="query_name" class="form-input" placeholder="e.g. Santa Fe Warehouse" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Type</label>
+          <select name="query_location_type" class="form-input" required>
+            <option value="warehouse">Warehouse</option>
+            <option value="transit">Transit (Truck/Van)</option>
+            <option value="store">Store</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Company (for stores)</label>
+          <select name="query_company_id" class="form-input">
+            <option value="">— None —</option>
+            <% @companies.each do |c| %>
+              <option value="<%= c.id %>"><%= c.company_name %></option>
+            <% end %>
+          </select>
+        </div>
+      </div>
+      <div class="card-footer">
+        <button type="submit" class="btn btn-primary">Create Location</button>
+        <a href="/inventory/locations" class="btn btn-ghost" style="margin-left:8px;">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>

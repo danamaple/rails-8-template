@@ -1,0 +1,54 @@
+<div class="page-header">
+  <div>
+    <h1 class="page-title">Locations</h1>
+    <p class="page-subtitle">Warehouses, transit, and stores</p>
+  </div>
+  <a href="/locations/new" class="btn btn-primary">+ New Location</a>
+</div>
+
+<%# Helper: render a location table section %>
+<% render_location_section = ->(title, locations, color_class) do %>
+  <div class="card" style="margin-bottom:20px;">
+    <div class="card-header" style="display:flex;align-items:center;gap:8px;">
+      <h3 class="card-title"><%= title %></h3>
+      <span class="badge badge-gray"><%= locations.count %></span>
+    </div>
+    <% if locations.empty? %>
+      <div class="card-body" style="color:#94a3b8;font-size:13px;">No locations yet.</div>
+    <% else %>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Company</th>
+            <th>Products</th>
+            <th>Lots</th>
+            <th>Total Units</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% locations.each do |loc| %>
+            <% lot_list = loc.lots %>
+            <% product_count = lot_list.map(&:product_id).uniq.count %>
+            <% total_units = lot_list.sum(&:quantity) %>
+            <tr>
+              <td><a href="/inventory/locations/<%= loc.id %>" style="font-weight:500;"><%= loc.name %></a></td>
+              <td><%= loc.company&.company_name || "—" %></td>
+              <td><%= product_count %></td>
+              <td><%= lot_list.count %></td>
+              <td><strong><%= total_units %></strong></td>
+              <td style="text-align:right;">
+                <a href="/delete_location/<%= loc.id %>" class="btn btn-danger-ghost btn-sm" data-confirm="Delete this location?">Delete</a>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+  </div>
+<% end %>
+
+<%= render_location_section.call("Warehouses", @warehouses, "blue") %>
+<%= render_location_section.call("Transit", @transit, "green") %>
+<%= render_location_section.call("Stores", @stores, "yellow") %>

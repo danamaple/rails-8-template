@@ -1,0 +1,156 @@
+<h1>
+  Lot #<%= @the_lot.id %> details
+</h1>
+
+<article>
+  <div>
+    <a href="/lots">
+      Go back
+    </a>
+  </div>
+
+  <div>
+    <a href="/delete_lot/<%= @the_lot.id %>">
+      Delete lot
+    </a>
+  </div>
+  <dl>
+    <dt>
+      Product
+    </dt>
+    <dd>
+      <%= @the_lot.product_id %>
+    </dd>
+
+    <dt>
+      Location
+    </dt>
+    <dd>
+      <%= @the_lot.location_id %>
+    </dd>
+
+    <dt>
+      Supplier
+    </dt>
+    <dd>
+      <%= @the_lot.supplier_id %>
+    </dd>
+
+    <dt>
+      Lot number
+    </dt>
+    <dd>
+      <%= @the_lot.lot_number %>
+    </dd>
+
+    <dt>
+      Quantity
+    </dt>
+    <dd>
+      <%= @the_lot.quantity %>
+    </dd>
+
+    <dt>
+      Expiry date
+    </dt>
+    <dd>
+      <%= @the_lot.expiry_date %>
+    </dd>
+
+    <dt>
+      Received date
+    </dt>
+    <dd>
+      <%= @the_lot.received_date %>
+    </dd>
+
+    <dt>
+      Created at
+    </dt>
+    <dd>
+      <%= time_ago_in_words(@the_lot.created_at) %> ago
+    </dd>
+
+    <dt>
+      Updated at
+    </dt>
+    <dd>
+      <%= time_ago_in_words(@the_lot.updated_at) %> ago
+    </dd>
+  </dl>
+</article>
+
+<hr>
+
+
+<article>
+  <header>
+    <h2>
+      Edit lot
+    </h2>
+  </header>
+
+  <form action="/modify_lot/<%= @the_lot.id %>"  method="post" >
+    <div>
+      <label for="product_id_box">
+        Product
+      </label>
+
+      <input type="text" id="product_id_box" name="query_product_id" value="<%= @the_lot.product_id %>">
+    </div>
+
+    <div>
+      <label for="location_id_box">
+        Location
+      </label>
+
+      <input type="text" id="location_id_box" name="query_location_id" value="<%= @the_lot.location_id %>">
+    </div>
+
+    <div>
+      <label for="supplier_id_box">
+        Supplier
+      </label>
+
+      <input type="text" id="supplier_id_box" name="query_supplier_id" value="<%= @the_lot.supplier_id %>">
+    </div>
+
+    <div>
+      <label for="lot_number_box">
+        Lot number
+      </label>
+
+      <input type="text" id="lot_number_box" name="query_lot_number" value="<%= @the_lot.lot_number %>">
+    </div>
+
+    <div>
+      <label for="quantity_box">
+        Quantity
+      </label>
+
+      <input type="text" id="quantity_box" name="query_quantity" value="<%= @the_lot.quantity %>">
+    </div>
+
+    <div>
+      <label for="expiry_date_box">
+        Expiry date
+      </label>
+
+      <input type="date" id="expiry_date_box" name="query_expiry_date" value="<%= @the_lot.expiry_date %>">
+    </div>
+
+    <div>
+      <label for="received_date_box">
+        Received date
+      </label>
+
+      <input type="date" id="received_date_box" name="query_received_date" value="<%= @the_lot.received_date %>">
+    </div>
+
+    <button type="submit">
+      Update lot
+    </button>
+  </form>
+</article>
+
+<hr>

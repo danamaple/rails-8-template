@@ -1,0 +1,75 @@
+<h1>
+  List of all inventory removals
+</h1>
+
+<hr>
+
+<article>
+  <header>
+    <h2>
+      Add a new inventory removal
+    </h2>
+  </header>
+
+  <form action="/insert_inventory_removal" method="post">
+    <div>
+      <label for="lot_id_box">
+        Lot
+      </label>
+
+      <input type="text" id="lot_id_box" name="query_lot_id">
+    </div>
+
+    <div>
+      <label for="quantity_box">
+        Quantity
+      </label>
+
+      <input type="text" id="quantity_box" name="query_quantity">
+    </div>
+
+    <div>
+      <label for="reason_box">
+        Reason
+      </label>
+
+      <input type="text" id="reason_box" name="query_reason">
+    </div>
+
+    <div>
+      <label for="removed_date_box">
+        Removed date
+      </label>
+
+      <input type="date" id="removed_date_box" name="query_removed_date">
+    </div>
+
+    <div>
+      <label for="notes_box">
+        Notes
+      </label>
+
+      <input type="text" id="notes_box" name="query_notes">
+    </div>
+
+    <button type="submit">
+      Create inventory removal
+    </button>
+  </form>
+</article>
+
+<hr>
+
+<article>
+  <ul>
+    <% @list_of_inventory_removals.each do |an_inventory_removal| %>
+      <li>
+        <a href="/inventory_removals/<%= an_inventory_removal.id %>">
+          Inventory removal #<%= an_inventory_removal.id %>
+        </a>
+      </li>
+    <% end %>
+  </ul>
+</article>
+
+<hr>

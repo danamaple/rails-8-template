@@ -1,0 +1,91 @@
+<h1>
+  List of all lots
+</h1>
+
+<hr>
+
+<article>
+  <header>
+    <h2>
+      Add a new lot
+    </h2>
+  </header>
+
+  <form action="/insert_lot" method="post">
+    <div>
+      <label for="product_id_box">
+        Product
+      </label>
+
+      <input type="text" id="product_id_box" name="query_product_id">
+    </div>
+
+    <div>
+      <label for="location_id_box">
+        Location
+      </label>
+
+      <input type="text" id="location_id_box" name="query_location_id">
+    </div>
+
+    <div>
+      <label for="supplier_id_box">
+        Supplier
+      </label>
+
+      <input type="text" id="supplier_id_box" name="query_supplier_id">
+    </div>
+
+    <div>
+      <label for="lot_number_box">
+        Lot number
+      </label>
+
+      <input type="text" id="lot_number_box" name="query_lot_number">
+    </div>
+
+    <div>
+      <label for="quantity_box">
+        Quantity
+      </label>
+
+      <input type="text" id="quantity_box" name="query_quantity">
+    </div>
+
+    <div>
+      <label for="expiry_date_box">
+        Expiry date
+      </label>
+
+      <input type="date" id="expiry_date_box" name="query_expiry_date">
+    </div>
+
+    <div>
+      <label for="received_date_box">
+        Received date
+      </label>
+
+      <input type="date" id="received_date_box" name="query_received_date">
+    </div>
+
+    <button type="submit">
+      Create lot
+    </button>
+  </form>
+</article>
+
+<hr>
+
+<article>
+  <ul>
+    <% @list_of_lots.each do |a_lot| %>
+      <li>
+        <a href="/lots/<%= a_lot.id %>">
+          Lot #<%= a_lot.id %>
+        </a>
+      </li>
+    <% end %>
+  </ul>
+</article>
+
+<hr>

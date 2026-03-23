@@ -1,0 +1,146 @@
+<div class="page-header">
+  <div>
+    <h1 class="page-title"><%= @the_location.name %></h1>
+    <p class="page-subtitle">
+      <span class="badge badge-gray"><%= @the_location.location_type&.capitalize %></span>
+      <% if @the_location.company.present? %>&nbsp; <%= @the_location.company.company_name %><% end %>
+    </p>
+  </div>
+  <div style="display:flex;gap:8px;">
+    <a href="/inventory/locations" class="btn btn-ghost btn-sm">← Locations</a>
+    <a href="/delete_location/<%= @the_location.id %>" class="btn btn-danger-ghost btn-sm" data-confirm="Delete this location?">Delete</a>
+  </div>
+</div>
+
+<%# Lot inventory table %>
+<div class="card" style="margin-bottom:20px;">
+  <div class="card-header">
+    <h3 class="card-title">Inventory Lots</h3>
+  </div>
+  <% if @lots.empty? %>
+    <div class="card-body" style="color:#94a3b8;font-size:13px;">No lots at this location yet. Use the form below to receive inventory.</div>
+  <% else %>
+    <div style="overflow-x:auto;">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Lot #</th>
+            <th>Supplier</th>
+            <th>Received</th>
+            <th>Expiry</th>
+            <th style="text-align:center;">Qty</th>
+            <th style="min-width:380px;">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @lots.each do |lot| %>
+            <tr>
+              <td>
+                <a href="/products/<%= lot.product_id %>"><%= lot.product.name %></a>
+                <% if lot.product.sku.present? %><br><code style="font-size:11px;color:#94a3b8;"><%= lot.product.sku %></code><% end %>
+              </td>
+              <td><%= lot.lot_number.presence || "—" %></td>
+              <td><%= lot.supplier&.name || "—" %></td>
+              <td style="font-size:12px;"><%= lot.received_date&.strftime("%b %d, %Y") || "—" %></td>
+              <td style="font-size:12px;">
+                <% if lot.expiry_date %>
+                  <% expired = lot.expiry_date < Date.today %>
+                  <span style="color:<%= expired ? '#dc2626' : '#374151' %>;">
+                    <%= lot.expiry_date.strftime("%b %d, %Y") %>
+                    <% if expired %><span class="badge badge-red" style="margin-left:4px;">Expired</span><% end %>
+                  </span>
+                <% else %>
+                  —
+                <% end %>
+              </td>
+              <td style="text-align:center;font-weight:600;font-size:15px;"><%= lot.quantity || 0 %></td>
+              <td>
+                <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;">
+
+                  <%# Transfer form %>
+                  <form action="/transfer_lot" method="post" style="display:flex;gap:4px;align-items:center;">
+                    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+                    <input type="hidden" name="query_lot_id" value="<%= lot.id %>">
+                    <input type="number" name="query_transfer_quantity" min="1" max="<%= lot.quantity %>" placeholder="Qty" style="width:56px;padding:4px 6px;font-size:12px;border:1px solid #d1d5db;border-radius:4px;">
+                    <select name="query_destination_location_id" style="font-size:12px;padding:4px 6px;border:1px solid #d1d5db;border-radius:4px;max-width:130px;">
+                      <option value="">→ Location</option>
+                      <% @all_locations.reject { |l| l.id == @the_location.id }.each do |dest| %>
+                        <option value="<%= dest.id %>"><%= dest.name %></option>
+                      <% end %>
+                    </select>
+                    <button type="submit" class="btn btn-secondary btn-sm" style="font-size:11px;padding:4px 8px;">Transfer</button>
+                  </form>
+
+                  <span style="color:#d1d5db;">|</span>
+
+                  <%# Remove form %>
+                  <form action="/insert_inventory_removal" method="post" style="display:flex;gap:4px;align-items:center;">
+                    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+                    <input type="hidden" name="query_lot_id" value="<%= lot.id %>">
+                    <input type="number" name="query_quantity" min="1" max="<%= lot.quantity %>" placeholder="Qty" style="width:56px;padding:4px 6px;font-size:12px;border:1px solid #d1d5db;border-radius:4px;">
+                    <select name="query_reason" style="font-size:12px;padding:4px 6px;border:1px solid #d1d5db;border-radius:4px;">
+                      <option value="shrinkage">Shrinkage</option>
+                      <option value="expired">Expired</option>
+                      <option value="spoiled">Spoiled</option>
+                      <option value="damaged">Damaged</option>
+                      <option value="other">Other</option>
+                    </select>
+                    <button type="submit" class="btn btn-danger-ghost btn-sm" style="font-size:11px;padding:4px 8px;border:1px solid #fecaca;">Remove</button>
+                  </form>
+
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+</div>
+
+<%# Receive Inventory form %>
+<div class="card">
+  <div class="card-header"><h3 class="card-title">Receive Inventory</h3></div>
+  <form action="/insert_lot" method="post">
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+    <input type="hidden" name="query_location_id" value="<%= @the_location.id %>">
+    <div class="card-body">
+      <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr auto;gap:12px;align-items:end;">
+        <div class="form-group" style="margin:0;">
+          <label class="form-label">Product</label>
+          <select name="query_product_id" class="form-input" required>
+            <option value="">— Select product —</option>
+            <% @products.each do |p| %>
+              <option value="<%= p.id %>"><%= p.name %><% if p.sku.present? %> (<%= p.sku %>)<% end %></option>
+            <% end %>
+          </select>
+        </div>
+        <div class="form-group" style="margin:0;">
+          <label class="form-label">Supplier</label>
+          <select name="query_supplier_id" class="form-input">
+            <option value="">— None —</option>
+            <% @suppliers.each do |s| %>
+              <option value="<%= s.id %>"><%= s.name %></option>
+            <% end %>
+          </select>
+        </div>
+        <div class="form-group" style="margin:0;">
+          <label class="form-label">Lot Number</label>
+          <input type="text" name="query_lot_number" class="form-input" placeholder="LOT-001">
+        </div>
+        <div class="form-group" style="margin:0;">
+          <label class="form-label">Quantity</label>
+          <input type="number" name="query_quantity" class="form-input" min="1" required>
+        </div>
+        <div class="form-group" style="margin:0;">
+          <label class="form-label">Expiry Date</label>
+          <input type="date" name="query_expiry_date" class="form-input">
+        </div>
+        <div style="margin-bottom:0;">
+          <button type="submit" class="btn btn-primary">Receive</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

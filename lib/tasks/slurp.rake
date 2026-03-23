@@ -111,6 +111,16 @@ namespace :slurp do
     puts "There are now #{Outreach.count} rows in the outreaches table"
   end
 
+  desc "Seed sample locations"
+  task locations: :environment do
+    Location.find_or_create_by(:name => "Santa Fe Warehouse", :location_type => "warehouse")
+    Location.find_or_create_by(:name => "Dallas Warehouse",   :location_type => "warehouse")
+    Location.find_or_create_by(:name => "Las Vegas Warehouse", :location_type => "warehouse")
+    Location.find_or_create_by(:name => "Truck 1",            :location_type => "transit")
+    Location.find_or_create_by(:name => "Truck 2",            :location_type => "transit")
+    puts "Created #{Location.count} locations"
+  end
+
   desc "Import all tables in order: create users, then companies, categories, lists, contacts, portfolios, list_memberships, outreaches"
   task all: :environment do
     puts "Creating users..."
@@ -140,6 +150,9 @@ namespace :slurp do
 
     Rake::Task["slurp:outreaches"].invoke
     ActiveRecord::Base.connection.reset_pk_sequence!("outreaches")
+
+    Rake::Task["slurp:locations"].invoke
+    ActiveRecord::Base.connection.reset_pk_sequence!("locations")
 
     puts "Done! All tables imported."
   end

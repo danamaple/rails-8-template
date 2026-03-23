@@ -344,6 +344,7 @@ namespace :slurp do
     Rake::Task["slurp:lots"].invoke
     ActiveRecord::Base.connection.reset_pk_sequence!("lots")
 
+    Rake::Task["db:reset_sequences"].invoke
     puts "Done! All tables imported."
   end
 end

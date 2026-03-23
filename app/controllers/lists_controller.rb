@@ -17,10 +17,13 @@ class ListsController < ApplicationController
 
   def show
     the_id = params.fetch("path_id")
-    matching_lists = List.where({ :id => the_id })
-    @the_list = matching_lists.at(0)
+    @the_list = List.where({ :id => the_id }).at(0)
     @list_of_all_companies = Company.all.order({ :company_name => :asc })
     @list_of_email_templates = EmailTemplate.all.order({ :name => :asc })
+    @all_members = @the_list.all_companies.order({ :company_name => :asc })
+    @excluded_companies = Company.where(:id => @the_list.list_exclusions.pluck(:company_id)).order({ :company_name => :asc })
+    @manual_ids = @the_list.list_memberships.pluck(:company_id)
+    @rule_matched_ids = @the_list.smart_list_rules.any? ? List.evaluate_rules(@the_list.smart_list_rules).pluck(:id) : []
 
     render({ :template => "list_templates/show" })
   end

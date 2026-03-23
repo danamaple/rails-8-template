@@ -1,4 +1,23 @@
 Rails.application.routes.draw do
+  # Routes for the List exclusion resource:
+
+  # CREATE
+  post("/insert_list_exclusion", { :controller => "list_exclusions", :action => "create" })
+
+  # READ
+  get("/list_exclusions", { :controller => "list_exclusions", :action => "index" })
+
+  get("/list_exclusions/:path_id", { :controller => "list_exclusions", :action => "show" })
+
+  # UPDATE
+
+  post("/modify_list_exclusion/:path_id", { :controller => "list_exclusions", :action => "update" })
+
+  # DELETE
+  get("/delete_list_exclusion/:path_id", { :controller => "list_exclusions", :action => "destroy" })
+
+  #------------------------------
+
   # Routes for the Inventory removal resource:
 
   # CREATE
@@ -424,6 +443,7 @@ Rails.application.routes.draw do
 
   # CREATE
   post("/insert_list_membership", { :controller => "list_memberships", :action => "create" })
+  post("/toggle_list_member",     { :controller => "list_memberships", :action => "toggle" })
 
   # DELETE
   get("/delete_list_membership/:path_id", { :controller => "list_memberships", :action => "destroy" })

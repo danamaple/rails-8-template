@@ -5,255 +5,307 @@
   </ul>
 </nav>
 
-<article>
-  <header>
-    <%= @the_list.name %>
-  </header>
-
-  <dl>
-    <dt>Notes</dt>
-    <dd><%= @the_list.notes %></dd>
-
-    <dt>Created</dt>
-    <dd><%= time_ago_in_words(@the_list.created_at) %> ago</dd>
-  </dl>
-
-  <a href="/delete_list/<%= @the_list.id %>">Delete list</a>
-</article>
-
-<article>
-  <header>
-    Edit list
-  </header>
-
-  <form action="/modify_list/<%= @the_list.id %>" method="post">
-    <div>
-      <label for="name_box">Name</label>
-      <input type="text" id="name_box" name="query_name" value="<%= @the_list.name %>">
+<%# ── TOP SECTION: List info + edit ──────────────────────────────────────── %>
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-bottom:1.5rem;">
+  <div class="card">
+    <div class="card-header">
+      <h2 class="card-title"><%= @the_list.name %></h2>
+      <div style="font-size:0.85rem; color:#666;">
+        Created <%= time_ago_in_words(@the_list.created_at) %> ago &nbsp;·&nbsp;
+        <strong><%= @all_members.count %></strong> <%= "member".pluralize(@all_members.count) %>
+      </div>
     </div>
-
-    <div>
-      <label for="notes_box">Notes</label>
-      <textarea id="notes_box" name="query_notes"><%= @the_list.notes %></textarea>
+    <div class="card-body">
+      <% if @the_list.notes.present? %>
+        <p style="margin:0;"><%= @the_list.notes %></p>
+      <% else %>
+        <p style="margin:0; color:#999;">No description.</p>
+      <% end %>
     </div>
-
-    <button type="submit">Update list</button>
-  </form>
-</article>
-
-<article>
-  <header>
-    Companies in this list
-  </header>
-
-  <% if @the_list.list_memberships.any? %>
-    <div class="overflow-auto">
-      <table>
-        <thead>
-          <tr>
-            <th>Company</th>
-            <th>Status</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @the_list.list_memberships.includes(:company).order("companies.company_name").each do |a_membership| %>
-            <tr>
-              <td>
-                <a href="/companies/<%= a_membership.company.id %>">
-                  <%= a_membership.company.company_name %>
-                </a>
-              </td>
-              <td><%= a_membership.company.status %></td>
-              <td>
-                <a href="/delete_list_membership/<%= a_membership.id %>">Remove</a>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
+    <div class="card-footer">
+      <a href="/delete_list/<%= @the_list.id %>"
+         onclick="return confirm('Delete this list?')"
+         class="btn btn-danger-ghost btn-sm">Delete list</a>
+      &nbsp;
+      <a href="/export_list_members/<%= @the_list.id %>.csv" class="btn btn-ghost btn-sm">Export members CSV</a>
     </div>
-  <% else %>
-    <p>No companies manually added yet.</p>
-  <% end %>
+  </div>
 
-  <hr>
+  <div class="card">
+    <div class="card-header"><h3 class="card-title">Edit List</h3></div>
+    <div class="card-body">
+      <form action="/modify_list/<%= @the_list.id %>" method="post">
+        <div style="margin-bottom:0.75rem;">
+          <label class="form-label" for="list_name_box">Name</label>
+          <input class="form-input" type="text" id="list_name_box" name="query_name" value="<%= @the_list.name %>">
+        </div>
+        <div style="margin-bottom:0.75rem;">
+          <label class="form-label" for="list_notes_box">Description</label>
+          <textarea class="form-input" id="list_notes_box" name="query_notes" rows="3"><%= @the_list.notes %></textarea>
+        </div>
+        <button class="btn btn-primary btn-sm" type="submit">Save changes</button>
+      </form>
+    </div>
+  </div>
+</div>
 
-  <strong>Add a company</strong>
+<%# ── BUILD THIS LIST ─────────────────────────────────────────────────────── %>
+<div class="card" style="margin-bottom:1.5rem;">
+  <div class="card-header"><h3 class="card-title">Build This List</h3></div>
+  <div class="card-body">
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem;">
 
-  <form action="/insert_list_membership" method="post">
-    <input type="hidden" name="query_list_id" value="<%= @the_list.id %>">
+      <%# Manual add %>
+      <div>
+        <h4 style="margin-top:0;">Manually Add a Company</h4>
+        <form action="/insert_list_membership" method="post">
+          <input type="hidden" name="query_list_id" value="<%= @the_list.id %>">
+          <input type="hidden" name="query_source" value="list">
+          <div style="margin-bottom:0.75rem;">
+            <label class="form-label" for="company_id_box">Company</label>
+            <select class="form-input" id="company_id_box" name="query_company_id">
+              <option value="">-- select a company --</option>
+              <% @list_of_all_companies.each do |a_company| %>
+                <option value="<%= a_company.id %>"><%= a_company.company_name %></option>
+              <% end %>
+            </select>
+          </div>
+          <button class="btn btn-primary btn-sm" type="submit">Add to list</button>
+        </form>
+      </div>
 
-    <div>
-      <label for="company_id_box">Company</label>
-      <select id="company_id_box" name="query_company_id">
-        <option value="">-- select a company --</option>
-        <% @list_of_all_companies.each do |a_company| %>
-          <option value="<%= a_company.id %>"><%= a_company.company_name %></option>
+      <%# Smart rule add %>
+      <div>
+        <h4 style="margin-top:0;">Add a Smart Rule</h4>
+
+        <% if @the_list.smart_list_rules.any? %>
+          <table class="data-table" style="margin-bottom:1rem; font-size:0.85rem;">
+            <thead>
+              <tr>
+                <th>Mode</th>
+                <th>Field</th>
+                <th>Measurement</th>
+                <th>Value</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @the_list.smart_list_rules.each do |a_rule| %>
+                <tr>
+                  <td><%= a_rule.mode.present? ? a_rule.mode.capitalize : "Include" %></td>
+                  <td><%= a_rule.field %></td>
+                  <td><%= a_rule.measurement %></td>
+                  <td><%= a_rule.value %></td>
+                  <td><a href="/delete_smart_list_rule/<%= a_rule.id %>" class="btn btn-danger-ghost btn-sm">×</a></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
         <% end %>
-      </select>
+
+        <form action="/insert_smart_list_rule" method="post">
+          <input type="hidden" name="query_list_id" value="<%= @the_list.id %>">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem; margin-bottom:0.5rem;">
+            <div>
+              <label class="form-label" for="rule_mode_box">Mode</label>
+              <select class="form-input" id="rule_mode_box" name="query_mode">
+                <option value="include">Include</option>
+                <option value="exclude">Exclude</option>
+              </select>
+            </div>
+            <div>
+              <label class="form-label" for="rule_field_box">Field</label>
+              <select class="form-input" id="rule_field_box" name="query_field" onchange="updateRuleOptions()">
+                <option value="">-- select --</option>
+                <option value="status">Status</option>
+                <option value="company_name">Company Name</option>
+                <option value="website">Website</option>
+                <option value="category">Category</option>
+                <option value="contact_count">Contact Count</option>
+                <option value="total_outreaches">Total Outreaches</option>
+                <option value="most_recent_outreach">Most Recent Outreach</option>
+                <option value="outreach_medium">Outreach Medium</option>
+              </select>
+            </div>
+            <div>
+              <label class="form-label" for="rule_measurement_box">Measurement</label>
+              <select class="form-input" id="rule_measurement_box" name="query_measurement">
+                <option value="">-- select field first --</option>
+              </select>
+            </div>
+            <div id="rule_value_wrapper">
+              <label class="form-label" for="rule_value_box">Value</label>
+              <input class="form-input" type="text" id="rule_value_box" name="query_value">
+            </div>
+          </div>
+          <button class="btn btn-primary btn-sm" type="submit">Add rule</button>
+        </form>
+      </div>
+
     </div>
+  </div>
+</div>
 
-    <button type="submit">Add company</button>
-  </form>
-</article>
+<%# ── LIST MEMBERS TABLE ──────────────────────────────────────────────────── %>
+<div class="card" style="margin-bottom:1.5rem;">
+  <div class="card-header">
+    <h3 class="card-title">List Members</h3>
+    <div style="font-size:0.85rem; color:#666;">
+      Check/uncheck to include or exclude companies from this list.
+    </div>
+  </div>
+  <div class="card-body" style="padding:0;">
+    <%
+      all_company_ids   = @list_of_all_companies.map(&:id)
+      manual_id_set     = @manual_ids.to_set
+      rule_id_set       = @rule_matched_ids.to_set
+      member_id_set     = @all_members.map(&:id).to_set
+      excluded_id_set   = @excluded_companies.map(&:id).to_set
 
-<article>
-  <header>
-    Rules
-  </header>
-
-  <% if @the_list.smart_list_rules.any? %>
-    <div class="overflow-auto">
-      <table>
+      display_companies = @list_of_all_companies.select { |c|
+        member_id_set.include?(c.id) || excluded_id_set.include?(c.id)
+      }
+    %>
+    <% if display_companies.any? %>
+      <table class="data-table">
         <thead>
           <tr>
-            <th>Field</th>
-            <th>Measurement</th>
-            <th>Value</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @the_list.smart_list_rules.each do |a_rule| %>
-            <tr>
-              <td><%= a_rule.field %></td>
-              <td><%= a_rule.measurement %></td>
-              <td><%= a_rule.value %></td>
-              <td><a href="/delete_smart_list_rule/<%= a_rule.id %>">Remove</a></td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-  <% else %>
-    <p>No rules yet.</p>
-  <% end %>
-
-  <hr>
-
-  <strong>Add a rule</strong>
-
-  <form action="/insert_smart_list_rule" method="post">
-    <input type="hidden" name="query_list_id" value="<%= @the_list.id %>">
-
-    <div>
-      <label for="field_box">Field</label>
-      <select id="field_box" name="query_field">
-        <option value="">-- select a field --</option>
-        <option value="status">status</option>
-        <option value="company_name">company_name</option>
-        <option value="website">website</option>
-        <option value="category">category</option>
-        <option value="contact_count">contact_count</option>
-        <option value="total_outreaches">total_outreaches</option>
-        <option value="most_recent_outreach">most_recent_outreach</option>
-        <option value="outreach_medium">outreach_medium</option>
-      </select>
-    </div>
-
-    <div>
-      <label for="measurement_box">Measurement</label>
-      <select id="measurement_box" name="query_measurement">
-        <option value="">-- select a measurement --</option>
-        <option value="equals">equals</option>
-        <option value="not_equals">not_equals</option>
-        <option value="contains">contains</option>
-        <option value="greater_than">greater_than</option>
-        <option value="less_than">less_than</option>
-        <option value="days_ago_more_than">days_ago_more_than</option>
-        <option value="days_ago_less_than">days_ago_less_than</option>
-        <option value="is_blank">is_blank</option>
-        <option value="is_not_blank">is_not_blank</option>
-      </select>
-    </div>
-
-    <div>
-      <label for="value_box">Value</label>
-      <input type="text" id="value_box" name="query_value">
-    </div>
-
-    <button type="submit">Add Rule</button>
-  </form>
-</article>
-
-<article>
-  <header>
-    All Members
-  </header>
-
-  <%
-    all_members     = @the_list.all_companies.order(:company_name)
-    manual_ids      = @the_list.companies.pluck(:id).to_set
-    rule_ids        = @the_list.smart_list_rules.any? ? List.evaluate_rules(@the_list.smart_list_rules).pluck(:id).to_set : Set.new
-  %>
-
-  <% if all_members.any? %>
-    <div class="overflow-auto">
-      <table>
-        <thead>
-          <tr>
+            <th style="width:2rem;"></th>
             <th>Company</th>
             <th>Status</th>
             <th>Source</th>
           </tr>
         </thead>
         <tbody>
-          <% all_members.each do |a_company| %>
+          <% display_companies.each do |a_company| %>
             <%
-              in_manual = manual_ids.include?(a_company.id)
-              in_rule   = rule_ids.include?(a_company.id)
-              badge     = if in_manual && in_rule then "Both"
-                          elsif in_manual          then "Manual"
-                          else                          "Rule"
-                          end
+              in_manual   = manual_id_set.include?(a_company.id)
+              in_rule     = rule_id_set.include?(a_company.id)
+              is_excluded = excluded_id_set.include?(a_company.id)
+              is_member   = member_id_set.include?(a_company.id)
+
+              source = if is_excluded
+                         "Excluded"
+                       elsif in_manual && in_rule
+                         "Manual + Rule"
+                       elsif in_manual
+                         "Manual"
+                       else
+                         "Rule"
+                       end
             %>
-            <tr>
+            <tr style="<%= is_excluded ? 'opacity:0.45;' : '' %>">
+              <td>
+                <form action="/toggle_list_member" method="post" style="margin:0;">
+                  <input type="hidden" name="query_list_id"    value="<%= @the_list.id %>">
+                  <input type="hidden" name="query_company_id" value="<%= a_company.id %>">
+                  <input type="hidden" name="query_checked"    value="<%= is_excluded ? 'false' : 'true' %>">
+                  <input type="checkbox"
+                         onchange="this.form.elements['query_checked'].value = this.checked ? 'true' : 'false'; this.form.submit();"
+                         <%= is_member ? 'checked' : '' %>>
+                </form>
+              </td>
               <td><a href="/companies/<%= a_company.id %>"><%= a_company.company_name %></a></td>
               <td><%= a_company.status %></td>
-              <td><%= badge %></td>
+              <td>
+                <span style="font-size:0.8rem; color:#666;"><%= source %></span>
+                <% if in_manual %>
+                  &nbsp;
+                  <a href="#" onclick="removeManual(<%= @the_list.list_memberships.find { |m| m.company_id == a_company.id }&.id %>); return false;"
+                     class="btn btn-danger-ghost btn-sm" style="padding:0 4px; font-size:0.75rem;">×</a>
+                <% end %>
+              </td>
             </tr>
           <% end %>
         </tbody>
       </table>
-    </div>
-  <% else %>
-    <p>No members yet.</p>
-  <% end %>
+    <% else %>
+      <div style="padding:1.5rem; color:#999;">No members yet. Add companies manually or create smart rules above.</div>
+    <% end %>
+  </div>
+</div>
 
-  <a href="/export_list_members/<%= @the_list.id %>.csv" role="button">Download CSV</a>
-</article>
+<%# ── SEND BULK EMAIL ─────────────────────────────────────────────────────── %>
+<div class="card" style="margin-bottom:1.5rem;">
+  <div class="card-header"><h3 class="card-title">Send Bulk Email</h3></div>
+  <div class="card-body">
+    <%
+      contact_count = @all_members.sum { |c| c.contacts.where.not(:email => [nil, ""]).count }
+      company_count = @all_members.count
+    %>
+    <p>This will email <strong><%= contact_count %></strong> <%= "contact".pluralize(contact_count) %> across <strong><%= company_count %></strong> <%= "company".pluralize(company_count) %>.</p>
 
-<article>
-  <header>
-    Send Bulk Email
-  </header>
+    <% if current_user.smtp_configured? %>
+      <form action="/send_bulk_email" method="post">
+        <input type="hidden" name="query_list_id" value="<%= @the_list.id %>">
+        <div style="margin-bottom:0.75rem;">
+          <label class="form-label" for="bulk_email_template_box">Email Template</label>
+          <select class="form-input" id="bulk_email_template_box" name="query_email_template_id" style="max-width:400px;">
+            <option value="">-- select a template --</option>
+            <% @list_of_email_templates.each do |a_template| %>
+              <option value="<%= a_template.id %>"><%= a_template.name %> — <%= a_template.subject %></option>
+            <% end %>
+          </select>
+        </div>
+        <button class="btn btn-primary" type="submit">Send to All Members</button>
+      </form>
+    <% else %>
+      <p>Configure your email settings to send bulk emails. <a href="/users/edit">Edit profile</a></p>
+    <% end %>
+  </div>
+</div>
 
-  <%
-    all_members_for_email = @the_list.all_companies
-    contact_count = all_members_for_email.sum { |c| c.contacts.where.not(:email => [nil, ""]).count }
-    company_count = all_members_for_email.count
-  %>
+<script>
+  const RULE_OPTIONS = {
+    status:              { measurements: ["equals","not_equals","contains","is_blank","is_not_blank"], needsValue: true },
+    company_name:        { measurements: ["equals","not_equals","contains"],                          needsValue: true },
+    website:             { measurements: ["contains","is_blank","is_not_blank"],                      needsValue: true },
+    category:            { measurements: ["equals"],                                                  needsValue: true },
+    contact_count:       { measurements: ["equals","greater_than","less_than"],                       needsValue: true },
+    total_outreaches:    { measurements: ["equals","greater_than","less_than"],                       needsValue: true },
+    most_recent_outreach:{ measurements: ["days_ago_more_than","days_ago_less_than","is_blank"],      needsValue: true },
+    outreach_medium:     { measurements: ["equals"],                                                  needsValue: true },
+  };
 
-  <p>This will email <strong><%= contact_count %></strong> <%= "contact".pluralize(contact_count) %> across <strong><%= company_count %></strong> <%= "company".pluralize(company_count) %>.</p>
+  function updateRuleOptions() {
+    const field       = document.getElementById("rule_field_box").value;
+    const mSelect     = document.getElementById("rule_measurement_box");
+    const valueWrap   = document.getElementById("rule_value_wrapper");
+    const valueInput  = document.getElementById("rule_value_box");
 
-  <% if current_user.smtp_configured? %>
-    <form action="/send_bulk_email" method="post">
-      <input type="hidden" name="query_list_id" value="<%= @the_list.id %>">
+    mSelect.innerHTML = "";
+    if (!field || !RULE_OPTIONS[field]) {
+      mSelect.innerHTML = '<option value="">-- select field first --</option>';
+      valueWrap.style.display = "";
+      return;
+    }
 
-      <div>
-        <label for="bulk_email_template_box">Email Template</label>
-        <select id="bulk_email_template_box" name="query_email_template_id">
-          <option value="">-- select a template --</option>
-          <% @list_of_email_templates.each do |a_template| %>
-            <option value="<%= a_template.id %>"><%= a_template.name %> — <%= a_template.subject %></option>
-          <% end %>
-        </select>
-      </div>
+    const opts = RULE_OPTIONS[field];
+    opts.measurements.forEach(m => {
+      const o = document.createElement("option");
+      o.value = m; o.textContent = m;
+      mSelect.appendChild(o);
+    });
 
-      <button type="submit">Send to All Members</button>
-    </form>
-  <% else %>
-    <p>Configure your email settings to send bulk emails. <a href="/users/edit">Edit profile</a></p>
-  <% end %>
-</article>
+    const noValue = ["is_blank","is_not_blank"];
+    mSelect.addEventListener("change", () => {
+      valueWrap.style.display = noValue.includes(mSelect.value) ? "none" : "";
+    });
+
+    valueWrap.style.display = "";
+    valueInput.value = "";
+  }
+
+  function removeManual(membershipId) {
+    if (!membershipId) return;
+    if (!confirm("Remove manual membership?")) return;
+    const f = document.createElement("form");
+    f.method = "post";
+    f.action = "/delete_list_membership/" + membershipId;
+    const s = document.createElement("input");
+    s.type = "hidden"; s.name = "source"; s.value = "list";
+    f.appendChild(s);
+    document.body.appendChild(f);
+    f.submit();
+  }
+</script>

@@ -15,15 +15,21 @@ class List < ApplicationRecord
   has_many :smart_list_rules, class_name: "SmartListRule", foreign_key: "list_id", dependent: :destroy
   has_many :promotion_lists, class_name: "PromotionList", foreign_key: "list_id"
   has_many :promotions, through: :promotion_lists, source: :promotion
+  has_many :list_exclusions, class_name: "ListExclusion", foreign_key: "list_id", dependent: :destroy
 
   def all_companies
     manual = companies
     if smart_list_rules.any?
       rule_matched = self.class.evaluate_rules(smart_list_rules)
-      Company.where(:id => manual.pluck(:id) + rule_matched.pluck(:id)).distinct
+      combined = Company.where(:id => manual.pluck(:id) + rule_matched.pluck(:id)).distinct
     else
-      manual
+      combined = manual
     end
+    excluded_ids = list_exclusions.pluck(:company_id)
+    if excluded_ids.any?
+      combined = combined.where.not(:id => excluded_ids)
+    end
+    combined
   end
 
   def self.evaluate_rules(rules)
@@ -42,8 +48,8 @@ class List < ApplicationRecord
     case field
     when "status"
       case measurement
-      when "equals"        then scope.where("companies.status = ?", value)
-      when "not_equals"    then scope.where("companies.status != ?", value)
+      when "equals"        then scope.where("companies.status ILIKE ?", value)
+      when "not_equals"    then scope.where("companies.status NOT ILIKE ?", value)
       when "contains"      then scope.where("companies.status ILIKE ?", "%#{value}%")
       when "is_blank"      then scope.where("companies.status IS NULL OR companies.status = ''")
       when "is_not_blank"  then scope.where("companies.status IS NOT NULL AND companies.status != ''")
@@ -51,8 +57,8 @@ class List < ApplicationRecord
       end
     when "company_name"
       case measurement
-      when "equals"     then scope.where("companies.company_name = ?", value)
-      when "not_equals" then scope.where("companies.company_name != ?", value)
+      when "equals"     then scope.where("companies.company_name ILIKE ?", value)
+      when "not_equals" then scope.where("companies.company_name NOT ILIKE ?", value)
       when "contains"   then scope.where("companies.company_name ILIKE ?", "%#{value}%")
       else scope
       end
@@ -66,7 +72,7 @@ class List < ApplicationRecord
     when "category"
       case measurement
       when "equals"
-        scope.joins(:portfolios => :category).where("categories.category = ?", value)
+        scope.joins(:portfolios => :category).where("categories.category ILIKE ?", value)
       else scope
       end
     when "contact_count"
@@ -96,7 +102,7 @@ class List < ApplicationRecord
     when "outreach_medium"
       case measurement
       when "equals"
-        scope.where("EXISTS (SELECT 1 FROM outreaches JOIN contacts ON contacts.id = outreaches.contact_id WHERE contacts.company_id = companies.id AND outreaches.outreach_medium = ?)", value)
+        scope.where("EXISTS (SELECT 1 FROM outreaches JOIN contacts ON contacts.id = outreaches.contact_id WHERE contacts.company_id = companies.id AND outreaches.outreach_medium ILIKE ?)", value)
       else scope
       end
     else

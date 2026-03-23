@@ -20,6 +20,23 @@ class ListMembershipsController < ApplicationController
     end
   end
 
+  def toggle
+    the_list_id    = params.fetch("query_list_id")
+    the_company_id = params.fetch("query_company_id")
+    checked        = params.fetch("query_checked")
+
+    if checked == "false"
+      ListExclusion.find_or_create_by(:list_id => the_list_id, :company_id => the_company_id)
+      membership = ListMembership.where(:list_id => the_list_id, :company_id => the_company_id).at(0)
+      membership.destroy if membership.present?
+    else
+      exclusion = ListExclusion.where(:list_id => the_list_id, :company_id => the_company_id).at(0)
+      exclusion.destroy if exclusion.present?
+    end
+
+    redirect_to("/lists/#{the_list_id}", { :notice => "List updated." })
+  end
+
   def destroy
     the_id = params.fetch("path_id")
     the_list_membership = ListMembership.where({ :id => the_id }).at(0)

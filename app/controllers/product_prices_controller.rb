@@ -47,6 +47,7 @@ class ProductPricesController < ApplicationController
   end
 
   def split
+    ActiveRecord::Base.connection.execute("SELECT setval('product_prices_id_seq', (SELECT MAX(id) FROM product_prices))")
     split_at = params.fetch("query_split_quantity").to_i
     product_id = params.fetch("path_id")
 

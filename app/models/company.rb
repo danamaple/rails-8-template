@@ -17,6 +17,7 @@ class Company < ApplicationRecord
   has_many :categories, through: :portfolios, source: :category
   has_many :list_memberships, class_name: "ListMembership", foreign_key: "company_id"
   has_many :lists, through: :list_memberships, source: :list
+  has_many :customer_prices, class_name: "CustomerPrice", foreign_key: "company_id"
 
   def self.to_csv(records = all)
     headers = ["id", "company_name", "website", "status", "notes", "categories", "lists"]

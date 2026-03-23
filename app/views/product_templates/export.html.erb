@@ -1,0 +1,3 @@
+<%# CSV export - no layout %>
+<%= "id,sku,name,frontend_name,upc,flavour,size,weight,supply_price,retail_price,is_active,new_arrival,new_arrival_date,brand,supplier,category_1,category_2,category_3,inventory_level,track_inventory\n" %>
+<% @list_of_products.each do |p| %><%= [p.id, p.sku, p.name, p.frontend_name, p.upc, p.flavour, p.size, p.weight, p.supply_price, p.retail_price, p.is_active, p.new_arrival, p.new_arrival_date, p.brand&.name, p.supplier&.name, p.product_category_one&.name, p.product_category_two&.name, p.product_category_three&.name, p.inventory_level, p.track_inventory].map { |v| v.to_s.include?(',') ? "\"#{v}\"" : v }.join(",") + "\n" %><% end %>

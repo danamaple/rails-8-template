@@ -1,0 +1,42 @@
+<div class="page-header">
+  <div>
+    <h1 class="page-title">Promotions</h1>
+    <p class="page-subtitle"><%= @list_of_promotions.count %> promotions</p>
+  </div>
+  <a href="/promotions/new" class="btn btn-primary">+ New Promotion</a>
+</div>
+
+<div class="card">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Discount</th>
+        <th>Start</th>
+        <th>End</th>
+        <th>Products</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @list_of_promotions.each do |p| %>
+        <tr>
+          <td><a href="/promotions/<%= p.id %>" style="font-weight:500;"><%= p.name %></a></td>
+          <td><span class="badge badge-gray"><%= p.discount_type %></span></td>
+          <td style="font-size:13px;"><%= p.discount_summary %></td>
+          <td style="font-size:13px;"><%= p.start_date&.strftime("%b %d, %Y") || "—" %></td>
+          <td style="font-size:13px;"><%= p.end_date&.strftime("%b %d, %Y") || "—" %></td>
+          <td><%= p.products.count %></td>
+          <td style="text-align:right;">
+            <a href="/promotions/<%= p.id %>" class="btn btn-ghost btn-sm">View</a>
+            <a href="/delete_promotion/<%= p.id %>" class="btn btn-danger-ghost btn-sm" data-confirm="Delete promotion?">Delete</a>
+          </td>
+        </tr>
+      <% end %>
+      <% if @list_of_promotions.empty? %>
+        <tr><td colspan="7" style="text-align:center;color:#94a3b8;padding:32px;">No promotions yet.</td></tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

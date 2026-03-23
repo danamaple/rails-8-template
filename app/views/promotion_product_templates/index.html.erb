@@ -1,0 +1,51 @@
+<h1>
+  List of all promotion products
+</h1>
+
+<hr>
+
+<article>
+  <header>
+    <h2>
+      Add a new promotion product
+    </h2>
+  </header>
+
+  <form action="/insert_promotion_product" method="post">
+    <div>
+      <label for="promotion_id_box">
+        Promotion
+      </label>
+
+      <input type="text" id="promotion_id_box" name="query_promotion_id">
+    </div>
+
+    <div>
+      <label for="product_id_box">
+        Product
+      </label>
+
+      <input type="text" id="product_id_box" name="query_product_id">
+    </div>
+
+    <button type="submit">
+      Create promotion product
+    </button>
+  </form>
+</article>
+
+<hr>
+
+<article>
+  <ul>
+    <% @list_of_promotion_products.each do |a_promotion_product| %>
+      <li>
+        <a href="/promotion_products/<%= a_promotion_product.id %>">
+          Promotion product #<%= a_promotion_product.id %>
+        </a>
+      </li>
+    <% end %>
+  </ul>
+</article>
+
+<hr>

@@ -1,0 +1,81 @@
+<h1>
+  Custom field #<%= @the_custom_field.id %> details
+</h1>
+
+<article>
+  <div>
+    <a href="/custom_fields">
+      Go back
+    </a>
+  </div>
+
+  <div>
+    <a href="/delete_custom_field/<%= @the_custom_field.id %>">
+      Delete custom field
+    </a>
+  </div>
+  <dl>
+    <dt>
+      Field name
+    </dt>
+    <dd>
+      <%= @the_custom_field.field_name %>
+    </dd>
+
+    <dt>
+      Data type
+    </dt>
+    <dd>
+      <%= @the_custom_field.data_type %>
+    </dd>
+
+    <dt>
+      Created at
+    </dt>
+    <dd>
+      <%= time_ago_in_words(@the_custom_field.created_at) %> ago
+    </dd>
+
+    <dt>
+      Updated at
+    </dt>
+    <dd>
+      <%= time_ago_in_words(@the_custom_field.updated_at) %> ago
+    </dd>
+  </dl>
+</article>
+
+<hr>
+
+
+<article>
+  <header>
+    <h2>
+      Edit custom field
+    </h2>
+  </header>
+
+  <form action="/modify_custom_field/<%= @the_custom_field.id %>"  method="post" >
+    <div>
+      <label for="field_name_box">
+        Field name
+      </label>
+
+      <input type="text" id="field_name_box" name="query_field_name" value="<%= @the_custom_field.field_name %>">
+    </div>
+
+    <div>
+      <label for="data_type_box">
+        Data type
+      </label>
+
+      <input type="text" id="data_type_box" name="query_data_type" value="<%= @the_custom_field.data_type %>">
+    </div>
+
+    <button type="submit">
+      Update custom field
+    </button>
+  </form>
+</article>
+
+<hr>

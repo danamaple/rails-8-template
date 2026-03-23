@@ -1,0 +1,40 @@
+<div class="page-header">
+  <h1 class="page-title">Price Categories</h1>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;">
+  <div class="card">
+    <div class="card-header"><h3 class="card-title">All Price Categories</h3></div>
+    <table class="data-table">
+      <thead>
+        <tr><th>Name</th><th>Products</th><th></th></tr>
+      </thead>
+      <tbody>
+        <% @list_of_price_categories.each do |pc| %>
+          <tr>
+            <td style="font-weight:500;"><%= pc.name %></td>
+            <td><%= pc.product_prices.count %> price rows</td>
+            <td style="text-align:right;">
+              <a href="/delete_price_category/<%= pc.id %>" class="btn btn-danger-ghost btn-sm" data-confirm="Delete this price category? This will remove all associated prices.">Delete</a>
+            </td>
+          </tr>
+        <% end %>
+        <% if @list_of_price_categories.empty? %>
+          <tr><td colspan="3" style="text-align:center;color:#94a3b8;padding:24px;">No price categories yet.</td></tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><h3 class="card-title">Add Price Category</h3></div>
+    <div class="card-body">
+      <p style="font-size:13px;color:#64748b;margin-bottom:12px;">When you add a price category, a base price row ($0) will be automatically created for every existing product.</p>
+      <form action="/insert_price_category" method="post" style="display:flex;gap:8px;">
+        <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+        <input type="text" name="query_name" class="form-input" placeholder="e.g. Wholesale, Retail, VIP" required style="flex:1;">
+        <button type="submit" class="btn btn-primary btn-sm">Add</button>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,4 +1,280 @@
 Rails.application.routes.draw do
+  # Routes for the Promotion list resource:
+
+  # CREATE
+  post("/insert_promotion_list", { :controller => "promotion_lists", :action => "create" })
+
+  # READ
+  get("/promotion_lists", { :controller => "promotion_lists", :action => "index" })
+
+  get("/promotion_lists/:path_id", { :controller => "promotion_lists", :action => "show" })
+
+  # UPDATE
+
+  post("/modify_promotion_list/:path_id", { :controller => "promotion_lists", :action => "update" })
+
+  # DELETE
+  get("/delete_promotion_list/:path_id", { :controller => "promotion_lists", :action => "destroy" })
+
+  #------------------------------
+
+  # Routes for the Promotion product resource:
+
+  # CREATE
+  post("/insert_promotion_product", { :controller => "promotion_products", :action => "create" })
+
+  # READ
+  get("/promotion_products", { :controller => "promotion_products", :action => "index" })
+
+  get("/promotion_products/:path_id", { :controller => "promotion_products", :action => "show" })
+
+  # UPDATE
+
+  post("/modify_promotion_product/:path_id", { :controller => "promotion_products", :action => "update" })
+
+  # DELETE
+  get("/delete_promotion_product/:path_id", { :controller => "promotion_products", :action => "destroy" })
+
+  #------------------------------
+
+  # Routes for the Promotion resource:
+
+  # CREATE
+  post("/insert_promotion", { :controller => "promotions", :action => "create" })
+
+  # READ
+  get("/promotions", { :controller => "promotions", :action => "index" })
+  get("/promotions/new", { :controller => "promotions", :action => "new" })
+  get("/promotions/:path_id", { :controller => "promotions", :action => "show" })
+
+  # UPDATE
+
+  post("/modify_promotion/:path_id", { :controller => "promotions", :action => "update" })
+
+  # DELETE
+  get("/delete_promotion/:path_id", { :controller => "promotions", :action => "destroy" })
+
+  #------------------------------
+
+  # Routes for the Customer price resource:
+
+  # CREATE
+  post("/insert_customer_price", { :controller => "customer_prices", :action => "create" })
+
+  # READ
+  get("/customer_prices", { :controller => "customer_prices", :action => "index" })
+
+  get("/customer_prices/:path_id", { :controller => "customer_prices", :action => "show" })
+
+  # UPDATE
+
+  post("/modify_customer_price/:path_id", { :controller => "customer_prices", :action => "update" })
+
+  # DELETE
+  get("/delete_customer_price/:path_id", { :controller => "customer_prices", :action => "destroy" })
+
+  #------------------------------
+
+  # Routes for the Product price resource:
+
+  # CREATE
+  post("/insert_product_price", { :controller => "product_prices", :action => "create" })
+
+  # READ
+  get("/product_prices", { :controller => "product_prices", :action => "index" })
+
+  get("/product_prices/:path_id", { :controller => "product_prices", :action => "show" })
+
+  # UPDATE
+  post("/modify_product_price/:path_id", { :controller => "product_prices", :action => "update" })
+  post("/split_product_prices/:path_id", { :controller => "product_prices", :action => "split" })
+
+  # DELETE
+  get("/delete_product_price/:path_id", { :controller => "product_prices", :action => "destroy" })
+
+  #------------------------------
+
+  # Routes for the Price category resource:
+
+  # CREATE
+  post("/insert_price_category", { :controller => "price_categories", :action => "create" })
+
+  # READ
+  get("/price_categories", { :controller => "price_categories", :action => "index" })
+
+  get("/price_categories/:path_id", { :controller => "price_categories", :action => "show" })
+
+  # UPDATE
+
+  post("/modify_price_category/:path_id", { :controller => "price_categories", :action => "update" })
+
+  # DELETE
+  get("/delete_price_category/:path_id", { :controller => "price_categories", :action => "destroy" })
+
+  #------------------------------
+
+  # Routes for the Custom field value resource:
+
+  # CREATE
+  post("/insert_custom_field_value", { :controller => "custom_field_values", :action => "create" })
+
+  # READ
+  get("/custom_field_values", { :controller => "custom_field_values", :action => "index" })
+
+  get("/custom_field_values/:path_id", { :controller => "custom_field_values", :action => "show" })
+
+  # UPDATE
+
+  post("/modify_custom_field_value/:path_id", { :controller => "custom_field_values", :action => "update" })
+
+  # DELETE
+  get("/delete_custom_field_value/:path_id", { :controller => "custom_field_values", :action => "destroy" })
+
+  #------------------------------
+
+  # Routes for the Custom field resource:
+
+  # CREATE
+  post("/insert_custom_field", { :controller => "custom_fields", :action => "create" })
+
+  # READ
+  get("/custom_fields", { :controller => "custom_fields", :action => "index" })
+
+  get("/custom_fields/:path_id", { :controller => "custom_fields", :action => "show" })
+
+  # UPDATE
+
+  post("/modify_custom_field/:path_id", { :controller => "custom_fields", :action => "update" })
+
+  # DELETE
+  get("/delete_custom_field/:path_id", { :controller => "custom_fields", :action => "destroy" })
+
+  #------------------------------
+
+  # Routes for the Product resource:
+
+  # CREATE
+  post("/insert_product", { :controller => "products", :action => "create" })
+
+  # READ
+  get("/products", { :controller => "products", :action => "index" })
+  get("/products/new", { :controller => "products", :action => "new" })
+  get("/products/:path_id", { :controller => "products", :action => "show" })
+
+  # UPDATE
+  post("/modify_product/:path_id", { :controller => "products", :action => "update" })
+
+  # DELETE
+  get("/delete_product/:path_id", { :controller => "products", :action => "destroy" })
+
+  # EXPORT
+  get("/export_products", { :controller => "products", :action => "export" })
+
+  #------------------------------
+
+  # Routes for unified Product Categories controller:
+  get("/product_categories", { :controller => "product_categories", :action => "index" })
+  post("/insert_product_category_one", { :controller => "product_categories", :action => "create_one" })
+  post("/insert_product_category_two", { :controller => "product_categories", :action => "create_two" })
+  post("/insert_product_category_three", { :controller => "product_categories", :action => "create_three" })
+
+  #------------------------------
+
+  # Routes for the Product category three resource:
+
+  # CREATE
+  post("/insert_product_category_three", { :controller => "product_category_threes", :action => "create" })
+
+  # READ
+  get("/product_category_threes", { :controller => "product_category_threes", :action => "index" })
+
+  get("/product_category_threes/:path_id", { :controller => "product_category_threes", :action => "show" })
+
+  # UPDATE
+
+  post("/modify_product_category_three/:path_id", { :controller => "product_category_threes", :action => "update" })
+
+  # DELETE
+  get("/delete_product_category_three/:path_id", { :controller => "product_category_threes", :action => "destroy" })
+
+  #------------------------------
+
+  # Routes for the Product category two resource:
+
+  # CREATE
+  post("/insert_product_category_two", { :controller => "product_category_twos", :action => "create" })
+
+  # READ
+  get("/product_category_twos", { :controller => "product_category_twos", :action => "index" })
+
+  get("/product_category_twos/:path_id", { :controller => "product_category_twos", :action => "show" })
+
+  # UPDATE
+
+  post("/modify_product_category_two/:path_id", { :controller => "product_category_twos", :action => "update" })
+
+  # DELETE
+  get("/delete_product_category_two/:path_id", { :controller => "product_category_twos", :action => "destroy" })
+
+  #------------------------------
+
+  # Routes for the Product category one resource:
+
+  # CREATE
+  post("/insert_product_category_one", { :controller => "product_category_ones", :action => "create" })
+
+  # READ
+  get("/product_category_ones", { :controller => "product_category_ones", :action => "index" })
+
+  get("/product_category_ones/:path_id", { :controller => "product_category_ones", :action => "show" })
+
+  # UPDATE
+
+  post("/modify_product_category_one/:path_id", { :controller => "product_category_ones", :action => "update" })
+
+  # DELETE
+  get("/delete_product_category_one/:path_id", { :controller => "product_category_ones", :action => "destroy" })
+
+  #------------------------------
+
+  # Routes for the Supplier resource:
+
+  # CREATE
+  post("/insert_supplier", { :controller => "suppliers", :action => "create" })
+
+  # READ
+  get("/suppliers", { :controller => "suppliers", :action => "index" })
+
+  get("/suppliers/:path_id", { :controller => "suppliers", :action => "show" })
+
+  # UPDATE
+
+  post("/modify_supplier/:path_id", { :controller => "suppliers", :action => "update" })
+
+  # DELETE
+  get("/delete_supplier/:path_id", { :controller => "suppliers", :action => "destroy" })
+
+  #------------------------------
+
+  # Routes for the Brand resource:
+
+  # CREATE
+  post("/insert_brand", { :controller => "brands", :action => "create" })
+
+  # READ
+  get("/brands", { :controller => "brands", :action => "index" })
+
+  get("/brands/:path_id", { :controller => "brands", :action => "show" })
+
+  # UPDATE
+
+  post("/modify_brand/:path_id", { :controller => "brands", :action => "update" })
+
+  # DELETE
+  get("/delete_brand/:path_id", { :controller => "brands", :action => "destroy" })
+
+  #------------------------------
+
   # Routes for the Email send resource:
 
   # CREATE

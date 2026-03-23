@@ -1,0 +1,59 @@
+<h1>
+  List of all custom field values
+</h1>
+
+<hr>
+
+<article>
+  <header>
+    <h2>
+      Add a new custom field value
+    </h2>
+  </header>
+
+  <form action="/insert_custom_field_value" method="post">
+    <div>
+      <label for="product_id_box">
+        Product
+      </label>
+
+      <input type="text" id="product_id_box" name="query_product_id">
+    </div>
+
+    <div>
+      <label for="custom_field_id_box">
+        Custom field
+      </label>
+
+      <input type="text" id="custom_field_id_box" name="query_custom_field_id">
+    </div>
+
+    <div>
+      <label for="value_box">
+        Value
+      </label>
+
+      <input type="text" id="value_box" name="query_value">
+    </div>
+
+    <button type="submit">
+      Create custom field value
+    </button>
+  </form>
+</article>
+
+<hr>
+
+<article>
+  <ul>
+    <% @list_of_custom_field_values.each do |a_custom_field_value| %>
+      <li>
+        <a href="/custom_field_values/<%= a_custom_field_value.id %>">
+          Custom field value #<%= a_custom_field_value.id %>
+        </a>
+      </li>
+    <% end %>
+  </ul>
+</article>
+
+<hr>

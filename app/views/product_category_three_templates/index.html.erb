@@ -1,0 +1,51 @@
+<h1>
+  List of all product category threes
+</h1>
+
+<hr>
+
+<article>
+  <header>
+    <h2>
+      Add a new product category three
+    </h2>
+  </header>
+
+  <form action="/insert_product_category_three" method="post">
+    <div>
+      <label for="name_box">
+        Name
+      </label>
+
+      <input type="text" id="name_box" name="query_name">
+    </div>
+
+    <div>
+      <label for="product_category_two_id_box">
+        Product category two
+      </label>
+
+      <input type="text" id="product_category_two_id_box" name="query_product_category_two_id">
+    </div>
+
+    <button type="submit">
+      Create product category three
+    </button>
+  </form>
+</article>
+
+<hr>
+
+<article>
+  <ul>
+    <% @list_of_product_category_threes.each do |a_product_category_three| %>
+      <li>
+        <a href="/product_category_threes/<%= a_product_category_three.id %>">
+          Product category three #<%= a_product_category_three.id %>
+        </a>
+      </li>
+    <% end %>
+  </ul>
+</article>
+
+<hr>

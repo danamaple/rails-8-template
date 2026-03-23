@@ -1,0 +1,81 @@
+<h1>
+  Product category two #<%= @the_product_category_two.id %> details
+</h1>
+
+<article>
+  <div>
+    <a href="/product_category_twos">
+      Go back
+    </a>
+  </div>
+
+  <div>
+    <a href="/delete_product_category_two/<%= @the_product_category_two.id %>">
+      Delete product category two
+    </a>
+  </div>
+  <dl>
+    <dt>
+      Name
+    </dt>
+    <dd>
+      <%= @the_product_category_two.name %>
+    </dd>
+
+    <dt>
+      Product category one
+    </dt>
+    <dd>
+      <%= @the_product_category_two.product_category_one_id %>
+    </dd>
+
+    <dt>
+      Created at
+    </dt>
+    <dd>
+      <%= time_ago_in_words(@the_product_category_two.created_at) %> ago
+    </dd>
+
+    <dt>
+      Updated at
+    </dt>
+    <dd>
+      <%= time_ago_in_words(@the_product_category_two.updated_at) %> ago
+    </dd>
+  </dl>
+</article>
+
+<hr>
+
+
+<article>
+  <header>
+    <h2>
+      Edit product category two
+    </h2>
+  </header>
+
+  <form action="/modify_product_category_two/<%= @the_product_category_two.id %>"  method="post" >
+    <div>
+      <label for="name_box">
+        Name
+      </label>
+
+      <input type="text" id="name_box" name="query_name" value="<%= @the_product_category_two.name %>">
+    </div>
+
+    <div>
+      <label for="product_category_one_id_box">
+        Product category one
+      </label>
+
+      <input type="text" id="product_category_one_id_box" name="query_product_category_one_id" value="<%= @the_product_category_two.product_category_one_id %>">
+    </div>
+
+    <button type="submit">
+      Update product category two
+    </button>
+  </form>
+</article>
+
+<hr>

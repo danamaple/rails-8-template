@@ -1,0 +1,126 @@
+<h1>
+  Product price #<%= @the_product_price.id %> details
+</h1>
+
+<article>
+  <div>
+    <a href="/product_prices">
+      Go back
+    </a>
+  </div>
+
+  <div>
+    <a href="/delete_product_price/<%= @the_product_price.id %>">
+      Delete product price
+    </a>
+  </div>
+  <dl>
+    <dt>
+      Product
+    </dt>
+    <dd>
+      <%= @the_product_price.product_id %>
+    </dd>
+
+    <dt>
+      Price category
+    </dt>
+    <dd>
+      <%= @the_product_price.price_category_id %>
+    </dd>
+
+    <dt>
+      Min quantity
+    </dt>
+    <dd>
+      <%= @the_product_price.min_quantity %>
+    </dd>
+
+    <dt>
+      Max quantity
+    </dt>
+    <dd>
+      <%= @the_product_price.max_quantity %>
+    </dd>
+
+    <dt>
+      Unit price
+    </dt>
+    <dd>
+      <%= @the_product_price.unit_price %>
+    </dd>
+
+    <dt>
+      Created at
+    </dt>
+    <dd>
+      <%= time_ago_in_words(@the_product_price.created_at) %> ago
+    </dd>
+
+    <dt>
+      Updated at
+    </dt>
+    <dd>
+      <%= time_ago_in_words(@the_product_price.updated_at) %> ago
+    </dd>
+  </dl>
+</article>
+
+<hr>
+
+
+<article>
+  <header>
+    <h2>
+      Edit product price
+    </h2>
+  </header>
+
+  <form action="/modify_product_price/<%= @the_product_price.id %>"  method="post" >
+    <div>
+      <label for="product_id_box">
+        Product
+      </label>
+
+      <input type="text" id="product_id_box" name="query_product_id" value="<%= @the_product_price.product_id %>">
+    </div>
+
+    <div>
+      <label for="price_category_id_box">
+        Price category
+      </label>
+
+      <input type="text" id="price_category_id_box" name="query_price_category_id" value="<%= @the_product_price.price_category_id %>">
+    </div>
+
+    <div>
+      <label for="min_quantity_box">
+        Min quantity
+      </label>
+
+      <input type="text" id="min_quantity_box" name="query_min_quantity" value="<%= @the_product_price.min_quantity %>">
+    </div>
+
+    <div>
+      <label for="max_quantity_box">
+        Max quantity
+      </label>
+
+      <input type="text" id="max_quantity_box" name="query_max_quantity" value="<%= @the_product_price.max_quantity %>">
+    </div>
+
+    <div>
+      <label for="unit_price_box">
+        Unit price
+      </label>
+
+      <input type="text" id="unit_price_box" name="query_unit_price" value="<%= @the_product_price.unit_price %>">
+    </div>
+
+    <button type="submit">
+      Update product price
+    </button>
+  </form>
+</article>
+
+<hr>

@@ -1,0 +1,66 @@
+<h1>
+  Brand #<%= @the_brand.id %> details
+</h1>
+
+<article>
+  <div>
+    <a href="/brands">
+      Go back
+    </a>
+  </div>
+
+  <div>
+    <a href="/delete_brand/<%= @the_brand.id %>">
+      Delete brand
+    </a>
+  </div>
+  <dl>
+    <dt>
+      Name
+    </dt>
+    <dd>
+      <%= @the_brand.name %>
+    </dd>
+
+    <dt>
+      Created at
+    </dt>
+    <dd>
+      <%= time_ago_in_words(@the_brand.created_at) %> ago
+    </dd>
+
+    <dt>
+      Updated at
+    </dt>
+    <dd>
+      <%= time_ago_in_words(@the_brand.updated_at) %> ago
+    </dd>
+  </dl>
+</article>
+
+<hr>
+
+
+<article>
+  <header>
+    <h2>
+      Edit brand
+    </h2>
+  </header>
+
+  <form action="/modify_brand/<%= @the_brand.id %>"  method="post" >
+    <div>
+      <label for="name_box">
+        Name
+      </label>
+
+      <input type="text" id="name_box" name="query_name" value="<%= @the_brand.name %>">
+    </div>
+
+    <button type="submit">
+      Update brand
+    </button>
+  </form>
+</article>
+
+<hr>

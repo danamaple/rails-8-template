@@ -13,6 +13,8 @@ class List < ApplicationRecord
   has_many :list_memberships, class_name: "ListMembership", foreign_key: "list_id"
   has_many :companies, through: :list_memberships, source: :company
   has_many :smart_list_rules, class_name: "SmartListRule", foreign_key: "list_id", dependent: :destroy
+  has_many :promotion_lists, class_name: "PromotionList", foreign_key: "list_id"
+  has_many :promotions, through: :promotion_lists, source: :promotion
 
   def all_companies
     manual = companies

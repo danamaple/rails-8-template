@@ -1,0 +1,417 @@
+<div class="page-header">
+  <div>
+    <h1 class="page-title"><%= @the_product.name.presence || "Unnamed Product" %></h1>
+    <p class="page-subtitle">SKU: <%= @the_product.sku.presence || "—" %></p>
+  </div>
+  <div style="display:flex;gap:8px;">
+    <a href="/products" class="btn btn-ghost btn-sm">← Products</a>
+    <a href="/delete_product/<%= @the_product.id %>" class="btn btn-danger-ghost btn-sm" data-confirm="Delete this product?">Delete</a>
+  </div>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;">
+
+  <%# ===== LEFT COLUMN ===== %>
+  <div>
+
+    <%# Product image + info card %>
+    <div class="card" style="margin-bottom:16px;">
+      <% if @the_product.image_url.present? %>
+        <div style="background:#f8fafc;border-radius:8px 8px 0 0;overflow:hidden;max-height:240px;display:flex;align-items:center;justify-content:center;">
+          <img src="<%= @the_product.image_url %>" alt="<%= @the_product.name %>" style="max-width:100%;max-height:240px;object-fit:contain;">
+        </div>
+      <% end %>
+      <div class="card-body">
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;">
+          <% if @the_product.is_active? %>
+            <span class="badge badge-green">Active</span>
+          <% else %>
+            <span class="badge badge-gray">Inactive</span>
+          <% end %>
+          <% if @the_product.new_arrival? %>
+            <span class="badge badge-blue">New Arrival</span>
+          <% end %>
+        </div>
+        <% if @the_product.description.present? %>
+          <p style="color:#475569;font-size:14px;margin-bottom:12px;"><%= @the_product.description %></p>
+        <% end %>
+      </div>
+    </div>
+
+    <%# Product data grid (editable) %>
+    <div class="card" style="margin-bottom:16px;">
+      <div class="card-header"><h3 class="card-title">Product Details</h3></div>
+      <form action="/modify_product/<%= @the_product.id %>" method="post">
+        <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+        <div class="card-body">
+          <div class="form-group">
+            <label class="form-label">Name</label>
+            <input type="text" name="query_name" value="<%= @the_product.name %>" class="form-input">
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div class="form-group">
+              <label class="form-label">SKU</label>
+              <input type="text" name="query_sku" value="<%= @the_product.sku %>" class="form-input">
+            </div>
+            <div class="form-group">
+              <label class="form-label">UPC</label>
+              <input type="text" name="query_upc" value="<%= @the_product.upc %>" class="form-input">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Frontend Name</label>
+            <input type="text" name="query_frontend_name" value="<%= @the_product.frontend_name %>" class="form-input">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Description</label>
+            <textarea name="query_description" class="form-input" rows="3"><%= @the_product.description %></textarea>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+            <div class="form-group">
+              <label class="form-label">Flavour</label>
+              <input type="text" name="query_flavour" value="<%= @the_product.flavour %>" class="form-input">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Size</label>
+              <input type="text" name="query_size" value="<%= @the_product.size %>" class="form-input">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Weight</label>
+              <input type="text" name="query_weight" value="<%= @the_product.weight %>" class="form-input">
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div class="form-group">
+              <label class="form-label">Supply Price</label>
+              <input type="number" name="query_supply_price" value="<%= @the_product.supply_price %>" class="form-input" step="0.01">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Retail Price</label>
+              <input type="number" name="query_retail_price" value="<%= @the_product.retail_price %>" class="form-input" step="0.01">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Image URL</label>
+            <input type="text" name="query_image_url" value="<%= @the_product.image_url %>" class="form-input">
+          </div>
+          <div style="display:flex;gap:16px;margin-bottom:12px;">
+            <label style="display:flex;align-items:center;gap:6px;cursor:pointer;">
+              <input type="checkbox" name="query_is_active" value="true" <%= @the_product.is_active? ? 'checked' : '' %>> Active
+            </label>
+            <label style="display:flex;align-items:center;gap:6px;cursor:pointer;">
+              <input type="checkbox" name="query_new_arrival" value="true" <%= @the_product.new_arrival? ? 'checked' : '' %>> New Arrival
+            </label>
+            <label style="display:flex;align-items:center;gap:6px;cursor:pointer;">
+              <input type="checkbox" name="query_track_inventory" value="true" <%= @the_product.track_inventory? ? 'checked' : '' %>> Track Inventory
+            </label>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div class="form-group">
+              <label class="form-label">New Arrival Date</label>
+              <input type="date" name="query_new_arrival_date" value="<%= @the_product.new_arrival_date %>" class="form-input">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Inventory Level</label>
+              <input type="number" name="query_inventory_level" value="<%= @the_product.inventory_level %>" class="form-input">
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div class="form-group">
+              <label class="form-label">Reorder Point</label>
+              <input type="number" name="query_reorder_point" value="<%= @the_product.reorder_point %>" class="form-input">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Reorder Qty</label>
+              <input type="number" name="query_reorder_quantity" value="<%= @the_product.reorder_quantity %>" class="form-input">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Brand</label>
+            <select name="query_brand_id" class="form-input">
+              <option value="">— None —</option>
+              <% @brands.each do |b| %>
+                <option value="<%= b.id %>" <%= @the_product.brand_id == b.id ? 'selected' : '' %>><%= b.name %></option>
+              <% end %>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Supplier</label>
+            <select name="query_supplier_id" class="form-input">
+              <option value="">— None —</option>
+              <% @suppliers.each do |s| %>
+                <option value="<%= s.id %>" <%= @the_product.supplier_id == s.id ? 'selected' : '' %>><%= s.name %></option>
+              <% end %>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Category Level 1</label>
+            <select name="query_product_category_one_id" class="form-input">
+              <option value="">— None —</option>
+              <% @category_ones.each do |c| %>
+                <option value="<%= c.id %>" <%= @the_product.product_category_one_id == c.id ? 'selected' : '' %>><%= c.name %></option>
+              <% end %>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Category Level 2</label>
+            <select name="query_product_category_two_id" class="form-input">
+              <option value="">— None —</option>
+              <% @category_twos.each do |c| %>
+                <option value="<%= c.id %>" <%= @the_product.product_category_two_id == c.id ? 'selected' : '' %>><%= c.name %> (<%= c.product_category_one&.name %>)</option>
+              <% end %>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Category Level 3</label>
+            <select name="query_product_category_three_id" class="form-input">
+              <option value="">— None —</option>
+              <% @category_threes.each do |c| %>
+                <option value="<%= c.id %>" <%= @the_product.product_category_three_id == c.id ? 'selected' : '' %>><%= c.name %> (<%= c.product_category_two&.name %>)</option>
+              <% end %>
+            </select>
+          </div>
+        </div>
+        <div class="card-footer">
+          <button type="submit" class="btn btn-primary btn-sm">Save Changes</button>
+        </div>
+      </form>
+    </div>
+
+    <%# Custom Fields %>
+    <div class="card" style="margin-bottom:16px;">
+      <div class="card-header"><h3 class="card-title">Custom Fields</h3></div>
+      <div class="card-body">
+        <% if @custom_fields.empty? %>
+          <p style="color:#94a3b8;font-size:13px;">No custom fields defined. <a href="/custom_fields">Add custom fields</a>.</p>
+        <% else %>
+          <% @custom_fields.each do |cf| %>
+            <% existing = @the_product.custom_field_values.find { |v| v.custom_field_id == cf.id } %>
+            <div style="margin-bottom:12px;">
+              <% if existing %>
+                <form action="/modify_custom_field_value/<%= existing.id %>" method="post" style="display:flex;gap:8px;align-items:center;">
+                  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+                  <label class="form-label" style="width:140px;flex-shrink:0;"><%= cf.field_name %></label>
+                  <input type="text" name="query_value" value="<%= existing.value %>" class="form-input" style="flex:1;">
+                  <button type="submit" class="btn btn-ghost btn-sm">Save</button>
+                </form>
+              <% else %>
+                <form action="/insert_custom_field_value" method="post" style="display:flex;gap:8px;align-items:center;">
+                  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+                  <input type="hidden" name="query_product_id" value="<%= @the_product.id %>">
+                  <input type="hidden" name="query_custom_field_id" value="<%= cf.id %>">
+                  <label class="form-label" style="width:140px;flex-shrink:0;"><%= cf.field_name %></label>
+                  <input type="text" name="query_value" class="form-input" style="flex:1;" placeholder="Enter value...">
+                  <button type="submit" class="btn btn-ghost btn-sm">Save</button>
+                </form>
+              <% end %>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+
+  </div>
+
+  <%# ===== RIGHT COLUMN ===== %>
+  <div>
+
+    <%# Price Book — matrix grid %>
+    <div class="card" style="margin-bottom:16px;">
+      <div class="card-header"><h3 class="card-title">Price Book</h3></div>
+      <% if @price_categories.empty? %>
+        <div class="card-body">
+          <p style="color:#94a3b8;font-size:13px;">No price categories. <a href="/price_categories">Add price categories</a>.</p>
+        </div>
+      <% else %>
+        <div style="overflow-x:auto;">
+          <table class="data-table" id="price-matrix">
+            <thead>
+              <tr>
+                <th style="min-width:120px;">Category</th>
+                <% @tiers.each do |min_qty| %>
+                  <th style="text-align:center;">Qty <%= min_qty %>+</th>
+                <% end %>
+                <% if @tiers.empty? %>
+                  <th style="text-align:center;">Base Price</th>
+                <% end %>
+              </tr>
+            </thead>
+            <tbody>
+              <% @price_categories.each do |pc| %>
+                <tr>
+                  <td style="font-weight:500;font-size:13px;"><%= pc.name %></td>
+                  <% if @tiers.empty? %>
+                    <td style="text-align:center;color:#94a3b8;">—</td>
+                  <% else %>
+                    <% @tiers.each do |min_qty| %>
+                      <td style="text-align:center;padding:4px 8px;">
+                        <% pp_row = @price_matrix[pc.id][min_qty] %>
+                        <% if pp_row %>
+                          <input type="number"
+                            step="0.01" min="0"
+                            value="<%= '%.2f' % pp_row.unit_price %>"
+                            style="width:80px;text-align:right;border:1px solid #e2e8f0;border-radius:4px;padding:4px 6px;font-size:13px;"
+                            data-price-id="<%= pp_row.id %>"
+                            class="price-cell-input"
+                            onchange="autosavePrice(this)">
+                        <% else %>
+                          <span style="color:#94a3b8;">—</span>
+                        <% end %>
+                      </td>
+                    <% end %>
+                  <% end %>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+
+        <div style="border-top:1px solid #f1f5f9;padding:12px 16px;">
+          <form action="/split_product_prices/<%= @the_product.id %>" method="post" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+            <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+            <label style="font-size:13px;color:#64748b;font-weight:500;">Add volume tier at qty:</label>
+            <input type="number" name="query_split_quantity" min="2" class="form-input" style="width:80px;" placeholder="e.g. 10">
+            <button type="submit" class="btn btn-secondary btn-sm">Split</button>
+            <span style="font-size:12px;color:#94a3b8;">Applies to all categories at once.</span>
+          </form>
+        </div>
+      <% end %>
+    </div>
+
+    <%# Customer Pricing %>
+    <div class="card" style="margin-bottom:16px;">
+      <div class="card-header"><h3 class="card-title">Customer Pricing</h3></div>
+      <div class="card-body">
+        <% if @the_product.customer_prices.any? %>
+          <table class="data-table" style="margin-bottom:12px;">
+            <thead>
+              <tr>
+                <th>Company</th>
+                <th>Min Qty</th>
+                <th>Max Qty</th>
+                <th>Unit Price</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @the_product.customer_prices.each do |cp| %>
+                <tr>
+                  <td><%= cp.company&.company_name || "Unknown" %></td>
+                  <td><%= cp.min_quantity %></td>
+                  <td><%= cp.max_quantity || "∞" %></td>
+                  <td>$<%= '%.2f' % cp.unit_price %></td>
+                  <td><a href="/delete_customer_price/<%= cp.id %>" class="btn btn-danger-ghost btn-sm" data-confirm="Remove?">Remove</a></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% end %>
+
+        <form action="/insert_customer_price" method="post">
+          <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+          <input type="hidden" name="query_product_id" value="<%= @the_product.id %>">
+          <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr auto;gap:8px;align-items:end;">
+            <div class="form-group" style="margin:0;">
+              <label class="form-label">Company</label>
+              <select name="query_company_id" class="form-input">
+                <option value="">— Select —</option>
+                <% @companies.each do |c| %>
+                  <option value="<%= c.id %>"><%= c.company_name %></option>
+                <% end %>
+              </select>
+            </div>
+            <div class="form-group" style="margin:0;">
+              <label class="form-label">Min Qty</label>
+              <input type="number" name="query_min_quantity" value="1" class="form-input">
+            </div>
+            <div class="form-group" style="margin:0;">
+              <label class="form-label">Max Qty</label>
+              <input type="number" name="query_max_quantity" class="form-input" placeholder="∞">
+            </div>
+            <div class="form-group" style="margin:0;">
+              <label class="form-label">Unit Price</label>
+              <input type="number" name="query_unit_price" step="0.01" class="form-input" placeholder="0.00">
+            </div>
+            <button type="submit" class="btn btn-primary btn-sm" style="margin-bottom:0;">Add</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <%# Promotions %>
+    <div class="card" style="margin-bottom:16px;">
+      <div class="card-header"><h3 class="card-title">Promotions</h3></div>
+      <div class="card-body">
+        <% active_promos = @the_product.promotions %>
+        <% if active_promos.any? %>
+          <table class="data-table" style="margin-bottom:12px;">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Discount</th>
+                <th>Dates</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% active_promos.each do |promo| %>
+                <% pp_record = @the_product.promotion_products.find { |r| r.promotion_id == promo.id } %>
+                <tr>
+                  <td><a href="/promotions/<%= promo.id %>"><%= promo.name %></a></td>
+                  <td style="font-size:12px;"><%= promo.discount_summary %></td>
+                  <td style="font-size:12px;"><%= promo.start_date&.strftime("%b %d") %> – <%= promo.end_date&.strftime("%b %d, %Y") %></td>
+                  <td>
+                    <% if pp_record %>
+                      <a href="/delete_promotion_product/<%= pp_record.id %>" class="btn btn-danger-ghost btn-sm" data-confirm="Remove?">Remove</a>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% end %>
+
+        <form action="/insert_promotion_product" method="post" style="display:flex;gap:8px;align-items:end;">
+          <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+          <input type="hidden" name="query_product_id" value="<%= @the_product.id %>">
+          <div class="form-group" style="margin:0;flex:1;">
+            <label class="form-label">Add to Promotion</label>
+            <select name="query_promotion_id" class="form-input">
+              <option value="">— Select promotion —</option>
+              <% @promotions_available.each do |promo| %>
+                <option value="<%= promo.id %>"><%= promo.name %></option>
+              <% end %>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary btn-sm" style="margin-bottom:0;">Add</button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function autosavePrice(input) {
+  const priceId = input.dataset.priceId;
+  const token = document.querySelector('meta[name="csrf-token"]').content;
+  const formData = new FormData();
+  formData.append('query_unit_price', input.value);
+  formData.append('authenticity_token', token);
+
+  fetch('/modify_product_price/' + priceId, {
+    method: 'POST',
+    headers: { 'Accept': 'application/json' },
+    body: formData
+  })
+  .then(r => r.json())
+  .then(data => {
+    input.style.borderColor = data.success ? '#22c55e' : '#ef4444';
+    setTimeout(() => { input.style.borderColor = '#e2e8f0'; }, 1500);
+  })
+  .catch(() => {
+    input.style.borderColor = '#ef4444';
+    setTimeout(() => { input.style.borderColor = '#e2e8f0'; }, 1500);
+  });
+}
+</script>

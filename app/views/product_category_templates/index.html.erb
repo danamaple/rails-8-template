@@ -1,0 +1,94 @@
+<div class="page-header">
+  <h1 class="page-title">Product Categories</h1>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;">
+
+  <%# Left: category tree %>
+  <div>
+    <div class="card" style="margin-bottom:16px;">
+      <div class="card-header"><h3 class="card-title">Category Hierarchy</h3></div>
+      <div class="card-body">
+        <% if @category_ones.empty? %>
+          <p style="color:#94a3b8;font-size:13px;">No categories yet.</p>
+        <% else %>
+          <% @category_ones.each do |c1| %>
+            <div style="margin-bottom:12px;">
+              <div style="font-weight:600;color:#1e293b;font-size:14px;padding:4px 0;">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width:12px;height:12px;display:inline;margin-right:4px;"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6Z"/></svg>
+                <%= c1.name %>
+              </div>
+              <% c1.product_category_twos.each do |c2| %>
+                <div style="margin-left:16px;padding:2px 0;color:#475569;font-size:13px;">
+                  ↳ <%= c2.name %>
+                  <% c2.product_category_threes.each do |c3| %>
+                    <div style="margin-left:16px;color:#94a3b8;font-size:12px;">↳ <%= c3.name %></div>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <%# Right: add forms %>
+  <div>
+    <div class="card" style="margin-bottom:16px;">
+      <div class="card-header"><h3 class="card-title">Add Level 1 Category</h3></div>
+      <div class="card-body">
+        <form action="/insert_product_category_one" method="post" style="display:flex;gap:8px;">
+          <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+          <input type="text" name="query_name" class="form-input" placeholder="Category name" required style="flex:1;">
+          <button type="submit" class="btn btn-primary btn-sm">Add</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:16px;">
+      <div class="card-header"><h3 class="card-title">Add Level 2 Sub-Category</h3></div>
+      <div class="card-body">
+        <form action="/insert_product_category_two" method="post">
+          <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+          <div class="form-group">
+            <label class="form-label">Parent Category (Level 1)</label>
+            <select name="query_product_category_one_id" class="form-input" required>
+              <option value="">— Select —</option>
+              <% @category_ones.each do |c| %>
+                <option value="<%= c.id %>"><%= c.name %></option>
+              <% end %>
+            </select>
+          </div>
+          <div style="display:flex;gap:8px;">
+            <input type="text" name="query_name" class="form-input" placeholder="Sub-category name" required style="flex:1;">
+            <button type="submit" class="btn btn-primary btn-sm">Add</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><h3 class="card-title">Add Level 3 Sub-Sub-Category</h3></div>
+      <div class="card-body">
+        <form action="/insert_product_category_three" method="post">
+          <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+          <div class="form-group">
+            <label class="form-label">Parent Category (Level 2)</label>
+            <select name="query_product_category_two_id" class="form-input" required>
+              <option value="">— Select —</option>
+              <% @category_twos.each do |c| %>
+                <option value="<%= c.id %>"><%= c.name %> (<%= c.product_category_one&.name %>)</option>
+              <% end %>
+            </select>
+          </div>
+          <div style="display:flex;gap:8px;">
+            <input type="text" name="query_name" class="form-input" placeholder="Sub-sub-category name" required style="flex:1;">
+            <button type="submit" class="btn btn-primary btn-sm">Add</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</div>

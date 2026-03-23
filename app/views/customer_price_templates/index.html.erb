@@ -1,0 +1,75 @@
+<h1>
+  List of all customer prices
+</h1>
+
+<hr>
+
+<article>
+  <header>
+    <h2>
+      Add a new customer price
+    </h2>
+  </header>
+
+  <form action="/insert_customer_price" method="post">
+    <div>
+      <label for="product_id_box">
+        Product
+      </label>
+
+      <input type="text" id="product_id_box" name="query_product_id">
+    </div>
+
+    <div>
+      <label for="company_id_box">
+        Company
+      </label>
+
+      <input type="text" id="company_id_box" name="query_company_id">
+    </div>
+
+    <div>
+      <label for="min_quantity_box">
+        Min quantity
+      </label>
+
+      <input type="text" id="min_quantity_box" name="query_min_quantity">
+    </div>
+
+    <div>
+      <label for="max_quantity_box">
+        Max quantity
+      </label>
+
+      <input type="text" id="max_quantity_box" name="query_max_quantity">
+    </div>
+
+    <div>
+      <label for="unit_price_box">
+        Unit price
+      </label>
+
+      <input type="text" id="unit_price_box" name="query_unit_price">
+    </div>
+
+    <button type="submit">
+      Create customer price
+    </button>
+  </form>
+</article>
+
+<hr>
+
+<article>
+  <ul>
+    <% @list_of_customer_prices.each do |a_customer_price| %>
+      <li>
+        <a href="/customer_prices/<%= a_customer_price.id %>">
+          Customer price #<%= a_customer_price.id %>
+        </a>
+      </li>
+    <% end %>
+  </ul>
+</article>
+
+<hr>

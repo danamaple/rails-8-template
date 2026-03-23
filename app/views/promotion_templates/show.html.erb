@@ -1,0 +1,163 @@
+<div class="page-header">
+  <div>
+    <h1 class="page-title"><%= @the_promotion.name %></h1>
+    <p class="page-subtitle"><%= @the_promotion.discount_summary %></p>
+  </div>
+  <div style="display:flex;gap:8px;">
+    <a href="/promotions" class="btn btn-ghost btn-sm">← Promotions</a>
+    <a href="/delete_promotion/<%= @the_promotion.id %>" class="btn btn-danger-ghost btn-sm" data-confirm="Delete this promotion?">Delete</a>
+  </div>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;">
+
+  <%# LEFT: Details + edit %>
+  <div>
+    <div class="card" style="margin-bottom:16px;">
+      <div class="card-header"><h3 class="card-title">Details</h3></div>
+      <form action="/modify_promotion/<%= @the_promotion.id %>" method="post">
+        <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+        <div class="card-body">
+          <div class="form-group">
+            <label class="form-label">Name</label>
+            <input type="text" name="query_name" value="<%= @the_promotion.name %>" class="form-input" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Description</label>
+            <textarea name="query_description" class="form-input" rows="2"><%= @the_promotion.description %></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Discount Type</label>
+            <select name="query_discount_type" class="form-input">
+              <% ["percentage","fixed","price_override","bogo"].each do |dt| %>
+                <option value="<%= dt %>" <%= @the_promotion.discount_type == dt ? 'selected' : '' %>><%= dt %></option>
+              <% end %>
+            </select>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div class="form-group">
+              <label class="form-label">Discount Value</label>
+              <input type="number" name="query_discount_value" value="<%= @the_promotion.discount_value %>" class="form-input" step="0.01">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Discount %</label>
+              <input type="number" name="query_discount_percent" value="<%= @the_promotion.discount_percent %>" class="form-input" step="0.01">
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div class="form-group">
+              <label class="form-label">Buy Quantity</label>
+              <input type="number" name="query_buy_quantity" value="<%= @the_promotion.buy_quantity %>" class="form-input">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Get Quantity</label>
+              <input type="number" name="query_get_quantity" value="<%= @the_promotion.get_quantity %>" class="form-input">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Minimum Quantity</label>
+            <input type="number" name="query_min_quantity" value="<%= @the_promotion.min_quantity %>" class="form-input">
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div class="form-group">
+              <label class="form-label">Start Date</label>
+              <input type="date" name="query_start_date" value="<%= @the_promotion.start_date %>" class="form-input">
+            </div>
+            <div class="form-group">
+              <label class="form-label">End Date</label>
+              <input type="date" name="query_end_date" value="<%= @the_promotion.end_date %>" class="form-input">
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <button type="submit" class="btn btn-primary btn-sm">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <%# RIGHT: Products + Lists %>
+  <div>
+
+    <%# Assigned Products %>
+    <div class="card" style="margin-bottom:16px;">
+      <div class="card-header"><h3 class="card-title">Assigned Products</h3></div>
+      <div class="card-body">
+        <% if @the_promotion.products.any? %>
+          <table class="data-table" style="margin-bottom:12px;">
+            <thead>
+              <tr><th>Product</th><th>SKU</th><th></th></tr>
+            </thead>
+            <tbody>
+              <% @the_promotion.promotion_products.each do |pp| %>
+                <tr>
+                  <td><a href="/products/<%= pp.product_id %>"><%= pp.product.name %></a></td>
+                  <td style="font-size:12px;"><%= pp.product.sku %></td>
+                  <td><a href="/delete_promotion_product/<%= pp.id %>" class="btn btn-danger-ghost btn-sm" data-confirm="Remove?">Remove</a></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% else %>
+          <p style="color:#94a3b8;font-size:13px;margin-bottom:12px;">No products assigned yet.</p>
+        <% end %>
+
+        <form action="/insert_promotion_product" method="post" style="display:flex;gap:8px;align-items:end;">
+          <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+          <input type="hidden" name="query_promotion_id" value="<%= @the_promotion.id %>">
+          <div class="form-group" style="margin:0;flex:1;">
+            <label class="form-label">Add Product</label>
+            <select name="query_product_id" class="form-input">
+              <option value="">— Select product —</option>
+              <% @products_available.each do |p| %>
+                <option value="<%= p.id %>"><%= p.name %> (<%= p.sku %>)</option>
+              <% end %>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary btn-sm" style="margin-bottom:0;">Add</button>
+        </form>
+      </div>
+    </div>
+
+    <%# Assigned Lists %>
+    <div class="card">
+      <div class="card-header"><h3 class="card-title">Assigned Lists</h3></div>
+      <div class="card-body">
+        <% if @the_promotion.lists.any? %>
+          <table class="data-table" style="margin-bottom:12px;">
+            <thead>
+              <tr><th>List</th><th>Members</th><th></th></tr>
+            </thead>
+            <tbody>
+              <% @the_promotion.promotion_lists.each do |pl| %>
+                <tr>
+                  <td><a href="/lists/<%= pl.list_id %>"><%= pl.list.name %></a></td>
+                  <td><%= pl.list.list_memberships.count %></td>
+                  <td><a href="/delete_promotion_list/<%= pl.id %>" class="btn btn-danger-ghost btn-sm" data-confirm="Remove?">Remove</a></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% else %>
+          <p style="color:#94a3b8;font-size:13px;margin-bottom:12px;">No lists assigned yet.</p>
+        <% end %>
+
+        <form action="/insert_promotion_list" method="post" style="display:flex;gap:8px;align-items:end;">
+          <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+          <input type="hidden" name="query_promotion_id" value="<%= @the_promotion.id %>">
+          <div class="form-group" style="margin:0;flex:1;">
+            <label class="form-label">Add List</label>
+            <select name="query_list_id" class="form-input">
+              <option value="">— Select list —</option>
+              <% @lists_available.each do |l| %>
+                <option value="<%= l.id %>"><%= l.name %></option>
+              <% end %>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary btn-sm" style="margin-bottom:0;">Add</button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</div>

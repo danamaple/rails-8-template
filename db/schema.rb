@@ -10,9 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_03_22_062614) do
+ActiveRecord::Schema[8.0].define(version: 2026_03_23_161047) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "brands", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "categories", force: :cascade do |t|
     t.string "category"
@@ -48,6 +54,31 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_22_062614) do
     t.datetime "email_consent_date"
     t.boolean "unsubscribed"
     t.datetime "unsubscribed_date"
+  end
+
+  create_table "custom_field_values", force: :cascade do |t|
+    t.integer "product_id"
+    t.integer "custom_field_id"
+    t.string "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "custom_fields", force: :cascade do |t|
+    t.string "field_name"
+    t.string "data_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "customer_prices", force: :cascade do |t|
+    t.integer "product_id"
+    t.integer "company_id"
+    t.integer "min_quantity"
+    t.integer "max_quantity"
+    t.decimal "unit_price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "email_sends", force: :cascade do |t|
@@ -97,6 +128,99 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_22_062614) do
   create_table "portfolios", force: :cascade do |t|
     t.integer "company_id"
     t.integer "category_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "price_categories", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "product_category_ones", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "product_category_threes", force: :cascade do |t|
+    t.string "name"
+    t.integer "product_category_two_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "product_category_twos", force: :cascade do |t|
+    t.string "name"
+    t.integer "product_category_one_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "product_prices", force: :cascade do |t|
+    t.integer "product_id"
+    t.integer "price_category_id"
+    t.integer "min_quantity"
+    t.integer "max_quantity"
+    t.decimal "unit_price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "products", force: :cascade do |t|
+    t.string "sku"
+    t.string "name"
+    t.text "description"
+    t.string "frontend_name"
+    t.string "upc"
+    t.string "flavour"
+    t.string "size"
+    t.string "weight"
+    t.decimal "supply_price"
+    t.decimal "retail_price"
+    t.boolean "is_active"
+    t.boolean "new_arrival"
+    t.date "new_arrival_date"
+    t.string "image_url"
+    t.integer "inventory_level"
+    t.boolean "track_inventory"
+    t.integer "reorder_quantity"
+    t.integer "reorder_point"
+    t.integer "brand_id"
+    t.integer "supplier_id"
+    t.integer "product_category_one_id"
+    t.integer "product_category_two_id"
+    t.integer "product_category_three_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "promotion_lists", force: :cascade do |t|
+    t.integer "promotion_id"
+    t.integer "list_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "promotion_products", force: :cascade do |t|
+    t.integer "promotion_id"
+    t.integer "product_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "promotions", force: :cascade do |t|
+    t.string "name"
+    t.date "start_date"
+    t.date "end_date"
+    t.integer "buy_quantity"
+    t.integer "get_quantity"
+    t.decimal "discount_percent"
+    t.string "discount_type"
+    t.decimal "discount_value"
+    t.integer "min_quantity"
+    t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -250,6 +374,16 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_22_062614) do
     t.index ["expires_at"], name: "index_solid_queue_semaphores_on_expires_at"
     t.index ["key", "value"], name: "index_solid_queue_semaphores_on_key_and_value"
     t.index ["key"], name: "index_solid_queue_semaphores_on_key", unique: true
+  end
+
+  create_table "suppliers", force: :cascade do |t|
+    t.string "name"
+    t.string "contact_name"
+    t.string "email"
+    t.string "phone"
+    t.string "website"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|

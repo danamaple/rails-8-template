@@ -1,0 +1,81 @@
+<h1>
+  Promotion list #<%= @the_promotion_list.id %> details
+</h1>
+
+<article>
+  <div>
+    <a href="/promotion_lists">
+      Go back
+    </a>
+  </div>
+
+  <div>
+    <a href="/delete_promotion_list/<%= @the_promotion_list.id %>">
+      Delete promotion list
+    </a>
+  </div>
+  <dl>
+    <dt>
+      Promotion
+    </dt>
+    <dd>
+      <%= @the_promotion_list.promotion_id %>
+    </dd>
+
+    <dt>
+      List
+    </dt>
+    <dd>
+      <%= @the_promotion_list.list_id %>
+    </dd>
+
+    <dt>
+      Created at
+    </dt>
+    <dd>
+      <%= time_ago_in_words(@the_promotion_list.created_at) %> ago
+    </dd>
+
+    <dt>
+      Updated at
+    </dt>
+    <dd>
+      <%= time_ago_in_words(@the_promotion_list.updated_at) %> ago
+    </dd>
+  </dl>
+</article>
+
+<hr>
+
+
+<article>
+  <header>
+    <h2>
+      Edit promotion list
+    </h2>
+  </header>
+
+  <form action="/modify_promotion_list/<%= @the_promotion_list.id %>"  method="post" >
+    <div>
+      <label for="promotion_id_box">
+        Promotion
+      </label>
+
+      <input type="text" id="promotion_id_box" name="query_promotion_id" value="<%= @the_promotion_list.promotion_id %>">
+    </div>
+
+    <div>
+      <label for="list_id_box">
+        List
+      </label>
+
+      <input type="text" id="list_id_box" name="query_list_id" value="<%= @the_promotion_list.list_id %>">
+    </div>
+
+    <button type="submit">
+      Update promotion list
+    </button>
+  </form>
+</article>
+
+<hr>

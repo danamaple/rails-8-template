@@ -1,0 +1,126 @@
+<h1>
+  Supplier #<%= @the_supplier.id %> details
+</h1>
+
+<article>
+  <div>
+    <a href="/suppliers">
+      Go back
+    </a>
+  </div>
+
+  <div>
+    <a href="/delete_supplier/<%= @the_supplier.id %>">
+      Delete supplier
+    </a>
+  </div>
+  <dl>
+    <dt>
+      Name
+    </dt>
+    <dd>
+      <%= @the_supplier.name %>
+    </dd>
+
+    <dt>
+      Contact name
+    </dt>
+    <dd>
+      <%= @the_supplier.contact_name %>
+    </dd>
+
+    <dt>
+      Email
+    </dt>
+    <dd>
+      <%= @the_supplier.email %>
+    </dd>
+
+    <dt>
+      Phone
+    </dt>
+    <dd>
+      <%= @the_supplier.phone %>
+    </dd>
+
+    <dt>
+      Website
+    </dt>
+    <dd>
+      <%= @the_supplier.website %>
+    </dd>
+
+    <dt>
+      Created at
+    </dt>
+    <dd>
+      <%= time_ago_in_words(@the_supplier.created_at) %> ago
+    </dd>
+
+    <dt>
+      Updated at
+    </dt>
+    <dd>
+      <%= time_ago_in_words(@the_supplier.updated_at) %> ago
+    </dd>
+  </dl>
+</article>
+
+<hr>
+
+
+<article>
+  <header>
+    <h2>
+      Edit supplier
+    </h2>
+  </header>
+
+  <form action="/modify_supplier/<%= @the_supplier.id %>"  method="post" >
+    <div>
+      <label for="name_box">
+        Name
+      </label>
+
+      <input type="text" id="name_box" name="query_name" value="<%= @the_supplier.name %>">
+    </div>
+
+    <div>
+      <label for="contact_name_box">
+        Contact name
+      </label>
+
+      <input type="text" id="contact_name_box" name="query_contact_name" value="<%= @the_supplier.contact_name %>">
+    </div>
+
+    <div>
+      <label for="email_box">
+        Email
+      </label>
+
+      <input type="text" id="email_box" name="query_email" value="<%= @the_supplier.email %>">
+    </div>
+
+    <div>
+      <label for="phone_box">
+        Phone
+      </label>
+
+      <input type="text" id="phone_box" name="query_phone" value="<%= @the_supplier.phone %>">
+    </div>
+
+    <div>
+      <label for="website_box">
+        Website
+      </label>
+
+      <input type="text" id="website_box" name="query_website" value="<%= @the_supplier.website %>">
+    </div>
+
+    <button type="submit">
+      Update supplier
+    </button>
+  </form>
+</article>
+
+<hr>

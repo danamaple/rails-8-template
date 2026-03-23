@@ -1,0 +1,51 @@
+<div class="page-header">
+  <h1 class="page-title">Custom Fields</h1>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;">
+  <div class="card">
+    <div class="card-header"><h3 class="card-title">All Custom Fields</h3></div>
+    <table class="data-table">
+      <thead>
+        <tr><th>Field Name</th><th>Data Type</th><th></th></tr>
+      </thead>
+      <tbody>
+        <% @list_of_custom_fields.each do |cf| %>
+          <tr>
+            <td style="font-weight:500;"><%= cf.field_name %></td>
+            <td><span class="badge badge-gray"><%= cf.data_type %></span></td>
+            <td style="text-align:right;">
+              <a href="/delete_custom_field/<%= cf.id %>" class="btn btn-danger-ghost btn-sm" data-confirm="Delete this custom field?">Delete</a>
+            </td>
+          </tr>
+        <% end %>
+        <% if @list_of_custom_fields.empty? %>
+          <tr><td colspan="3" style="text-align:center;color:#94a3b8;padding:24px;">No custom fields yet.</td></tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><h3 class="card-title">Add Custom Field</h3></div>
+    <div class="card-body">
+      <form action="/insert_custom_field" method="post">
+        <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+        <div class="form-group">
+          <label class="form-label">Field Name</label>
+          <input type="text" name="query_field_name" class="form-input" placeholder="e.g. Allergens" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Data Type</label>
+          <select name="query_data_type" class="form-input">
+            <option value="text">Text</option>
+            <option value="number">Number</option>
+            <option value="boolean">Boolean</option>
+            <option value="date">Date</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Field</button>
+      </form>
+    </div>
+  </div>
+</div>

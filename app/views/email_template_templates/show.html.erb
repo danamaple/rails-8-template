@@ -15,7 +15,7 @@
     <dd><%= @the_email_template.subject %></dd>
 
     <dt>Body</dt>
-    <dd><pre style="white-space: pre-wrap;"><%= @the_email_template.body %></pre></dd>
+    <dd><div style="border: 1px solid #ddd; padding: 16px; border-radius: 8px;"><%= raw @the_email_template.body %></div></dd>
 
     <dt>Created</dt>
     <dd><%= time_ago_in_words(@the_email_template.created_at) %> ago</dd>
@@ -46,7 +46,71 @@
       <textarea id="body_box" name="query_body" rows="10"><%= @the_email_template.body %></textarea>
     </div>
 
+    <div>
+      <label>
+        <input type="checkbox" name="query_show_prices" value="true" <%= @the_email_template.show_prices? ? "checked" : "" %> onchange="this.form.submit()">
+        Show prices in email
+      </label>
+    </div>
+
     <button type="submit">Update Template</button>
+  </form>
+</article>
+
+<article>
+  <header>
+    Products
+  </header>
+
+  <% if @template_products.any? %>
+    <div class="overflow-auto">
+      <table>
+        <thead>
+          <tr>
+            <th>Position</th>
+            <th>Name</th>
+            <th>Brand</th>
+            <th>Size</th>
+            <th>Retail Price</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @template_products.each do |etp| %>
+            <tr>
+              <td><%= etp.position %></td>
+              <td><a href="/products/<%= etp.product.id %>"><%= etp.product.name %></a></td>
+              <td><%= etp.product.brand&.name %></td>
+              <td><%= etp.product.size %></td>
+              <td><%= etp.product.retail_price.present? ? "$#{"%.2f" % etp.product.retail_price}" : "" %></td>
+              <td><a href="/delete_email_template_product/<%= etp.id %>">Remove</a></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <p>No products added yet.</p>
+  <% end %>
+
+  <hr>
+
+  <strong>Add a product</strong>
+
+  <form action="/insert_email_template_product" method="post">
+    <input type="hidden" name="query_email_template_id" value="<%= @the_email_template.id %>">
+
+    <div>
+      <label for="product_id_box">Product</label>
+      <select id="product_id_box" name="query_product_id">
+        <option value="">-- select a product --</option>
+        <% @list_of_all_products.each do |a_product| %>
+          <option value="<%= a_product.id %>"><%= a_product.name %><%= a_product.brand.present? ? " — #{a_product.brand.name}" : "" %><%= a_product.size.present? ? " (#{a_product.size})" : "" %></option>
+        <% end %>
+      </select>
+    </div>
+
+    <button type="submit">Add Product</button>
   </form>
 </article>
 
@@ -78,7 +142,7 @@
       <dd><%= @preview[:subject] %></dd>
 
       <dt>Body</dt>
-      <dd><pre style="white-space: pre-wrap;"><%= @preview[:body] %></pre></dd>
+      <dd><div style="border: 1px solid #ddd; padding: 16px; border-radius: 8px;"><%= raw @preview[:body] %></div></dd>
     </dl>
     <p><small>Previewing for: <%= @preview_contact.first_name %> <%= @preview_contact.last_name %></small></p>
   <% end %>

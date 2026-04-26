@@ -1,0 +1,96 @@
+<h1>
+  Email template product #<%= @the_email_template_product.id %> details
+</h1>
+
+<article>
+  <div>
+    <a href="/email_template_products">
+      Go back
+    </a>
+  </div>
+
+  <div>
+    <a href="/delete_email_template_product/<%= @the_email_template_product.id %>">
+      Delete email template product
+    </a>
+  </div>
+  <dl>
+    <dt>
+      Email template
+    </dt>
+    <dd>
+      <%= @the_email_template_product.email_template_id %>
+    </dd>
+
+    <dt>
+      Product
+    </dt>
+    <dd>
+      <%= @the_email_template_product.product_id %>
+    </dd>
+
+    <dt>
+      Position
+    </dt>
+    <dd>
+      <%= @the_email_template_product.position %>
+    </dd>
+
+    <dt>
+      Created at
+    </dt>
+    <dd>
+      <%= time_ago_in_words(@the_email_template_product.created_at) %> ago
+    </dd>
+
+    <dt>
+      Updated at
+    </dt>
+    <dd>
+      <%= time_ago_in_words(@the_email_template_product.updated_at) %> ago
+    </dd>
+  </dl>
+</article>
+
+<hr>
+
+
+<article>
+  <header>
+    <h2>
+      Edit email template product
+    </h2>
+  </header>
+
+  <form action="/modify_email_template_product/<%= @the_email_template_product.id %>"  method="post" >
+    <div>
+      <label for="email_template_id_box">
+        Email template
+      </label>
+
+      <input type="text" id="email_template_id_box" name="query_email_template_id" value="<%= @the_email_template_product.email_template_id %>">
+    </div>
+
+    <div>
+      <label for="product_id_box">
+        Product
+      </label>
+
+      <input type="text" id="product_id_box" name="query_product_id" value="<%= @the_email_template_product.product_id %>">
+    </div>
+
+    <div>
+      <label for="position_box">
+        Position
+      </label>
+
+      <input type="text" id="position_box" name="query_position" value="<%= @the_email_template_product.position %>">
+    </div>
+
+    <button type="submit">
+      Update email template product
+    </button>
+  </form>
+</article>
+
+<hr>

@@ -1,4 +1,23 @@
 Rails.application.routes.draw do
+  # Routes for the Email template product resource:
+
+  # CREATE
+  post("/insert_email_template_product", { :controller => "email_template_products", :action => "create" })
+
+  # READ
+  get("/email_template_products", { :controller => "email_template_products", :action => "index" })
+
+  get("/email_template_products/:path_id", { :controller => "email_template_products", :action => "show" })
+
+  # UPDATE
+
+  post("/modify_email_template_product/:path_id", { :controller => "email_template_products", :action => "update" })
+
+  # DELETE
+  get("/delete_email_template_product/:path_id", { :controller => "email_template_products", :action => "destroy" })
+
+  #------------------------------
+
   # Routes for the List exclusion resource:
 
   # CREATE

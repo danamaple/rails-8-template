@@ -20,6 +20,9 @@
     <dt>Notes</dt>
     <dd><%= @the_company.notes %></dd>
 
+    <dt>Price Category</dt>
+    <dd><%= @the_company.price_category&.name %></dd>
+
     <dt>Created</dt>
     <dd><%= time_ago_in_words(@the_company.created_at) %> ago</dd>
   </dl>
@@ -55,6 +58,18 @@
     <div>
       <label for="notes_box">Notes</label>
       <textarea id="notes_box" name="query_notes"><%= @the_company.notes %></textarea>
+    </div>
+
+    <div>
+      <label for="price_category_box">Price Category</label>
+      <select id="price_category_box" name="query_price_category_id">
+        <option value="">-- none --</option>
+        <% @list_of_price_categories.each do |a_price_category| %>
+          <option value="<%= a_price_category.id %>" <%= @the_company.price_category_id == a_price_category.id ? "selected" : "" %>>
+            <%= a_price_category.name %>
+          </option>
+        <% end %>
+      </select>
     </div>
 
     <button type="submit">Update company</button>

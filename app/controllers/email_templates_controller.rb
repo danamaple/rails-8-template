@@ -19,6 +19,8 @@ class EmailTemplatesController < ApplicationController
     the_id = params.fetch("path_id")
     @the_email_template = EmailTemplate.where({ :id => the_id }).at(0)
     @list_of_all_contacts = Contact.all.order({ :last_name => :asc, :first_name => :asc })
+    @list_of_all_products = Product.where({ :is_active => true }).order({ :name => :asc })
+    @template_products = @the_email_template.email_template_products.includes(:product => :brand).order(:position)
 
     if params["preview_contact_id"].present?
       preview_contact = Contact.where({ :id => params["preview_contact_id"] }).at(0)
@@ -50,6 +52,7 @@ class EmailTemplatesController < ApplicationController
     the_email_template.name = params.fetch("query_name")
     the_email_template.subject = params.fetch("query_subject")
     the_email_template.body = params.fetch("query_body")
+    the_email_template.show_prices = params.fetch("query_show_prices", "false") == "true"
 
     if the_email_template.valid?
       the_email_template.save

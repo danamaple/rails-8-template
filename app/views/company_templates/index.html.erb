@@ -56,6 +56,18 @@
           <% end %>
         </select>
       </div>
+
+      <div>
+        <label for="price_category_filter">Price Category</label>
+        <select id="price_category_filter" name="query_price_category_id">
+          <option value="">All price categories</option>
+          <% @list_of_price_categories.each do |a_price_category| %>
+            <option value="<%= a_price_category.id %>" <%= params["query_price_category_id"] == a_price_category.id.to_s ? "selected" : "" %>>
+              <%= a_price_category.name %>
+            </option>
+          <% end %>
+        </select>
+      </div>
     </div>
 
     <div style="display: flex; align-items: center; gap: 8px; margin-top: 10px;">

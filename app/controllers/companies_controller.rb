@@ -18,11 +18,16 @@ class CompaniesController < ApplicationController
       matching_companies = matching_companies.joins(:list_memberships).where({ :list_memberships => { :list_id => params["query_list_id"] } }).distinct
     end
 
+    if params["query_price_category_id"].present?
+      matching_companies = matching_companies.where({ :price_category_id => params["query_price_category_id"] })
+    end
+
     @total_count = Company.count
     @filtered_count = matching_companies.count
     @list_of_companies = matching_companies.includes({ :portfolios => :category }, { :list_memberships => :list }).order({ :company_name => :asc })
     @list_of_categories = Category.all.order({ :category => :asc })
     @list_of_lists = List.all.order({ :name => :asc })
+    @list_of_price_categories = PriceCategory.all.order({ :name => :asc })
 
     # Outreach aggregate stats — one query for all counts + max date
     @outreach_stats = Outreach.joins(:contact)
@@ -67,6 +72,7 @@ class CompaniesController < ApplicationController
     @the_company = matching_companies.at(0)
     @list_of_categories = Category.all.order({ :category => :asc })
     @list_of_lists = List.all.order({ :name => :asc })
+    @list_of_price_categories = PriceCategory.all.order({ :name => :asc })
 
     @all_outreaches = Outreach.includes(:contact, :rep)
       .joins(:contact)
@@ -104,6 +110,7 @@ class CompaniesController < ApplicationController
     the_company.website = params.fetch("query_website")
     the_company.status = params.fetch("query_status")
     the_company.notes = params.fetch("query_notes")
+    the_company.price_category_id = params["query_price_category_id"].present? ? params["query_price_category_id"] : nil
 
     if the_company.valid?
       the_company.save

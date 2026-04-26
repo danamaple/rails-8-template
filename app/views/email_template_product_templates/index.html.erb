@@ -1,0 +1,59 @@
+<h1>
+  List of all email template products
+</h1>
+
+<hr>
+
+<article>
+  <header>
+    <h2>
+      Add a new email template product
+    </h2>
+  </header>
+
+  <form action="/insert_email_template_product" method="post">
+    <div>
+      <label for="email_template_id_box">
+        Email template
+      </label>
+
+      <input type="text" id="email_template_id_box" name="query_email_template_id">
+    </div>
+
+    <div>
+      <label for="product_id_box">
+        Product
+      </label>
+
+      <input type="text" id="product_id_box" name="query_product_id">
+    </div>
+
+    <div>
+      <label for="position_box">
+        Position
+      </label>
+
+      <input type="text" id="position_box" name="query_position">
+    </div>
+
+    <button type="submit">
+      Create email template product
+    </button>
+  </form>
+</article>
+
+<hr>
+
+<article>
+  <ul>
+    <% @list_of_email_template_products.each do |an_email_template_product| %>
+      <li>
+        <a href="/email_template_products/<%= an_email_template_product.id %>">
+          Email template product #<%= an_email_template_product.id %>
+        </a>
+      </li>
+    <% end %>
+  </ul>
+</article>
+
+<hr>

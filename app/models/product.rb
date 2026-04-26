@@ -12,6 +12,7 @@
 #  name                      :string
 #  new_arrival               :boolean
 #  new_arrival_date          :date
+#  product_url               :string
 #  reorder_point             :integer
 #  reorder_quantity          :integer
 #  retail_price              :decimal(, )

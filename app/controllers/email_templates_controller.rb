@@ -21,6 +21,12 @@ class EmailTemplatesController < ApplicationController
     @list_of_all_contacts = Contact.all.order({ :last_name => :asc, :first_name => :asc })
     @list_of_all_products = Product.where({ :is_active => true }).order({ :name => :asc })
     @template_products = @the_email_template.email_template_products.includes(:product => :brand).order(:position)
+    @product_rules = @the_email_template.email_product_rules.order(:created_at)
+    @rule_matched_count = @the_email_template.rule_matched_products.count
+    @list_of_brands = Brand.order(:name)
+    @list_of_suppliers = Supplier.order(:name)
+    @list_of_category_ones = ProductCategoryOne.order(:name)
+    @list_of_category_twos = ProductCategoryTwo.order(:name)
 
     if params["preview_contact_id"].present?
       preview_contact = Contact.where({ :id => params["preview_contact_id"] }).at(0)

@@ -1,0 +1,111 @@
+<h1>
+  Email product rule #<%= @the_email_product_rule.id %> details
+</h1>
+
+<article>
+  <div>
+    <a href="/email_product_rules">
+      Go back
+    </a>
+  </div>
+
+  <div>
+    <a href="/delete_email_product_rule/<%= @the_email_product_rule.id %>">
+      Delete email product rule
+    </a>
+  </div>
+  <dl>
+    <dt>
+      Email template
+    </dt>
+    <dd>
+      <%= @the_email_product_rule.email_template_id %>
+    </dd>
+
+    <dt>
+      Field
+    </dt>
+    <dd>
+      <%= @the_email_product_rule.field %>
+    </dd>
+
+    <dt>
+      Measurement
+    </dt>
+    <dd>
+      <%= @the_email_product_rule.measurement %>
+    </dd>
+
+    <dt>
+      Value
+    </dt>
+    <dd>
+      <%= @the_email_product_rule.value %>
+    </dd>
+
+    <dt>
+      Created at
+    </dt>
+    <dd>
+      <%= time_ago_in_words(@the_email_product_rule.created_at) %> ago
+    </dd>
+
+    <dt>
+      Updated at
+    </dt>
+    <dd>
+      <%= time_ago_in_words(@the_email_product_rule.updated_at) %> ago
+    </dd>
+  </dl>
+</article>
+
+<hr>
+
+
+<article>
+  <header>
+    <h2>
+      Edit email product rule
+    </h2>
+  </header>
+
+  <form action="/modify_email_product_rule/<%= @the_email_product_rule.id %>"  method="post" >
+    <div>
+      <label for="email_template_id_box">
+        Email template
+      </label>
+
+      <input type="text" id="email_template_id_box" name="query_email_template_id" value="<%= @the_email_product_rule.email_template_id %>">
+    </div>
+
+    <div>
+      <label for="field_box">
+        Field
+      </label>
+
+      <input type="text" id="field_box" name="query_field" value="<%= @the_email_product_rule.field %>">
+    </div>
+
+    <div>
+      <label for="measurement_box">
+        Measurement
+      </label>
+
+      <input type="text" id="measurement_box" name="query_measurement" value="<%= @the_email_product_rule.measurement %>">
+    </div>
+
+    <div>
+      <label for="value_box">
+        Value
+      </label>
+
+      <input type="text" id="value_box" name="query_value" value="<%= @the_email_product_rule.value %>">
+    </div>
+
+    <button type="submit">
+      Update email product rule
+    </button>
+  </form>
+</article>
+
+<hr>

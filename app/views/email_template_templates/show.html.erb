@@ -116,6 +116,162 @@
 
 <article>
   <header>
+    Product Rules
+  </header>
+
+  <p><small><%= @rule_matched_count %> product<%= @rule_matched_count == 1 ? "" : "s" %> match these rules</small></p>
+
+  <% if @product_rules.any? %>
+    <div class="overflow-auto">
+      <table>
+        <thead>
+          <tr>
+            <th>Field</th>
+            <th>Measurement</th>
+            <th>Value</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @product_rules.each do |rule| %>
+            <tr>
+              <td><%= rule.field %></td>
+              <td><%= rule.measurement %></td>
+              <td><%= rule.value %></td>
+              <td><a href="/delete_email_product_rule/<%= rule.id %>">Remove</a></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <p>No rules added yet.</p>
+  <% end %>
+
+  <hr>
+
+  <strong>Add a rule</strong>
+
+  <form action="/insert_email_product_rule" method="post" id="product-rule-form">
+    <input type="hidden" name="query_email_template_id" value="<%= @the_email_template.id %>">
+
+    <div>
+      <label for="rule_field_box">Field</label>
+      <select id="rule_field_box" name="query_field" onchange="updateRuleValueInput(this.value)">
+        <option value="">-- select a field --</option>
+        <option value="new_arrival">new_arrival</option>
+        <option value="product_category_one">product_category_one</option>
+        <option value="product_category_two">product_category_two</option>
+        <option value="brand">brand</option>
+        <option value="supplier">supplier</option>
+        <option value="name_contains">name_contains</option>
+        <option value="retail_price_less_than">retail_price_less_than</option>
+        <option value="retail_price_greater_than">retail_price_greater_than</option>
+        <option value="added_within_days">added_within_days</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="rule_measurement_box">Measurement</label>
+      <input type="text" id="rule_measurement_box" name="query_measurement" value="equals" readonly>
+    </div>
+
+    <div id="rule_value_container">
+      <label for="rule_value_box">Value</label>
+      <input type="text" id="rule_value_box" name="query_value">
+    </div>
+
+    <button type="submit">Add Rule</button>
+  </form>
+</article>
+
+<script>
+var brandOptions = [<%= @list_of_brands.map { |b| "['#{b.id}', '#{b.name.gsub("'", "\\\\'")}']" }.join(", ").html_safe %>];
+var supplierOptions = [<%= @list_of_suppliers.map { |s| "['#{s.id}', '#{s.name.gsub("'", "\\\\'")}']" }.join(", ").html_safe %>];
+var catOneOptions = [<%= @list_of_category_ones.map { |c| "['#{c.name.gsub("'", "\\\\'")}', '#{c.name.gsub("'", "\\\\'")}']" }.join(", ").html_safe %>];
+var catTwoOptions = [<%= @list_of_category_twos.map { |c| "['#{c.name.gsub("'", "\\\\'")}', '#{c.name.gsub("'", "\\\\'")}']" }.join(", ").html_safe %>];
+
+function updateRuleValueInput(field) {
+  var container = document.getElementById('rule_value_container');
+  var measurement = document.getElementById('rule_measurement_box');
+
+  var label = document.createElement('label');
+  label.setAttribute('for', 'rule_value_box');
+  label.textContent = 'Value';
+
+  var input;
+
+  if (field === 'new_arrival') {
+    measurement.value = 'equals';
+    input = document.createElement('select');
+    input.name = 'query_value';
+    input.id = 'rule_value_box';
+    input.innerHTML = '<option value="true">true</option><option value="false">false</option>';
+  } else if (field === 'brand') {
+    measurement.value = 'equals';
+    input = document.createElement('select');
+    input.name = 'query_value';
+    input.id = 'rule_value_box';
+    input.innerHTML = '<option value="">-- select brand --</option>' +
+      brandOptions.map(function(o) { return '<option value="' + o[1] + '">' + o[1] + '</option>'; }).join('');
+  } else if (field === 'supplier') {
+    measurement.value = 'equals';
+    input = document.createElement('select');
+    input.name = 'query_value';
+    input.id = 'rule_value_box';
+    input.innerHTML = '<option value="">-- select supplier --</option>' +
+      supplierOptions.map(function(o) { return '<option value="' + o[1] + '">' + o[1] + '</option>'; }).join('');
+  } else if (field === 'product_category_one') {
+    measurement.value = 'equals';
+    input = document.createElement('select');
+    input.name = 'query_value';
+    input.id = 'rule_value_box';
+    input.innerHTML = '<option value="">-- select category --</option>' +
+      catOneOptions.map(function(o) { return '<option value="' + o[1] + '">' + o[1] + '</option>'; }).join('');
+  } else if (field === 'product_category_two') {
+    measurement.value = 'equals';
+    input = document.createElement('select');
+    input.name = 'query_value';
+    input.id = 'rule_value_box';
+    input.innerHTML = '<option value="">-- select category --</option>' +
+      catTwoOptions.map(function(o) { return '<option value="' + o[1] + '">' + o[1] + '</option>'; }).join('');
+  } else if (field === 'retail_price_less_than') {
+    measurement.value = 'less_than';
+    input = document.createElement('input');
+    input.type = 'number';
+    input.step = '0.01';
+    input.name = 'query_value';
+    input.id = 'rule_value_box';
+  } else if (field === 'retail_price_greater_than') {
+    measurement.value = 'greater_than';
+    input = document.createElement('input');
+    input.type = 'number';
+    input.step = '0.01';
+    input.name = 'query_value';
+    input.id = 'rule_value_box';
+  } else if (field === 'added_within_days') {
+    measurement.value = 'days';
+    input = document.createElement('input');
+    input.type = 'number';
+    input.name = 'query_value';
+    input.id = 'rule_value_box';
+    label.textContent = 'Days';
+  } else {
+    measurement.value = 'equals';
+    input = document.createElement('input');
+    input.type = 'text';
+    input.name = 'query_value';
+    input.id = 'rule_value_box';
+  }
+
+  container.innerHTML = '';
+  container.appendChild(label);
+  container.appendChild(input);
+}
+</script>
+
+<article>
+  <header>
     Preview
   </header>
 

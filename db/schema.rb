@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_04_26_215923) do
+ActiveRecord::Schema[8.0].define(version: 2026_04_26_221639) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -78,6 +78,15 @@ ActiveRecord::Schema[8.0].define(version: 2026_04_26_215923) do
     t.integer "min_quantity"
     t.integer "max_quantity"
     t.decimal "unit_price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "email_product_rules", force: :cascade do |t|
+    t.integer "email_template_id"
+    t.string "field"
+    t.string "measurement"
+    t.string "value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -241,6 +250,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_04_26_215923) do
     t.integer "product_category_three_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "product_url"
   end
 
   create_table "promotion_lists", force: :cascade do |t|

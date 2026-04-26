@@ -35,6 +35,9 @@
         <% if @the_product.description.present? %>
           <p style="color:#475569;font-size:14px;margin-bottom:12px;"><%= @the_product.description %></p>
         <% end %>
+        <% if @the_product.product_url.present? %>
+          <p style="font-size:13px;"><a href="<%= @the_product.product_url %>" target="_blank">View on store ↗</a></p>
+        <% end %>
       </div>
     </div>
 
@@ -93,6 +96,10 @@
           <div class="form-group">
             <label class="form-label">Image URL</label>
             <input type="text" name="query_image_url" value="<%= @the_product.image_url %>" class="form-input">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Product URL</label>
+            <input type="text" name="query_product_url" value="<%= @the_product.product_url %>" class="form-input" placeholder="https://...">
           </div>
           <div style="display:flex;gap:16px;margin-bottom:12px;">
             <label style="display:flex;align-items:center;gap:6px;cursor:pointer;">

@@ -67,6 +67,7 @@ class ProductsController < ApplicationController
     the_product.product_category_one_id = params.fetch("query_product_category_one_id", nil).presence
     the_product.product_category_two_id = params.fetch("query_product_category_two_id", nil).presence
     the_product.product_category_three_id = params.fetch("query_product_category_three_id", nil).presence
+    the_product.product_url = params.fetch("query_product_url", "")
 
     if the_product.valid?
       the_product.save
@@ -113,6 +114,7 @@ class ProductsController < ApplicationController
     the_product.product_category_one_id = params.fetch("query_product_category_one_id", nil).presence
     the_product.product_category_two_id = params.fetch("query_product_category_two_id", nil).presence
     the_product.product_category_three_id = params.fetch("query_product_category_three_id", nil).presence
+    the_product.product_url = params.fetch("query_product_url", "")
 
     if the_product.valid?
       the_product.save

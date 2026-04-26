@@ -1,4 +1,23 @@
 Rails.application.routes.draw do
+  # Routes for the Email product rule resource:
+
+  # CREATE
+  post("/insert_email_product_rule", { :controller => "email_product_rules", :action => "create" })
+
+  # READ
+  get("/email_product_rules", { :controller => "email_product_rules", :action => "index" })
+
+  get("/email_product_rules/:path_id", { :controller => "email_product_rules", :action => "show" })
+
+  # UPDATE
+
+  post("/modify_email_product_rule/:path_id", { :controller => "email_product_rules", :action => "update" })
+
+  # DELETE
+  get("/delete_email_product_rule/:path_id", { :controller => "email_product_rules", :action => "destroy" })
+
+  #------------------------------
+
   # Routes for the Email template product resource:
 
   # CREATE
